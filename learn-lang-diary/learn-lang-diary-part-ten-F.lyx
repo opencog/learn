@@ -21525,35 +21525,444 @@ Today's surprise comes from 錦織心希,
  the original essay is thought provoking.
  I'd run this now,
  but I want to get back to physics...
+\end_layout
+
+\begin_layout Subsection*
+19 March 2026
+\end_layout
+
+\begin_layout Standard
+Time is valuable.
+ I want to think about physics,
+ but am faced with endless distractions.
+ I get older,
+ and I am mortal.
+ There's not much time left.
+\end_layout
+
+\begin_layout Standard
+Over the decades,
+ I've cast my eye on geometric quantization,
+ but have never been quite motivated to sit and read it carefully.
+ I'm half–heartedly thinking I should now,
+ but the very first issue breaks my brain.
+ Here's what breaks.
+ In conventional second quantization on flat Lorentz space,
+ we have ladder operators 
+\begin_inset Formula $a_{\mathbf{k}}$
+\end_inset
+
+ and 
+\begin_inset Formula $a_{\mathbf{k}}^{\dagger}$
+\end_inset
+
+ that destroy/create plane waves 
+\begin_inset Formula $e^{-ik\cdot x}$
+\end_inset
+
+ for some 4-momentum 
+\begin_inset Formula $k_{\mu}$
+\end_inset
+
+.
+ This is a ansatz.
+ There's some hand–waving towards the need for thinking of the 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $a^{\dagger}$
+\end_inset
+
+ as being the ladder operators for a simple harmonic oscillator,
+ which makes sense,
+ if there were to be a parabola–shaped potential.
+ Exactly such a potential is provided by the mass term 
+\begin_inset Formula $m^{2}\phi^{2}$
+\end_inset
+
+ of a scalar field.
+ That's the standard picture.
+\end_layout
+
+\begin_layout Standard
+If the field really is a scalar,
+ then we'd have just 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\dot{\phi}$
+\end_inset
+
+ and a 
+\begin_inset Quotes eld
+\end_inset
+
+zero
+\begin_inset Quotes erd
+\end_inset
+
+–dimensional Lagrangian 
+\begin_inset Formula $\mathcal{L}\left(\phi,\dot{\phi}\right)$
+\end_inset
+
+ and can do a Lagrange xform to get a Hamiltonian 
+\begin_inset Formula $\mathcal{H}\left(\phi,\pi\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $q=\phi$
+\end_inset
+
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+generalized coordinate
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Formula $p=\pi$
+\end_inset
+
+ the conjugate momentum.
+ Of course,
  
+\begin_inset Formula $\mathcal{H}=\frac{1}{2}\left(p^{2}+m^{2}q^{2}\right)$
+\end_inset
+
+ for the simple harmonic oscillator.
+ Ignoring 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ and focusing on 
+\begin_inset Formula $q,p$
+\end_inset
+
+ we can write the universal enveloping algebra,
+ the Weyl algebra,
+ at this one point.
+ This one single instance of the Weyl algebra is associated with one single instance of 
+\begin_inset Formula $\mathbb{R}^{2}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-x
+It is tempting to write and say that 
+\begin_inset Quotes eld
+\end_inset
+
+there is one instance of the Weyl algebra for each space–time point
+\begin_inset Quotes erd
+\end_inset
+
+ but this is incorrect.
+ The problem is that for 
+\begin_inset Formula $\mathcal{L}=\frac{1}{2}\left(\partial_{\mu}\phi\right)^{2}-\frac{m^{2}}{2}\phi^{2}$
+\end_inset
+
+ we don't know what to do with the spatial derivatives,
+ and so make another ansatz of using plane–waves to write 
+\begin_inset Formula $k_{\mu}$
+\end_inset
+
+ in place of 
+\begin_inset Formula $\partial_{\mu}$
+\end_inset
+
+.
+ Yuck.
+ I don't like where this is going.
+ The stupidity here is that as long as we are careless,
+ the former behaves Schrodinger–like,
+ i.e.
+ non–relativistic,
+ while the latter is using relativistic notation.
+ The standard escape is to say 
+\begin_inset Quotes eld
+\end_inset
+
+presto–chango,
+ Klein–Gordon eqn.
+\begin_inset Quotes erd
+\end_inset
+
+ I don't want to do that.
+ I don't know what I want to do,
+ but rehashing 70–year old material is not the point.
 \end_layout
 
 \begin_layout Standard
-x
+I just looked.
+ The presto–chango occurs on page 5 of Bjorken and Drell,
+ Relativistic Quantum Mechanics.
+ This is the first of the two books,
+ not even the second one.
+ Lets see what book two has to say.
+ This is chapter 11.
+ Here's the trick.
+ First,
+ it does the canonical quantization for one SHO.
+ Then,
+ it says,
+ for 
+\begin_inset Formula $n$
+\end_inset
+
+ of them,
+ write 
+\begin_inset Formula $\left[q_{i},p_{j}\right]=i\hbar\delta_{ij}$
+\end_inset
+
+ and then take 
+\begin_inset Formula $n\to\infty$
+\end_inset
+
+.
+ The first example is beads on a string,
+ this gives the 1D field 
+\begin_inset Formula $\phi\left(x,t\right)$
+\end_inset
+
+ and the conjugate momentum 
+\begin_inset Formula $\pi\left(x,t\right)$
+\end_inset
+
+ and considerable breathing is expended on this being the Heisenberg picture,
+ viz that these are field operators,
+ and that it is NOT the state vector that carries the time dependence,
+ viz that e.g.
+ the vacuum state
+\begin_inset Formula $\left|0\right\rangle $
+\end_inset
+
+ does not have time dependence.
+ Between pages 12 and 13,
+ the presto–chango happens again:
+ the jump from a first–derivative in time in the Schrodinger theory to the second derivative in order to get relativistic invariance.
+ The continuum canonical quantization commutator is 
+\begin_inset Formula $\left[\phi\left(\mathbf{x},t\right),\pi\left(\mathbf{x}^{\prime},t\right)\right]=i\hbar\delta^{3}\left(\mathbf{x}-\mathbf{x}^{\prime}\right)$
+\end_inset
+
+ and the thing to draw attention to here is that it is 
+\begin_inset Formula $\delta^{3}$
+\end_inset
+
+ and not 
+\begin_inset Formula $\delta^{4}$
+\end_inset
+
+.
+ That is,
+ canonical quantization is happening on a space–like surface.
+ There is no discussion of 
+\begin_inset Formula $\left[\phi\left(\mathbf{x},t\right),\pi\left(\mathbf{x}^{\prime},t^{\prime}\right)\right]$
+\end_inset
+
+.
+ Why?
+ The key came earlier,
+ page 5,
+ while talking about retarded causality in the light–cone:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+This concept of 
+\begin_inset Quotes eld
+\end_inset
+
+microscopic causality
+\begin_inset Quotes erd
+\end_inset
+
+ strongly forces us into the field concept.
+\begin_inset Quotes erd
+\end_inset
+
+ Then again Figure 11.2 on page 12.
 \end_layout
 
 \begin_layout Standard
-x 
+Everything is a field operator,
+ up until eqn.
+ 11.63 where we are reminded that there are still state vectors,
+ although the context for that discussion is for non–scalar fields.
+ The part that makes me scratch my head is that although they have used the words 
+\begin_inset Quotes eld
+\end_inset
+
+Hilbert space
+\begin_inset Quotes erd
+\end_inset
+
+ here and there,
+ nothing so far requires 
+\begin_inset Formula $\left|\Psi\right\rangle $
+\end_inset
+
+ to be square–integrable in some 
+\begin_inset Formula $L_{2}\left(\mathbb{R}^{3}\right)$
+\end_inset
+
+ sense.
+ The intent of that era,
+ if it had been more mathematical,
+ would have been to use the compactly generated topology,
+ i.e.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Gaussian wave functions
+\begin_inset Quotes erd
+\end_inset
+
+ and classroom lectures repeatedly stresses 
+\begin_inset Quotes eld
+\end_inset
+
+Gaussian wave packets
+\begin_inset Quotes erd
+\end_inset
+
+ but the profs never explained why.
+ Were they carrying only dim memories of something they'd read of Stone–von Neumann?
+ Did they intend to say something sharper?
+ Did they not want to confuse the poor students with words like 
+\begin_inset Quotes eld
+\end_inset
+
+topology
+\begin_inset Quotes erd
+\end_inset
+
+?
+ Was my mind wandering during the lecture,
+ and I simply missed that part?
+ Was there some supplemental reading I was supposed to read,
+ but didn't?
+ Things were certainly difficult enough,
+ to not overcrowd the material with representational concerns and mathematical formalities – we students were repeatedly warned away from mathematical formalities.
+ I guess they new that we could fall into a well,
+ Timmy.
+ It was Feynmann,
+ not Schwinger,
+ that left his mark.
 \end_layout
 
 \begin_layout Standard
-x
+But that was then,
+ and this is now.
+ Nothing is written that implies we can't use the 
+\begin_inset Quotes eld
+\end_inset
+
+distribution topology
+\begin_inset Quotes erd
+\end_inset
+
+ or the Arens–Micheal topology or even the David Mumford theta representation for 
+\begin_inset Formula $\left|\Psi\right\rangle $
+\end_inset
+
+.
+ And I can't think of any reason myself.
+ The S–matrix only requires in and out states,
+ and these are obviously going to be localized wave–packets,
+ and any of these topologies are entirely capable of generating wave packets as the asymptotic states.
+ That is,
+ I currently am not aware of any constraint arising from actual physics viz.
+ experiments,
+ that constrains the topology to be applied to the state functions 
+\begin_inset Formula $\left|\Psi\right\rangle $
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-x
+Huh.
+ Interesting.
+ Unexpected.
+ I thought I was chained,
+ but I seem not to be.
+ This is forward progress,
+ however minuscule.
+ Who else knows?
+ Is this common knowledge?
+ I will have to ask the LLM tomorrow.
+ (Its after 1AM right now.
+ Bedtime.)
 \end_layout
 
 \begin_layout Standard
-x
+Hmm.
+ The only pseudo–gotcha is the discussion of unitarity,
+ pages 21–22.
+ Here,
+ the observation is made that when the state vectors transform as 
+\begin_inset Formula $\left|\Psi\right\rangle \mapsto U\left|\Psi\right\rangle $
+\end_inset
+
+ then the field operators 
+\begin_inset Formula $\phi$
+\end_inset
+
+ must transform as 
+\begin_inset Formula $\phi\mapsto U\phi U^{-1}$
+\end_inset
+
+.
+ Notable here is that although Bjorken&Drell use the word 
+\begin_inset Quotes eld
+\end_inset
+
+unitary
+\begin_inset Quotes erd
+\end_inset
+
+,
+ they never say 
+\begin_inset Formula $U^{-1}=U^{\dagger}$
+\end_inset
+
+ (although I imagine this does appear later,
+ and perhaps earlier in the book).
+ The point here is that although by convention,
+ the word 
+\begin_inset Quotes eld
+\end_inset
+
+unitary
+\begin_inset Quotes erd
+\end_inset
+
+ is used,
+ it does not appear to be forced just yet;
+ 
+\begin_inset Quotes eld
+\end_inset
+
+similarity
+\begin_inset Quotes erd
+\end_inset
+
+ is enough.
+ There might be constraints from C and T symmetry,
+ but I don't know what those are.
+ What might the nature of the constraints on the topology of state space be?
 \end_layout
 
 \begin_layout Standard
-x
+I fear asking Claude and Gemini.
+ They'll blow smoke up my ass and leave me confused.
+ I'll have to tread very carefully.
 \end_layout
 
 \begin_layout Standard
