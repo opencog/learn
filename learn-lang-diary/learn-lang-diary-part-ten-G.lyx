@@ -229,6 +229,266 @@ Notable here is a short day–dream about geometry.
  so there's nothing.
  A different part is to have these operators as sections of a bundle,
  where each fiber is a Weyl algebra.
+ I'm drawing attention to this,
+ because the standard presentation,
+ in B&D and other texts of that era,
+ is that these are just 
+\begin_inset Quotes eld
+\end_inset
+
+operators
+\begin_inset Quotes erd
+\end_inset
+
+ devoid of any setting.
+ They just 
+\begin_inset Quotes eld
+\end_inset
+
+are
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and its up to you to imagine or guess what else might be an operator,
+ or where they come from.
+ They're just instances from some unspecified set.
+ For me,
+ my brain always bonked,
+ here.
+ There's some 
+\begin_inset Quotes eld
+\end_inset
+
+set of operators
+\begin_inset Quotes erd
+\end_inset
+
+,
+ but what is it?
+ What's that set?
+ B&D never say,
+ no one else does either.
+ Hint,
+ perhaps,
+ but never say.
+ So,
+ for me,
+ it was this vague itch – well,
+ more than vague,
+ it sometimes became so intense that it prevented my ability to understand.
+ I recall tripping over 
+\begin_inset Quotes eld
+\end_inset
+
+operator algebras
+\begin_inset Quotes erd
+\end_inset
+
+,
+ but was stymied by not knowing the formal definition of an algebra;
+ more,
+ by not knowing that I didn't know,
+ and the formal definition,
+ simple as it is,
+ is fundamentally important for knowing what an 
+\begin_inset Quotes eld
+\end_inset
+
+algebra
+\begin_inset Quotes erd
+\end_inset
+
+ is.
+ I mean,
+ duh,
+ but that's what it is.
+ I also didn't really know what an operator was.
+ I mean,
+ of course,
+ linear,
+ and of course,
+ infinite–dimensional,
+ but I was lacking in any formal grounding in operator theory.
+ Both of these deficits have been cured.
+ Many decades far too late,
+ bu it is what it is.
+\end_layout
+
+\begin_layout Standard
+Three things were needed to find the cure.
+ (1) spare time.
+ I had to hit the stacks at the UT PMA library and read books at random,
+ irrespective of topic.
+ This gave a marvelous survey,
+ which I'd been sorely lacking.
+ If I had had that survey earlier,
+ oh,
+ how things would have been different.
+ (2) Wikipedia.
+ Without this,
+ its again 
+\begin_inset Quotes eld
+\end_inset
+
+impossible
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Of course,
+ if one had a question,
+ one could wander into the book stacks and try to find the answer.
+ But it would be on page 155 of a book in aisle G on the lower middle shelf on the left.
+ It was needle–in–a–haystack search.
+ More than half the time,
+ one would come up empty–handed.
+ I have no clue how the geniuses of the earlier eras did their stuff.
+ Were they omnivorous readers?
+ For me,
+ the ability to click a link,
+ and get an answer,
+ or at least a partial answer,
+ or even just a clue,
+ hint,
+ pointer,
+ that was a fundamental breakthrough.
+ I mean,
+ for crying out loud,
+ I could read the formal definition for an 
+\begin_inset Quotes eld
+\end_inset
+
+algebra
+\begin_inset Quotes erd
+\end_inset
+
+ without having had to stumble through the library,
+ perusing some textbook,
+ to find it.
+ (3) Online PDF's.
+ Anyway,
+ so now I'm cured.
+ Ingredient (4) has recently shown:
+ the LLM's.
+ These are...
+ tools to improve the speed of knowledge acquisition:
+ industrial sieves separating what is wanted from the dross.
+ Panning for gold,
+ but using an industrial apparatus for panning.
+ A conveyor belt of knowledge,
+ offering delivery–on–demand.
+ I'm still learning how to use them.
+ But still.
+\end_layout
+
+\begin_layout Standard
+So where were we?
+ We have operators 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\pi$
+\end_inset
+
+ and we can write points 
+\begin_inset Formula $\phi\left(\mathbf{x},t\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\pi\left(\mathbf{x},t\right)$
+\end_inset
+
+ and by convention,
+ the base–space is Minkowski space 
+\begin_inset Formula $\left(\mathbf{x},t\right)$
+\end_inset
+
+ and the operators are fibers.
+ Is it possible to flip the bundle on its side,
+ and say that the operator algebra for 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\pi$
+\end_inset
+
+ are the 
+\begin_inset Quotes eld
+\end_inset
+
+base space
+\begin_inset Quotes erd
+\end_inset
+
+ and the fibers are 
+\begin_inset Formula $\left(\mathbf{x},t\right)$
+\end_inset
+
+?
+ OMG.
+ Well,
+ this is very much the path I've been attempting to take,
+ with mixed success.
+ I need to throw away a lot of useless mental baggage.
+\end_layout
+
+\begin_layout Standard
+So one piece of useless baggage is this.
+ In a conventional fiber bundle,
+ the base space is distinguished:
+ it carries a topology,
+ and a section is a function into the fibers.
+ Flipping it on it's side is tricky:
+ if one mentally imagines a *single* fiber 
+\begin_inset Formula $F$
+\end_inset
+
+,
+ then there is no map (no function) from a single point 
+\begin_inset Formula $p\in F$
+\end_inset
+
+ to all of the points 
+\begin_inset Formula $x\in B$
+\end_inset
+
+ of the base–space 
+\begin_inset Formula $B$
+\end_inset
+
+ where the fiber might be valued as 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ Its just not a function,
+ and there's no way to cure this,
+ at least,
+ if one thinks of a *single* fiber.
+ Yes,
+ locally,
+ a fiber bundle looks like the Cartesian product 
+\begin_inset Formula $B\times F$
+\end_inset
+
+,
+ but the gluing of the fibers makes use of the topology on 
+\begin_inset Formula $B$
+\end_inset
+
+ and not on 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ The space 
+\begin_inset Formula $B$
+\end_inset
+
+ is distinguished.
  
 \end_layout
 
