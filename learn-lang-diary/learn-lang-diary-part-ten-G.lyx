@@ -1078,6 +1078,200 @@ This allows us to identify
  That mapping would map the tensor product to whatever product is appropriate on that space.
 \end_layout
 
+\begin_layout Subsection*
+21 March 2026
+\end_layout
+
+\begin_layout Standard
+Here's the curiosity in the above.
+ For the standard map 
+\begin_inset Formula $e_{q}\mapsto x$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{p}\mapsto-i\hbar d/dx$
+\end_inset
+
+ and a target space of 
+\begin_inset Formula $L^{2}\left(\mathbb{R}\right)$
+\end_inset
+
+,
+ one finds that the spectrum of 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is discrete;
+ its the usual harmonic oscillator spectrum.
+ However,
+ there are other maps for 
+\begin_inset Formula $e_{q}$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{p}$
+\end_inset
+
+ and other spaces for 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ to act on,
+ and not all of these will have a discrete spectrum.
+ Does this matter?
+ I'm finding this confusing.
+\end_layout
+
+\begin_layout Standard
+Let's look at the evidence.
+ Clearly,
+ one wants to have a mapping where 
+\begin_inset Formula $e_{q}\mapsto\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is interpreted as a field strength;
+ i.e.
+ it is what appears in couplings to other fields.
+ For a scalar field 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is real;
+ for a charged scalar,
+ 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is complex;
+ etc for a vector field.
+ But does anything depend on having 
+\begin_inset Formula $\phi$
+\end_inset
+
+ having the form of the Hermite polynomial(s)?
+ This is not clear.
+ A propagator needs to be constructed;
+ the standard construction of a propagator requires a complete set of states.
+ The construction does not require that these have to be the Hermites;
+ any other complete set of states will do,
+ as long as the resulting propagator is for a scalar,
+ and that the measure on the scalar is uniform,
+ viz has the standard uniform measure on 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+.
+ What about coherent states?
+ These are eigenstates of the annihilation operator,
+ which is just 
+\begin_inset Formula $e_{q}-ie_{p}$
+\end_inset
+
+.
+ Hmm.
+ Well,
+ I guess that the situation is forced,
+ where there has to be something interpretable as a field–strength,
+ and that field–strength has to be intrepretable as a probability distribution on 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+,
+ and this appears to force the use of 
+\begin_inset Formula $L^{2}\left(\mathbb{R}\right)$
+\end_inset
+
+ as the appropriate space of of field strengths at a point 
+\begin_inset Formula $\left(\mathbf{x},t\right)$
+\end_inset
+
+.
+ But this now implies that there is a second fiber bundle:
+ the one who's fiber is 
+\begin_inset Formula $L^{2}\left(\mathbb{R}\right)$
+\end_inset
+
+,
+ in addition to the operator–valued fiber of which 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\pi$
+\end_inset
+
+ are sections.
+ So at least from here,
+ the conventional interpretation appears to be inescapable;
+ I see no loopholes.
+ And yet...
+\end_layout
+
+\begin_layout Standard
+There is one more confusion.
+ The wave–function 
+\begin_inset Formula $\left|\Phi\right\rangle $
+\end_inset
+
+ is a section of the second bundle;
+ its value on a fiber is 
+\begin_inset Formula $\left\langle \mathbf{x},t\right.\left|\Phi\right\rangle $
+\end_inset
+
+ but otherwise,
+ as a section 
+\begin_inset Formula $\left|\Phi\right\rangle $
+\end_inset
+
+ is location–less.
+ The field strength at a point is 
+\begin_inset Formula $\left|\left\langle \mathbf{x},t\right.\left|\Phi\right\rangle \right|^{2}=\left\langle \Phi\right|\left.\mathbf{x},t\right\rangle \left\langle \mathbf{x},t\right.\left|\Phi\right\rangle $
+\end_inset
+
+ and *this* is the quantity that must be real–valued.
+ That is,
+ we MUST have 
+\begin_inset Formula $\left|\left\langle \mathbf{x},t\right.\left|\Phi\right\rangle \right|^{2}\in\mathbb{R}$
+\end_inset
+
+ and that THIS is the field–strength.
+ So we opened up the loophole,
+ again.
+ We've removed the restriction that 
+\begin_inset Formula $\left\langle \mathbf{x},t\right.\left|\Phi\right\rangle \in L^{2}\left(\mathbb{R}\right)$
+\end_inset
+
+ and it seems that we can instead have 
+\begin_inset Formula $\left\langle \mathbf{x},t\right.\left|\Phi\right\rangle \in F$
+\end_inset
+
+ as long as the space 
+\begin_inset Formula $F$
+\end_inset
+
+ has a real–valued norm.
+ The norm has to be bilinear so that 
+\begin_inset Formula $F$
+\end_inset
+
+ has to be a vector space,
+ and we identify 
+\begin_inset Formula $\left\langle \Phi\right|\left.\mathbf{x},t\right\rangle \in F^{*}$
+\end_inset
+
+ as belonging to the dual space.
+ The space has to be complete ...
+ by convention,
+ it has to be a Hilbert space,
+ but I am having an attack of the stupids,
+ so I don't see why.
+ 
+\end_layout
+
 \begin_layout Standard
 x
 \end_layout
