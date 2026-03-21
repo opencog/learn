@@ -1269,7 +1269,213 @@ There is one more confusion.
  it has to be a Hilbert space,
  but I am having an attack of the stupids,
  so I don't see why.
+\end_layout
+
+\begin_layout Standard
+So why does this matter?
+ If 
+\begin_inset Formula $F=L^{2}\left(\mathbb{R}\right)$
+\end_inset
+
+ and if 
+\begin_inset Formula $e_{q}\mapsto x$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{p}\mapsto-i\hbar d/dx$
+\end_inset
+
+ then we come to the inescapable conclusion that the spectrum has the form 
+\begin_inset Formula $\left(n+\frac{1}{2}\right)\hbar\omega$
+\end_inset
+
+ and that the ground state 
+\begin_inset Formula $\left|0\right\rangle $
+\end_inset
+
+ has energy 
+\begin_inset Formula $\hbar\omega/2$
+\end_inset
+
+ and we run afoul if this is identified with the cosmological constant.
+ However,
+ I cannot see,
+ for the life of me,
+ why 
+\begin_inset Formula $F=L^{2}\left(\mathbb{R}\right)$
+\end_inset
+
+;
+ it could just be some other Hilbert space,
+ or any other space with a real–valued norm and bilinear.
+ I need to ask an LLM about this.
  
+\end_layout
+
+\begin_layout Standard
+Let's continue.
+ We want to get off of just one fiber,
+ and deal with the general case 
+\begin_inset Formula $\nabla\phi\ne0$
+\end_inset
+
+.
+ Reading further into chapter 12 of Bjorken & Drell gives the conventional development for how to do this.
+ I will copy the formulas as the seem relevant.
+\end_layout
+
+\begin_layout Standard
+Write 
+\begin_inset Formula $\omega_{k}=+\sqrt{\mathbf{k}^{2}+m^{2}}$
+\end_inset
+
+ with 
+\begin_inset Formula $\mathbf{k}^{2}$
+\end_inset
+
+ the 3-wavevector.
+ The normalized plane–wave solutions to KG are
+\begin_inset Formula 
+\[
+f_{k}\left(x\right)=\frac{1}{\sqrt{\left(2\pi\right)^{3}2\omega_{k}}}e^{-ik\cdot x}=\frac{1}{\sqrt{\left(2\pi\right)^{3}2\omega_{k}}}e^{i\mathbf{k}\cdot\mathbf{x}-i\omega_{k}t}=f_{k}\left(\mathbf{x},t\right)
+\]
+
+\end_inset
+
+The notational convention here is that the bold–face 
+\begin_inset Formula $\mathbf{k}$
+\end_inset
+
+ is the 3D wavevector,
+ and italic 
+\begin_inset Formula $k$
+\end_inset
+
+ is the 4-vector.
+ I'm being picky,
+ so as to avoid unwanted confusions later in the game.
+ The above are complex–valued functions;
+ they are not operators,
+ nor are they 
+\begin_inset Quotes eld
+\end_inset
+
+states
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These are orthonormal,
+ in that
+\begin_inset Formula 
+\[
+\int d^{3}xf_{k}^{*}\left(\mathbf{x},t\right)\overleftrightarrow{\partial_{0}}f_{k^{\prime}}\left(\mathbf{x},t\right)=-i\delta^{3}\left(k-k^{\prime}\right)
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+a\overleftrightarrow{\partial_{0}}b=a\dot{b}-\dot{a}b
+\]
+
+\end_inset
+
+This is an anti–symmetric bilinear form.
+ It's required to cancel out the 
+\begin_inset Formula $1/\sqrt{2\omega_{k}}$
+\end_inset
+
+ and the anti–symmetry is forced by the complex conjugate
+\end_layout
+
+\begin_layout Standard
+A generalized (classical,
+ scalar) solution of KG,
+ expanded in terms of this plane–wave basis is
+\begin_inset Formula 
+\[
+\phi\left(\mathbf{x},t\right)=\int d^{3}k\left[f_{k}\left(x\right)a\left(k\right)+f_{k}^{*}\left(x\right)a^{\dagger}\left(k\right)\right]
+\]
+
+\end_inset
+
+I use the word 
+\begin_inset Quotes eld
+\end_inset
+
+classical
+\begin_inset Quotes erd
+\end_inset
+
+ to denote that in the above,
+ 
+\begin_inset Formula $\phi$
+\end_inset
+
+ a complex–valued field,
+ and 
+\begin_inset Formula $a,a^{\dagger}$
+\end_inset
+
+ as complex–valued amplitudes.
+ The expansion is in terms of plane–waves,
+ for two or three reasons.
+ Foremost,
+ the plane–wave can be identified with a non–interacting particle of constant momentum,
+ i.e.
+ at rest in it's rest frame.
+ Second,
+ plane waves are easy to work with.
+ Easier than wave packets or something else with compact support;
+ the physics appears not depend on the mathematical formalities of defining an appropriate topology that is complete (and appropriately bounded) for the space of solutions of the KG operator.
+ More precisely,
+ there does not appear to be any physical experiment that could physically distinguish one topology from another.
+ At least,
+ not that I know of.
+\end_layout
+
+\begin_layout Standard
+The normalization for this case is that 
+\begin_inset Formula 
+\[
+1=\int d^{3}x\left|\phi\left(\mathbf{x},t\right)\right|^{2}
+\]
+
+\end_inset
+
+for a single–particle solution,
+ and here,
+ the need to interpret 
+\begin_inset Formula $\phi$
+\end_inset
+
+ as a complex–valued square–integrable function on 1+3 Minkowski space is indisputable.
+ This is the context in which the adjective 
+\begin_inset Quotes eld
+\end_inset
+
+Hilbert
+\begin_inset Quotes erd
+\end_inset
+
+ is not only appropriate,
+ but is pointless to challenge.
+ At the classical level,
+ we're dealing only with complex–valued solutions to Klein–Gordon,
+ and I don't see any particular need to get all twisted up over this.
+ I mean,
+ we could get fancy and perhaps insist on using some Sobolev space,
+ if we wanted to do analysis on some general Riemannian manifold,
+ but there does not appear to be any call for this,
+ not at this stage of the game.
+ At any rate,
+ it again appears to be out–of–bounds for physics,
+ as one would have to be mighty clever to invent some experiment to confirm or rule out that Sobolev spaces apply,
+ or that the topology is compactly generated or not.
+ These are desirable mathematical properties;
+ they are not obviously experimentally accessible.
 \end_layout
 
 \begin_layout Standard
