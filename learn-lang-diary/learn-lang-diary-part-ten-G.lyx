@@ -1387,7 +1387,101 @@ This is an anti–symmetric bilinear form.
 \begin_inset Formula $1/\sqrt{2\omega_{k}}$
 \end_inset
 
- and the anti–symmetry is forced by the complex conjugate
+ and the anti–symmetry is forced by the complex conjugate.
+ The 
+\begin_inset Formula $\sqrt{2\omega_{k}}$
+\end_inset
+
+ arises as a requirement that the volume element is Lorentz–invariant.
+ The Lorentz–invariant particle number density is
+\begin_inset Formula 
+\[
+\rho=i\psi^{*}\overleftrightarrow{\partial_{0}}\psi
+\]
+
+\end_inset
+
+which is the zeroth component of the Noether current corresponding to Lorentz invariance.
+\end_layout
+
+\begin_layout Standard
+The point of belaboring this point is to determine the 
+\begin_inset Quotes eld
+\end_inset
+
+root cause
+\begin_inset Quotes erd
+\end_inset
+
+ of the anti–symmetry:
+ it is forced by the 
+\begin_inset Quotes eld
+\end_inset
+
+classical
+\begin_inset Quotes erd
+\end_inset
+
+,
+ non–quantized structure of a harmonic map (albeit with mass) on a pseudo–riemannian space.
+ The point here is that,
+ although I've been doing a lot of blathering about symplectic forms,
+ the origin of this anti–symmetry is not because we enforced some kind of symplectic condition from the outside;
+ rather,
+ it appeared all on it's own,
+ unbidden,
+ during the analysis of the Lorentz invariance of a scalar field.
+ Perhaps the answer here is trite:
+ to talk about harmnic functions,
+ we must necessarily talk about first derivatives.
+ And to talk about first derivatives,
+ we must necessarily talk about cotangent bundles.
+ And it is unavoidably the case that cotangent bundles are symplectic.
+ This appears to be an unavoidable consequence of working with first derivatives.
+ The looseness or floppiness or lack of rigidity of symplectic manifolds is then hardly a surprise,
+ but rather the consequence of imposing some bare minimum of constraints,
+ that bare minimum having mostly something to do with normalizability,
+ or of having a scalar norm,
+ and its hard to get more minimal than that.
+ Well,
+ projective spaces are projective precisely because they discard the notion of a norm.
+ And one can argue that wave–functions are 
+\begin_inset Quotes eld
+\end_inset
+
+effectively
+\begin_inset Quotes erd
+\end_inset
+
+ residents of a projective space;
+ the normalization is a 
+\begin_inset Quotes eld
+\end_inset
+
+convenience
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Hmm.
+ So once again,
+ I am confused.
+ Is it possible to articulate a set of solutions that are naturally interpreted as residing in a projective space?
+ This projective space would still need to be Lorentz invariant,
+ would still employ derivatives,
+ would still induce a Noether current,
+ and would still have anti–symmetry arise 
+\begin_inset Quotes eld
+\end_inset
+
+naturally
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These are my words,
+ and I'm sticking to them,
+ but I still feel as if I'm missing something.
 \end_layout
 
 \begin_layout Standard
@@ -1434,6 +1528,18 @@ classical
  there does not appear to be any physical experiment that could physically distinguish one topology from another.
  At least,
  not that I know of.
+\end_layout
+
+\begin_layout Standard
+The third reason to use a plane–wave basis is because we are not working with particles–in–a–box;
+ in such a case a different basis would be appropriate.
+ Due to the magic of Fourier decompositions,
+ some of the possible linear combinations are entirely wild,
+ and are tamed only be requirements of smoothness,
+ and/or of uniform convergence.
+ For the present discussion,
+ we can ignore these other wild bases;
+ perhaps there will be a need to revisit this later.
 \end_layout
 
 \begin_layout Standard
