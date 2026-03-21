@@ -210,7 +210,7 @@ P^{0} & =H=\int d^{3}x\mathcal{\mathcal{H}}\left(\pi,\phi\right)\\
 \end_inset
 
 Notable here is a short day–dream about geometry.
- Bjoreken&Drell write the above point–wise,
+ Bjorken&Drell write the above point–wise,
  by including the base–point 
 \begin_inset Formula $\left(\mathbf{x},t\right)$
 \end_inset
@@ -684,7 +684,121 @@ Why?
 \end_layout
 
 \begin_layout Standard
-The momentum operator is
+The 3D part of the momentum operator is
+\begin_inset Formula 
+\[
+\mathbf{P}=\int d^{3}x\,\pi\nabla\phi
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $P^{0}$
+\end_inset
+
+ was given before,
+ and notice that it is not at all obvious that the combined 
+\begin_inset Formula $P^{\mu}$
+\end_inset
+
+ transforms appropriately under Lorentz,
+ given how different these two look.
+ Curiously,
+ 
+\begin_inset Formula 
+\[
+i\left[P^{\mu},\phi\right]=\partial^{\mu}\phi
+\]
+
+\end_inset
+
+is an operator identity.
+ Holding on sections of the operator bundle over flat spacetime.
+ My struggle here is that B&D is a textbook from 1964,
+ so over 60 years old.
+ Of course,
+ there has been a mathematical formalization,
+ some operator algebra,
+ that uses the proper fiber–bundle language to talk about this algebra ...
+ but I don't know what that is.
+ I may have seen it once,
+ but my eyes glazed over because I did not see the point.
+ Now I see the point,
+ but alas...
+\end_layout
+
+\begin_layout Standard
+What is this?
+ 
+\begin_inset Formula $P^{\mu}$
+\end_inset
+
+ is an integral over a space–like surface,
+ somehow appropriately regularized in some kind of compactly–generated topology of some kind.
+ Details unclear,
+ but the point is that its an 
+\begin_inset Quotes eld
+\end_inset
+
+single
+\begin_inset Quotes erd
+\end_inset
+
+ operator,
+ with no spatial location.
+ It's constructed from *sections* 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\pi$
+\end_inset
+
+ and B&D use the convention of attaching 
+\begin_inset Formula $\left(\mathbf{x},t\right)$
+\end_inset
+
+ to serve as a reminder that these are sections.
+ The products 
+\begin_inset Formula $P^{\mu}\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi P^{\mu}$
+\end_inset
+
+ are operator products,
+ taken point–wise at each 
+\begin_inset Formula $\left(\mathbf{x},t\right)$
+\end_inset
+
+ of the section.
+ We still have not given any precise definition of what the word 
+\begin_inset Quotes eld
+\end_inset
+
+operator
+\begin_inset Quotes erd
+\end_inset
+
+ means,
+ here.
+\end_layout
+
+\begin_layout Standard
+What is 
+\begin_inset Formula $\partial^{\mu}\phi$
+\end_inset
+
+?
+ Its the horizontal part of the connection.
+ We do not yet know what the vertical part needs to be.
+ I've been imagining the fibers are each a copy of the Weyl algebra.
+ I guess.
+ So the vertical part of the connection needs to be fiber–valued.
+ The words come out,
+ but the details remain unclear.
+ So lets get a better look at the fibers.
 \end_layout
 
 \begin_layout Standard
