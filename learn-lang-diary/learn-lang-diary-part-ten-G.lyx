@@ -1309,7 +1309,28 @@ So why does this matter?
  it could just be some other Hilbert space,
  or any other space with a real–valued norm and bilinear.
  I need to ask an LLM about this.
- 
+\end_layout
+
+\begin_layout Standard
+(Oh,
+ but see the next days entry below;
+ the 
+\begin_inset Formula $1/2$
+\end_inset
+
+ comes not from the harmonic oscillator,
+ but from the commutator 
+\begin_inset Formula $\left[p,q\right]=1$
+\end_inset
+
+ and so the 
+\begin_inset Formula $1/2$
+\end_inset
+
+ is unavoidable;
+ its a feature of any representation.
+ Oh.
+ Whoops.)
 \end_layout
 
 \begin_layout Standard
@@ -1646,6 +1667,170 @@ I'm confused about whether there needs to be some kind of gauge freedom for each
  Am I making some kind of mistake?
  I thought I was being careful...
  I'm confused.
+\end_layout
+
+\begin_layout Subsection*
+22 March 2026
+\end_layout
+
+\begin_layout Standard
+Well,
+ I slept on the above.
+ There are several possible replies.
+ One is that this gauging is not dynamical,
+ in that it does not appear with any derivatives.
+ The KG eqn is,
+ after all for just a scalar,
+ a scalar that we identify with a coordinate 
+\begin_inset Formula $q$
+\end_inset
+
+ and nothing more.
+ The coordinate 
+\begin_inset Formula $p$
+\end_inset
+
+ is 
+\begin_inset Formula $\dot{q}$
+\end_inset
+
+ and would seem to have no independent existence;
+ or rather,
+ is already subsumed in the eqn.
+ We can perhaps talk of rotations between 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+ and these are given the conventional name of 
+\begin_inset Quotes eld
+\end_inset
+
+boosts
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But these are,
+ by convention,
+ nothing other than reparameterizations of one coordinate system on Minkowski space by another,
+ described by a Lorentz transform:
+ a coordinate change,
+ and nothing more.
+ This coordinate change is far more restrictive than a symplectic xform,
+ and besides,
+ it ties in spatial directions:
+ so it is entirely something else,
+ of an entirely different character.
+\end_layout
+
+\begin_layout Standard
+So somehow,
+ I am confusing the (dynamical) degree of freedom that is the scalar field with it's time derivative,
+ which is not free,
+ but is tied into space.
+ This is more or less wrong,
+ or impossible,
+ at the classical level;
+ I seem to be bumbling into some ghost that arises in the construction of the Clifford algebra,
+ but what is that ghost?
+\end_layout
+
+\begin_layout Standard
+Lockhart writes:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+You will declare yourself a genius at breakfast,
+ and an idiot by lunch.
+ We've all done it.
+\begin_inset Quotes erd
+\end_inset
+
+ It's lunchtime,
+ lets do it.
+ Writing 
+\begin_inset Formula $\pi=\dot{\phi}$
+\end_inset
+
+ the KG eqn is first order,
+ not second order in the time derivative.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\partial_{0}\pi-\nabla^{2}\phi+m^{2}\phi=0
+\]
+
+\end_inset
+
+As a vector eqn:
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+1 & 1\end{array}\right]\left[\begin{array}{cc}
+\partial_{0} & 0\\
+0 & \nabla^{2}-m^{2}
+\end{array}\right]\left[\begin{array}{cc}
+0 & 1\\
+-1 & 0
+\end{array}\right]\left[\begin{array}{c}
+\phi\\
+\pi
+\end{array}\right]=0
+\]
+
+\end_inset
+
+Then plug in 
+\begin_inset Formula $J=M^{T}JM$
+\end_inset
+
+ with
+\begin_inset Formula 
+\[
+M=\left[\begin{array}{cc}
+a & b\\
+c & d
+\end{array}\right]\qquad ad-bc=1
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+\phi^{\prime}\\
+\pi^{\prime}
+\end{array}\right]=M\left[\begin{array}{c}
+\phi\\
+\pi
+\end{array}\right]
+\]
+
+\end_inset
+
+which forces
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\partial_{0} & 0\\
+0 & \nabla^{2}-m^{2}
+\end{array}\right]\left[\begin{array}{cc}
+a & b\\
+c & d
+\end{array}\right]=
+\]
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Standard
