@@ -1369,7 +1369,7 @@ states
  in that
 \begin_inset Formula 
 \[
-\int d^{3}xf_{k}^{*}\left(\mathbf{x},t\right)\overleftrightarrow{\partial_{0}}f_{k^{\prime}}\left(\mathbf{x},t\right)=-i\delta^{3}\left(k-k^{\prime}\right)
+\int d^{3}xf_{k}^{*}\left(\mathbf{x},t\right)\overleftrightarrow{i\partial_{0}}f_{k^{\prime}}\left(\mathbf{x},t\right)=\delta^{3}\left(k-k^{\prime}\right)
 \]
 
 \end_inset
@@ -1489,9 +1489,9 @@ A generalized (classical,
  scalar) solution of KG,
  expanded in terms of this plane–wave basis is
 \begin_inset Formula 
-\[
-\phi\left(\mathbf{x},t\right)=\int d^{3}k\left[f_{k}\left(x\right)a\left(k\right)+f_{k}^{*}\left(x\right)a^{\dagger}\left(k\right)\right]
-\]
+\begin{equation}
+\phi\left(\mathbf{x},t\right)=\int d^{3}k\left[f_{k}\left(x\right)a\left(k\right)+f_{k}^{*}\left(x\right)a^{\dagger}\left(k\right)\right]\label{eq:basis}
+\end{equation}
 
 \end_inset
 
@@ -1582,6 +1582,70 @@ Hilbert
  or that the topology is compactly generated or not.
  These are desirable mathematical properties;
  they are not obviously experimentally accessible.
+\end_layout
+
+\begin_layout Standard
+The plane–wave basis expansion of eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:basis"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ can also be taken to be an operator eqn.
+ that provides the definition of the creation and annihilation operators.
+ It is convenient to perform the inversion while still working with complex–valued functions;
+ the inversion gives
+\begin_inset Formula 
+\[
+a\left(k\right)=\int d^{3}xf_{k}^{*}\left(\mathbf{x},t\right)\overleftrightarrow{i\partial_{0}}\phi\left(\mathbf{x},t\right)
+\]
+
+\end_inset
+
+which is B&D eqn 12.9,
+ which is followed by a remark that the LHS is independent of time.
+ The operator identity is obtained by means of the symbolic mapping 
+\begin_inset Formula $\phi\mapsto e_{q}$
+\end_inset
+
+ and 
+\begin_inset Formula $\dot{\phi}=\pi\mapsto e_{p}$
+\end_inset
+
+.
+ This mapping is done fiber by fiber,
+ so
+\begin_inset Formula 
+\begin{align*}
+a\left(k\right) & =i\int d^{3}xf_{k}^{*}\left(\mathbf{x},t\right)\left[e_{p}\left(\mathbf{x},t\right)-i\omega_{k}e_{q}\left(\mathbf{x},t\right)\right]\\
+ & =ie_{p}\left(k\right)+\omega_{k}e_{q}\left(k\right)
+\end{align*}
+
+\end_inset
+
+I'm confused about whether there needs to be some kind of gauge freedom for each fiber.
+ After all,
+ it seems that I have complete freedom to choose the 
+\begin_inset Formula $q,p$
+\end_inset
+
+ directions on each fiber.
+ When there's only one fiber,
+ then it kind of doesn't matter.
+ But as I move from thread to thread,
+ there's some kind of gauge freedom,
+ right?
+ It's never mentioned anywhere that I've ever seen.
+ Is that an oversight,
+ or does it cancel itself out (in some way I can't yet imagine)?
+ Am I making some kind of mistake?
+ I thought I was being careful...
+ I'm confused.
 \end_layout
 
 \begin_layout Standard
