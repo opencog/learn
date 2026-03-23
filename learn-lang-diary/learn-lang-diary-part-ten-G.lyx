@@ -1817,20 +1817,192 @@ and
 \end_inset
 
 which forces
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 \left[\begin{array}{cc}
 \partial_{0} & 0\\
 0 & \nabla^{2}-m^{2}
 \end{array}\right]\left[\begin{array}{cc}
-a & b\\
-c & d
-\end{array}\right]=
+a & c\\
+b & d
+\end{array}\right]=\left[\begin{array}{cc}
+\partial_{0}a & \partial_{0}c\\
+\left(\nabla^{2}-m^{2}\right)b\;\; & \left(\nabla^{2}-m^{2}\right)d
+\end{array}\right]+\left[\begin{array}{cc}
+a\partial_{0} & c\partial_{0}\\
+b\nabla^{2}+2\left(\nabla b\right)\cdot\nabla\;\; & d\nabla^{2}+2\left(\nabla d\right)\cdot\nabla
+\end{array}\right]
 \]
 
 \end_inset
 
- 
+which makes use of
+\begin_inset Formula 
+\[
+\nabla^{2}bf=f\nabla^{2}b+2\left(\nabla b\right)\cdot\left(\nabla f\right)+b\nabla^{2}f
+\]
+
+\end_inset
+
+I gain no insight staring at this.
+ Lets try collapsing it back down
+\begin_inset Formula 
+\begin{align*}
+\left[\begin{array}{cc}
+\partial_{0} & 0\\
+0 & \nabla^{2}-m^{2}
+\end{array}\right]\left[\begin{array}{cc}
+a & c\\
+b & d
+\end{array}\right]\left[\begin{array}{cc}
+0 & 1\\
+-1 & 0
+\end{array}\right]= & \left[\begin{array}{cc}
+-\partial_{0}c & \partial_{0}a\\
+-\left(\nabla^{2}-m^{2}\right)d\;\; & \left(\nabla^{2}-m^{2}\right)b
+\end{array}\right]\\
+ & \qquad+\left[\begin{array}{cc}
+-c\partial_{0} & a\partial_{0}\\
+-\left(d\nabla^{2}+2\left(\nabla d\right)\cdot\nabla\right)\;\; & b\nabla^{2}+2\left(\nabla b\right)\cdot\nabla
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+or
+\begin_inset Formula 
+\begin{align*}
+\left[\begin{array}{cc}
+\partial_{0} & 0\\
+0 & \nabla^{2}-m^{2}
+\end{array}\right]\left[\begin{array}{cc}
+a & c\\
+b & d
+\end{array}\right]\left[\begin{array}{cc}
+0 & 1\\
+-1 & 0
+\end{array}\right]\left[\begin{array}{c}
+\phi^{\prime}\\
+\pi^{\prime}
+\end{array}\right]= & \left[\begin{array}{c}
+-\phi^{\prime}\partial_{0}c+\pi^{\prime}\partial_{0}a\\
+-\phi^{\prime}\left(\nabla^{2}-m^{2}\right)d+\pi^{\prime}\left(\nabla^{2}-m^{2}\right)b
+\end{array}\right]\\
+ & \qquad+\left[\begin{array}{c}
+-c\partial_{0}\phi^{\prime}+a\partial_{0}\pi^{\prime}\\
+-d\nabla^{2}\phi^{\prime}-2\left(\nabla d\right)\cdot\nabla\phi^{\prime}+b\nabla^{2}\pi^{\prime}+2\left(\nabla b\right)\cdot\nabla\pi^{\prime}
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+which is nasty.
+ One obvious trickery is to write 
+\begin_inset Formula 
+\begin{align*}
+\dot{a} & =\partial_{0}a\\
+B & =\left(\nabla^{2}-m^{2}\right)b\\
+D & =\left(\nabla^{2}-m^{2}\right)d
+\end{align*}
+
+\end_inset
+
+to get
+\begin_inset Formula 
+\[
+0=\left(\dot{a}+B\right)\pi^{\prime}-c\partial_{0}\phi^{\prime}-\left(\dot{c}+D\right)\phi^{\prime}+a\partial_{0}\pi^{\prime}+b\nabla^{2}\pi^{\prime}+2\left(\nabla b\right)\cdot\nabla\pi^{\prime}-d\nabla^{2}\phi^{\prime}-2\left(\nabla d\right)\cdot\nabla\phi^{\prime}
+\]
+
+\end_inset
+
+It is tempting to write 
+\begin_inset Formula $\pi^{\prime}=\partial_{0}\phi^{\prime}$
+\end_inset
+
+ but the legality of this is not yet obvious.
+ Anyway,
+ the above is a mess.
+ Is there a way to get lucky?
+ Lets try
+\begin_inset Formula 
+\[
+M=\left[\begin{array}{cc}
+1/s & 0\\
+0 & s
+\end{array}\right]
+\]
+
+\end_inset
+
+Then
+\begin_inset Formula 
+\[
+0=-\pi^{\prime}\frac{\dot{s}}{s^{2}}+\phi^{\prime}m^{2}s-\phi^{\prime}\nabla^{2}s+\frac{1}{s}\partial_{0}\pi^{\prime}-s\nabla^{2}\phi^{\prime}-2\left(\nabla s\right)\cdot\nabla\phi^{\prime}
+\]
+
+\end_inset
+
+If we set 
+\begin_inset Formula $\dot{s}=0$
+\end_inset
+
+ and,
+ well,
+ there's nothing interesting I can think of saying about this.
+ It's just obviously a rescaling of the field.
+ As a rescaling,
+ there's still only one dynamical equation here,
+ not two;
+ nothing constrains 
+\begin_inset Formula $s$
+\end_inset
+
+ independently of 
+\begin_inset Formula $\phi^{\prime}$
+\end_inset
+
+;
+ only the combined 
+\begin_inset Formula $\phi=s\phi^{\prime}$
+\end_inset
+
+ has dynamics.
+ Some other equation,
+ arriving from outer space,
+ would be required to independently fix 
+\begin_inset Formula $s$
+\end_inset
+
+.
+ But there are no such illegal aliens.
+ It gets no better were we to imagine 
+\begin_inset Formula $\phi^{\prime}$
+\end_inset
+
+ to be an operator,
+ instead of a scalar field.
+\end_layout
+
+\begin_layout Standard
+Strike one.
+\end_layout
+
+\begin_layout Standard
+Lets try again:
+\begin_inset Formula 
+\[
+M=\left[\begin{array}{cc}
+1 & 0\\
+k & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+Then
 \end_layout
 
 \begin_layout Standard
