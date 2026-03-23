@@ -1991,6 +1991,19 @@ Strike one.
 \end_layout
 
 \begin_layout Standard
+Well,
+ given that any 
+\begin_inset Formula $M$
+\end_inset
+
+ will be nothing more than a reparameterization ...
+ what could possibly be expected,
+ any way?
+ At best,
+ some vague impression of some old forgotten melody?
+\end_layout
+
+\begin_layout Standard
 Lets try again:
 \begin_inset Formula 
 \[
@@ -2003,6 +2016,115 @@ k & 1
 \end_inset
 
 Then
+\begin_inset Formula 
+\[
+0=-k\partial_{0}\phi^{\prime}-\left(\dot{k}-m^{2}\right)\phi^{\prime}+\partial_{0}\pi^{\prime}-\nabla^{2}\phi^{\prime}
+\]
+
+\end_inset
+
+and again I see nothing to stir the soul.
+ Strike two.
+ That leaves
+\begin_inset Formula 
+\[
+M=\left[\begin{array}{cc}
+a & b\\
+-b & a
+\end{array}\right]
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $a^{2}+b^{2}=1$
+\end_inset
+
+ which yields
+\begin_inset Formula 
+\[
+0=\left(\dot{a}+B\right)\pi^{\prime}+b\partial_{0}\phi^{\prime}+\left(\dot{b}-A\right)\phi^{\prime}+a\partial_{0}\pi^{\prime}+b\nabla^{2}\pi^{\prime}+2\left(\nabla b\right)\cdot\nabla\pi^{\prime}-a\nabla^{2}\phi^{\prime}-2\left(\nabla a\right)\cdot\nabla\phi^{\prime}
+\]
+
+\end_inset
+
+Wow.
+ This achieves a whole new level of pointlessness.
+\end_layout
+
+\begin_layout Standard
+What's the nature of the lesson here?
+ If one truly desires to,
+ one can think of the scalar field possessing independent coordinates 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\dot{\phi}$
+\end_inset
+
+ and insofar as these can be presumed to somehow be 
+\begin_inset Quotes eld
+\end_inset
+
+independent
+\begin_inset Quotes erd
+\end_inset
+
+,
+ then they do span a space 
+\begin_inset Formula $\mathbb{R}^{2}$
+\end_inset
+
+.
+ And this space can be taken to be a fiber,
+ and the coordinates on each fiber can be varied by applying a varying symplectic 
+\begin_inset Formula $M$
+\end_inset
+
+ (i.e.
+ obeying the loose constraint 
+\begin_inset Formula $M^{T}JM=J$
+\end_inset
+
+ or 
+\begin_inset Formula $ad-bc=1$
+\end_inset
+
+).
+ But doing this appears to be pointless,
+ as there is no independent dynamics for 
+\begin_inset Formula $M$
+\end_inset
+
+ – it really is just a coordinate transformation and nothing more.
+ There was a whisper of a hope that one of the forms might 
+\begin_inset Quotes eld
+\end_inset
+
+look like something
+\begin_inset Quotes erd
+\end_inset
+
+,
+ i.e.
+ have some familiar form,
+ and thus suggesting some alternative interpretation,
+ but I see nothing of that sort.
+\end_layout
+
+\begin_layout Standard
+What was that whisper?
+ Well,
+ that something Bogoliubov–y would be recognizable here.
+ But Bogoliubov works with the creation/annihilation operators,
+ which is not what we have here.
+ So lets now return to that.
+\end_layout
+
+\begin_layout Standard
+The process is to then copy out another handful of formulas from B&D.
+ These are:
 \end_layout
 
 \begin_layout Standard
