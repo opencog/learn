@@ -2818,9 +2818,9 @@ Lets try this.
  It is complex–valued,
  and by convention can be fourier–expanded in terms of plane–wave basis functions:
 \begin_inset Formula 
-\[
-\Psi\left(\mathbf{x},t\right)=\int d^{3}k\left[f_{k}\left(x\right)c\left(k\right)+f_{k}^{*}\left(x\right)c^{\dagger}\left(k\right)\right]
-\]
+\begin{equation}
+\Psi\left(\mathbf{x},t\right)=\int d^{3}k\left[f_{k}\left(x\right)c\left(k\right)+f_{k}^{*}\left(x\right)c^{\dagger}\left(k\right)\right]\label{eq:fourier-wave}
+\end{equation}
 
 \end_inset
 
@@ -3227,7 +3227,36 @@ which is identical to the simple scalar wave normalization.
 OK,
  enough of this.
  So how do we go measure–theoretic in this setting?
- 
+ And what is the correct way to talk about mixed states?
+ That is,
+ everything above was a pure state;
+ the 
+\begin_inset Formula $c,c^{\dagger}$
+\end_inset
+
+ are amplitudes,
+ not probabilities;
+ the wave function in eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fourier-wave"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ is a wave–packet,
+ but it is a pure state;
+ it is not a mixture of waves.
+\end_layout
+
+\begin_layout Standard
+Ugh.
+ It is approaching 1AM I'm tired,
+ its bed–time.
+ I'm not getting much opportunity to work on this during daylight hours.
 \end_layout
 
 \begin_layout Standard
