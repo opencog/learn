@@ -2869,9 +2869,9 @@ nolink "false"
  if it is to be interpreted literally,
  then we have to write
 \begin_inset Formula 
-\[
-\phi\left(\mathbf{x},t\right)=\int d^{3}k\left[f_{k}\left(x\right)c\left(k\right)a\left(k\right)+f_{k}^{*}\left(x\right)c^{\dagger}\left(k\right)a^{\dagger}\left(k\right)\right]
-\]
+\begin{equation}
+\phi\left(\mathbf{x},t\right)=\int d^{3}k\left[f_{k}\left(x\right)c\left(k\right)a\left(k\right)+f_{k}^{*}\left(x\right)c^{\dagger}\left(k\right)a^{\dagger}\left(k\right)\right]\label{eq:operator expansion}
+\end{equation}
 
 \end_inset
 
@@ -2969,8 +2969,277 @@ a ha!
  and then I'll poke harder and find out that what Claude said consisted of dazed and confused bullcrap,
  and untangling it will give me a headache.
  My head is already hurting,
- just writing this last papragraph.
+ just writing this last paragraph.
  Why did I write this????
+\end_layout
+
+\begin_layout Standard
+So,
+ where were we – the operator expression in eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:operator expansion"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ does not appear in B&D.
+ Why not?
+ Did I miss something?
+ Lets review.
+ B&D eqn (12.10) convolutes the operator 
+\begin_inset Formula $\phi$
+\end_inset
+
+ with a plane wave to obtain the commutator 
+\begin_inset Formula $\left[a^{\dagger}\left(k\right),a\left(k\right)\right]$
+\end_inset
+
+ ...
+ Does this miss a beat?
+ Yes,
+ I think it does – it misleads the reader.
+ There is not 
+\begin_inset Quotes eld
+\end_inset
+
+one
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\phi$
+\end_inset
+
+ – there are many.
+ In what way,
+ do you ask?
+ Well,
+ this follows from eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:operator action"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ – for each 
+\begin_inset Formula $\phi$
+\end_inset
+
+ there is one 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ where 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ is a conventional single–quantized wave–function (probability amplitude) and since there are many 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ there are also many 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and the mapping 
+\begin_inset Formula $\phi\to\Psi$
+\end_inset
+
+ has to be onto.
+ But if eqn (12.10) is to be taken literally,
+ that means that there are many 
+\begin_inset Formula $a\left(k\right)$
+\end_inset
+
+ but the language changes to suggest that there is only one operator 
+\begin_inset Formula $a\left(k\right)$
+\end_inset
+
+ and I think this is where the flaw in the argument comes in.
+\end_layout
+
+\begin_layout Standard
+This is a bit vexing.
+ This feels like a bit of a mistake in 
+\begin_inset Formula $B\&D$
+\end_inset
+
+,
+ and I'm surprised by it.
+ First,
+ they are assumed infallible,
+ second,
+ I never noticed before – I suffer from a form of ADHD so once I 
+\begin_inset Quotes eld
+\end_inset
+
+get
+\begin_inset Quotes erd
+\end_inset
+
+ a formula
+\begin_inset Quotes erd
+\end_inset
+
+ I rarely go back to re–think it,
+ and when I was younger,
+ I 
+\begin_inset Quotes eld
+\end_inset
+
+got
+\begin_inset Quotes erd
+\end_inset
+
+ B&D with a sufficient amount of blurry–eyed acceptance,
+ and did not spot this mistake overtly.
+ But it did sort of bubble in the subconscious,
+ causing grief.
+ This mistake,
+ and the morass of divergences,
+ and the seeming ineffable 
+\begin_inset Quotes eld
+\end_inset
+
+complicatedness 
+\begin_inset Quotes erd
+\end_inset
+
+ of the vacuum did cause frustration.
+ And the resolution of this frustration is what I pursue now.
+ Why do I feel compelled to write these asides?
+ Well,
+ because I use them to strengthen my courage.
+ Working with these formulas,
+ which are effectively taken to be canonically correct,
+ and interpreting them slightly differently feels like an act of heresy.
+ And heresy requires either stupid brainless conviction,
+ or courage.
+ I need courage.
+ I want to not make a mistake.
+\end_layout
+
+\begin_layout Standard
+Also I don't have a copy of Itzakson & Zuber at my finger–tips;
+ that would be worthwhie to review.
+ However,
+ my personal memory of I&Z is that they simply copied large parts of B&D verbatim.
+ So who knows ...
+\end_layout
+
+\begin_layout Standard
+So where we at?
+ The interpretation of eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:operator expansion"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ is this:
+ the 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $a^{\dagger}$
+\end_inset
+
+ are counting infrastructure:
+ they are operators that destroy,
+ create oscillators,
+ and they are 
+\begin_inset Quotes eld
+\end_inset
+
+unique
+\begin_inset Quotes erd
+\end_inset
+
+ in that there is only 
+\begin_inset Quotes eld
+\end_inset
+
+one of them
+\begin_inset Quotes erd
+\end_inset
+
+ for each wave–vector 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ The 
+\begin_inset Formula $c$
+\end_inset
+
+ and 
+\begin_inset Formula $c^{\dagger}$
+\end_inset
+
+ care complex numbers,
+ and they give the probability amplitude that a certain wave–vector state is occupied.
+ That is,
+ 
+\begin_inset Formula $a^{\dagger}\left(k\right)\left|0\right\rangle $
+\end_inset
+
+ is a state that has a distinct occupation number of one.
+ The 
+\begin_inset Formula $c^{\dagger}\left(k\right)a^{\dagger}\left(k\right)\left|0\right\rangle $
+\end_inset
+
+ says that this state is occupied with a probability of 
+\begin_inset Formula $\left|c^{\dagger}\left(k\right)c\left(k\right)\right|$
+\end_inset
+
+ subject to the normalization of 
+\begin_inset Formula 
+\[
+1=\int dk^{3}\,c^{\dagger}\left(k\right)c\left(k\right)
+\]
+
+\end_inset
+
+which is identical to the simple scalar wave normalization.
+ The 
+\begin_inset Formula $f_{k}\left(x\right)$
+\end_inset
+
+ is just the plane wave itself,
+ a reminder that if we have one quantum of excitation,
+ then this is the amplitude it would have spread out across space.
+\end_layout
+
+\begin_layout Standard
+OK,
+ enough of this.
+ So how do we go measure–theoretic in this setting?
+ 
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+x
 \end_layout
 
 \begin_layout Standard
