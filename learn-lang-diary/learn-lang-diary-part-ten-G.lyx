@@ -3731,6 +3731,234 @@ that's the stupidest question I ever heard,
 \end_layout
 
 \begin_layout Standard
+OK.
+ Let's paraphrase the reply.
+ I found the usage of the word 
+\begin_inset Quotes eld
+\end_inset
+
+obstruction
+\begin_inset Quotes erd
+\end_inset
+
+ interesting:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The fundamental obstruction:
+ uncountable sums of nonzero vectors simply cannot converge in the norm topology,
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Stated as a theorem,
+ it's this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Theorem:
+ In any normed space,
+ if the unconditional sum 
+\begin_inset Formula $\sum_{\alpha\in A}v_{\alpha}$
+\end_inset
+
+ converges (meaning:
+ the net of finite partial sums 
+\begin_inset Formula $\{S_{F}=\sum_{\alpha\in F}v_{\alpha}:F\subset A\text{ finite}\}$
+\end_inset
+
+ is Cauchy and has a limit),
+ then 
+\begin_inset Formula $v_{\alpha}=0$
+\end_inset
+
+ for all but countably many 
+\begin_inset Formula $\alpha\in A$
+\end_inset
+
+.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ The proof is by contradiction:
+ assume not;
+ the uncountable sum of 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ diverges.
+\end_layout
+
+\begin_layout Standard
+Next,
+ Claude gives me the textbook definition for a Bochner integral.
+ Copying it here seems like the Hermione thing to do.
+ When I was an undergrad,
+ there was a Hermione in my physics course.
+ I wish I could recall her real name.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+The Bochner integral
+\series default
+.
+ If 
+\begin_inset Formula $(U,\mathcal{F},\mu)$
+\end_inset
+
+ is a measure space and 
+\begin_inset Formula $m\mapsto\psi_{m}\in H$
+\end_inset
+
+ is a measurable,
+ integrable map in the sense that 
+\begin_inset Formula $\int_{U}\|\psi_{m}\|_{H}\,d\mu(m)<\infty$
+\end_inset
+
+,
+ then the Bochner integral 
+\begin_inset Formula $\int_{U}\psi_{m}\,d\mu(m)\in H$
+\end_inset
+
+ is a well–defined vector.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Claude then points out that eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fourier-wave"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ is already a Bochner–style integral.
+ It adds that 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The Plancherel theorem guarantees 
+\begin_inset Formula $\Psi\in L^{2}$
+\end_inset
+
+ whenever 
+\begin_inset Formula $c\in L^{2}(k\text{-space})$
+\end_inset
+
+
+\emph default
+.
+\begin_inset Quotes erd
+\end_inset
+
+ Spitting in my face with hardly–concealed contempt,
+ it adds:
+ 
+\emph on
+
+\begin_inset Quotes eld
+\end_inset
+
+The deeper reason this is that 
+\begin_inset Formula $L^{2}(\mathbb{R}^{3})$
+\end_inset
+
+ is separable:
+ it has a countable orthonormal basis 
+\begin_inset Formula $\{e_{n}\}_{n\in\mathbb{N}}$
+\end_inset
+
+The non–separable case exists mathematically —
+ 
+\begin_inset Formula $\ell^{2}(A)$
+\end_inset
+
+ for uncountable 
+\begin_inset Formula $A$
+\end_inset
+
+ is a valid Hilbert space —
+ but it cannot be realized as 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+over any 
+\begin_inset Formula $\sigma$
+\end_inset
+
+–finite measure space,
+ and it does not arise in standard quantum mechanics.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Should I tell it that I am attempting to construct a non–standard quantum mechanics?
+ I feel like the school–child who said something silly in front of his peers,
+ and then is taunted.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+But LLM's are just machines:
+ you are ascribing psychological state to a machine that has none.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So I learned exactly nothing new from Claude.
+ I mean,
+ I guess I forgot that they were called Bochner integrals and the Plancherel theorem,
+ so OK,
+ Claude is not totally useless.
+ The other way that it is not totally useless is that it has made it clear that I have to somehow sharpen my questions and make them more pointed,
+ so as not to get textbook answers.
+ But how?
+ 
+\end_layout
+
+\begin_layout Standard
 x 
 \end_layout
 
