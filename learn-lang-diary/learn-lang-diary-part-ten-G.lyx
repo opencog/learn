@@ -3618,8 +3618,116 @@ magic happens there
 \end_layout
 
 \begin_layout Standard
-First,
- a refresher.
+An LLM bombing run.
+ I just asked Claude Sonnet 4.6 Extended this:
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Infinite-dimensional Hilbert spaces.
+ I am interested in better understanding the structure of infinite dimensional Hilbert spaces.
+ As a concrete example,
+ consider the conventional definition of a wave-packet as a Fourier sum over plane waves:
+ $
+\backslash
+Psi(x,t) = 
+\backslash
+int d^3k [c(k) f_k(x,t) + c^
+\backslash
+dagger(k) f^*_k(x,t)]$ where the $f_k(x,t)=e^{ikx-i
+\backslash
+omega t}$ is a plane wave,
+ and the $c(k)$ are complex numbers.
+ Clearly,
+ if I have two such decompositions,
+ $c_1(k)$ and $c_2(k)$ then I can take their linear combination to get a new wave--packet.
+ I think this is also possible if I have a countable number of $c_m(k)$ provided some care is taken regarding weak convergence,
+ or something like that.
+ That is,
+ one can still get a valid wave function by taking $
+\backslash
+sum_{m=1}^
+\backslash
+infty c_m(k)$ provided that this sum converges appropriately:
+ the result of this sum is still a vector in the Hilbert space.
+ However,
+ if I attempt to perform a sum over an uncountable number of these $c_m(k)$,
+ then I think that this is not possible.
+ I want to gain a better understanding of why it is not possible.
+ As an explicit example of the notation,
+ it seems that it is not possible to give a coherent,
+ non-contradictory,
+ paradox--free definition of the sum $
+\backslash
+int_U c_m(k)dm$ over some uncountable set U.
+ Or that such a sum would no longer be a member of the Hilbert space,
+ even though each "point" $c_m(k)$ was.
+ What is the best way,
+ the correct way of understanding such summability on Hilbert spaces?
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+How does Claude respond?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+This is a beautiful structural question that cuts to the heart of functional analysis.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+OMG.
+ I can hear the voice of a Southern dame oozing out the words 
+\begin_inset Quotes eld
+\end_inset
+
+That's special.
+\begin_inset Quotes erd
+\end_inset
+
+ What follows is some special–ed material on Bochner integrals.
+ Behave like an idiot,
+ get treated like an idiot.
+ By a non–judgemental LLM that has learned the social graces of saying 
+\begin_inset Quotes eld
+\end_inset
+
+that's a beautiful question
+\begin_inset Quotes erd
+\end_inset
+
+ instead of 
+\begin_inset Quotes eld
+\end_inset
+
+that's the stupidest question I ever heard,
+ and it's clear you need some remedial edumacation.
+\begin_inset Quotes erd
+\end_inset
+
+ AGI may not be here yet,
+ but the enrollment of humanity in special–ed has started.
+ Are we having fun,
+ yet?
 \end_layout
 
 \begin_layout Standard
