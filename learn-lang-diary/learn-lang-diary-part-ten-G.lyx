@@ -3853,6 +3853,46 @@ The Bochner integral
 \end_layout
 
 \begin_layout Standard
+Repeating itself so as to use my notation:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The sum 
+\begin_inset Formula $\int c_{m}(k)\,dm$
+\end_inset
+
+ is perfectly well–defined as a Bochner integral over the parameter space of wave packets,
+ as long as 
+\begin_inset Formula $m\mapsto c_{m}(\cdot)\in L^{2}$
+\end_inset
+
+ is measurable and 
+\begin_inset Formula $\int_{U}\|c_{m}\|_{L^{2}}\,d\mu(m)<\infty$
+\end_inset
+
+.
+ The result is a new element of 
+\begin_inset Formula $L^{2}(\mathbb{R}^{3})$
+\end_inset
+
+.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+OK,
+ so this is welcome precision to assuage my previous anxiety attacks.
+\end_layout
+
+\begin_layout Standard
 Claude then points out that eqn 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3952,14 +3992,495 @@ So I learned exactly nothing new from Claude.
  I guess I forgot that they were called Bochner integrals and the Plancherel theorem,
  so OK,
  Claude is not totally useless.
- The other way that it is not totally useless is that it has made it clear that I have to somehow sharpen my questions and make them more pointed,
+ It pointed at the idea of a 
+\begin_inset Formula $\sigma$
+\end_inset
+
+–finite measure does some heavy lifting.
+ The other way that Claude is not totally useless is that it has made it clear that I have to somehow sharpen my questions and make them more pointed,
  so as not to get textbook answers.
  But how?
+ It pays to act stupid,
+ like Columbo,
  
+\begin_inset Quotes eld
+\end_inset
+
+just one more thing
+\begin_inset Quotes erd
+\end_inset
+
+ and the LLM will give a better,
+ unbiased answer.
+ I'm trying to figure out how to play stupid.
 \end_layout
 
 \begin_layout Standard
-x 
+The results are these:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+Case 1:
+ Non-Separable Hilbert Spaces
+\series default
+.
+ Any density operator automatically has separable support,
+ regardless of whether the ambient Hilbert space is separable.
+ Proof:
+ If 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is trace-class and positive...
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ OK.
+ But this is kind of a circular argument:
+ it assumes that density operators are always trace–class.
+ But this is the standard QM assumption,
+ so let it slide.
+\end_layout
+
+\begin_layout Standard
+It then surprises me with something I'd never heard of before.
+ I'll quote verbatim,
+ lightly edited,
+ because I'm too lazy to paraphrase.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+Superselection sectors
+\series default
+.
+ In algebraic QFT (DHR theory —
+ Doplicher–Haag–Roberts),
+ the physical Hilbert space decomposes as 
+\begin_inset Formula $H=\bigoplus_{\alpha\in A}H_{\alpha}$
+\end_inset
+
+ where each 
+\begin_inset Formula $H_{\alpha}$
+\end_inset
+
+\SpecialChar allowbreak
+ is a separable sector (charged sector,
+ particle type,
+ etc.),
+ and 
+\begin_inset Formula $A$
+\end_inset
+
+ may be uncountable.
+ The full direct sum is non–separable.
+ But every physical density matrix lives in a single 
+\begin_inset Formula $H_{\alpha}$
+\end_inset
+
+\SpecialChar allowbreak
+ or a countable superposition of sectors.
+ The non-separability is real —
+ it parameterizes the landscape of possible phases —
+ but no single physical state accesses it uncountably.
+ The non–separable ambient space is better thought of as a bookkeeping device for the sector structure.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I don't understand where the uncountability comes from.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+Case 2:
+ Non-Sigma-Finite Measures
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+For a density matrix 
+\begin_inset Formula $\rho=\int_{U}|c_{m}\rangle\langle c_{m}|\,d\mu(m)$
+\end_inset
+
+ to be a valid normalized mixed state,
+ we need 
+\begin_inset Formula $\mathrm{Tr}(\rho)=1$
+\end_inset
+
+,
+ which forces 
+\begin_inset Formula $\mu$
+\end_inset
+
+ to be (equivalent to) a probability measure —
+ automatically sigma–finite.
+ So in the standard Hilbert space formulation,
+ non–sigma–finite measures cannot give density matrices directly.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\emph on
+KMS states and Type III von Neumann algebras.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Consider quantum statistical mechanics at inverse temperature 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+ The Gibbs state is formally 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula 
+\[
+\rho_{\beta}=\frac{e^{-\beta H}}{Z},\qquad Z=\mathrm{Tr}(e^{-\beta H}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+For a finite system,
+ 
+\begin_inset Formula $Z<\infty$
+\end_inset
+
+ and everything works.
+ In the thermodynamic limit (infinite volume),
+ 
+\begin_inset Formula $Z\to\infty$
+\end_inset
+
+.
+ There is no normalizable density matrix.
+ The "measure" 
+\begin_inset Formula $d\mu(m)=e^{-\beta E_{m}}\,d(\mathrm{spectrum})$
+\end_inset
+
+ is not finite.
+ The resolution is to abandon the density–matrix formulation entirely and work at the level of the observable algebra 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+.
+ A state becomes a positive linear functional 
+\begin_inset Formula $\omega:\mathcal{A}\to\mathbb{C}$
+\end_inset
+
+ with 
+\begin_inset Formula $\omega(\mathbf{1})=1$
+\end_inset
+
+.
+ The thermal equilibrium condition is encoded not by a density matrix but by the KMS condition:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula 
+\[
+\omega\!\left(A\,\sigma_{i\beta}^{\omega}(B)\right)=\omega(BA)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+where 
+\begin_inset Formula $\sigma_{t}^{\omega}$
+\end_inset
+
+\SpecialChar allowbreak
+ is the modular automorphism group.
+ This is the correct replacement for 
+\begin_inset Formula $\mathrm{Tr}(\rho AB)=\mathrm{Tr}(\rho BA\,e^{-\beta H}\cdot e^{\beta H})$
+\end_inset
+
+.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+wtf??
+ that looks wrong.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Quotes eld
+\end_inset
+
+The GNS representation of a KMS state generates a 
+\begin_inset Formula $\textbf{Type III}_{1}$
+\end_inset
+
+ von Neumann factor (in relativistic QFT —
+ Bisognano–Wichmann theorem) or 
+\begin_inset Formula $\textbf{Type II}_{1}$
+\end_inset
+
+ (in some non–relativistic cases).
+ These are factors with no trace at all in the Type III case,
+ or an unbounded trace in 
+\begin_inset Formula $\textbf{Type II}_{\infty}$
+\end_inset
+
+ \SpecialChar allowbreak
+.
+ The non–sigma–finite measure is the shadow of the fact that you are in Type II or III territory,
+ where the conventional density–matrix formulation is simply not available and KMS/modular theory takes over.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The Tomita-Takesaki modular theory is precisely the machinery that handles what "density matrix" would have done,
+ without requiring one to exist.
+ The modular operator 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ encodes the non–sigma–finite structure in a canonical operator–algebraic form.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Well,
+ this is all new to me.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+Case 3:
+ Failure of 
+\begin_inset Formula $\int_{U}\left\Vert c_{m}\right\Vert _{L^{2}}<\infty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+This case has the most direct and elegant mapping to mixed states,
+ via a precise integrability gap.
+ The key identity is 
+\begin_inset Formula $\left\Vert \left|c_{m}\right\rangle \left\langle c_{m}\right|\right\Vert _{\mathrm{trace}}=\left\Vert c_{m}\right\Vert _{H}^{2}$
+\end_inset
+
+\SpecialChar allowbreak
+.
+ The trace–class norm of a rank-1 projector goes as the square of the vector norm,
+ not linearly.
+ For finite measure spaces (including probability measures),
+ Hölder's inequality forces 
+\begin_inset Formula $L^{2}\left(\mu\right)\subset L^{1}\left(\mu\right)$
+\end_inset
+
+,
+ so the density–operator condition implies the vector condition.
+ The two cases collapse together.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+For infinite measure spaces,
+ 
+\begin_inset Formula $L^{2}\left(\mu\right)\not\subset L^{1}\left(\mu\right)$
+\end_inset
+
+,
+ and the gap is real and generic.
+ A concrete example:
+ take 
+\begin_inset Formula $\mu$
+\end_inset
+
+ = Lebesgue measure on 
+\begin_inset Formula $U=\left[1,\infty\right)$
+\end_inset
+
+,
+ with 
+\begin_inset Formula $\left\Vert c_{m}\right\Vert _{H}=m^{-3/4}$
+\end_inset
+
+.
+ Then:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\int_{1}^{\infty}m^{-3/4}=\infty$
+\end_inset
+
+ (vector integral fails)
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula $\int_{1}^{\infty}m^{-3/2}=2<\infty$
+\end_inset
+
+ (density operator integral succeeds)
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+After renormalizing so 
+\begin_inset Formula $\mathrm{Tr}(\rho)=1$
+\end_inset
+
+,
+ you obtain a perfectly well–defined mixed state,
+ with no corresponding pure–state average wavefunction.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The physical interpretation is illuminating:
+ the failure of 
+\series bold
+
+\begin_inset Formula $\int_{U}\left\Vert c_{m}\right\Vert _{L^{2}}<\infty$
+\end_inset
+
+
+\series default
+ means there is too much total coherent amplitude to form a pure superposition —
+ the integral "wants to diverge" at the level of amplitudes.
+ But 
+\series bold
+
+\begin_inset Formula $\int_{U}\left\Vert c_{m}\right\Vert ^{2}<\infty$
+\end_inset
+
+
+\series default
+ says the total intensity (probability weight) is finite,
+ which is all that is needed for a statistical mixture.
+ The mathematics is forcing you to describe the ensemble as a mixed state because no coherent pure–state description is available.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+OK.
+ ...
+ Direct,
+ no mincing of words.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+The Unified Picture
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The three cases are not entirely independent.
+ A cleaner way to see their common structure is through the hierarchy:
+\emph default
+
+\begin_inset Formula 
+\[
+\text{pure state}\in H\quad\subset\quad\text{mixed state}\in\mathcal{B}_{1}(H)\quad\subset\quad\text{KMS/algebraic state}\in\mathcal{A}^{*}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+...
+ need a more general notion of state
+\emph default
+.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+OK then.
+ This feels like writing poetry.
+ The artistry is in writing a prompt that gives a pleasing answer.
+ The above seems OK for a novice attempt.
+\end_layout
+
+\begin_layout Standard
+x.
 \end_layout
 
 \begin_layout Standard
