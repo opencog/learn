@@ -2915,6 +2915,12 @@ I hate the above,
 .
 \end_layout
 
+\begin_layout Standard
+Footnote 27 March 2026:
+ The above is founded on a mis–understanding.
+ fixed below.
+\end_layout
+
 \begin_layout Subsection*
 25 March 2026
 \end_layout
@@ -3257,6 +3263,13 @@ Ugh.
  It is approaching 1AM I'm tired,
  its bed–time.
  I'm not getting much opportunity to work on this during daylight hours.
+\end_layout
+
+\begin_layout Standard
+Update 27 March 2026:
+ much of the above is wrong,
+ founded on a mis–understanding,
+ fixed further below.
 \end_layout
 
 \begin_layout Subsection*
@@ -5177,6 +5190,122 @@ Then I need to sleep on this.
 The meta–question is as before:
  in what respect can Unruh radiation be understood as some KMS effect or some Faddeev–Kulish dressing?
  I'm sure Claude will have some surprises in store for me.
+\end_layout
+
+\begin_layout Subsection*
+27 March 2026
+\end_layout
+
+\begin_layout Standard
+This afternoons question posed to Claude is this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+I would like to reformulate the previous discussion in terms of canonical second quantization.
+ In this picture,
+ the field $
+\backslash
+Psi$ is promoted to an operator $
+\backslash
+phi$ acting on a vacuum state $|0
+\backslash
+rangle$  such that $
+\backslash
+phi |0
+\backslash
+rangle = 
+\backslash
+Psi$  For a scalar field decomposed into plane waves,
+ one writes $
+\backslash
+Psi(x,t)=
+\backslash
+int d^k (c(k) f_k(x,t) + c^*(k) f^*_k(x,t))$   with the $c(k)$ being complex numbers and the $f_k$ being plane waves.  The corresponding decomposition for the operator is $
+\backslash
+phi(x,t)=
+\backslash
+int d^k (c(k) a(k) f_k(x,t) + c^*(k) a^
+\backslash
+dagger(k) f^*_k(x,t))$ where the a and a^
+\backslash
+dagger are the annihilation and creation operators for a field quantum of momentum k.  It appears that some authors fold the complex amplitudes into the annihilation/creation operators,
+ others do not.  Can you comment on this?
+ More generally,
+ in this picture of canonical second quantization,
+ what is the topology of the space that the creation/annihilation operators live?
+ Are there alternative representations?
+ How might they work?
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Well,
+ OK,
+ doing physics with Claude ain't all that bad.
+ I learned something new.
+ Both conventions are in use;
+ the convention where the 
+\begin_inset Formula $c\left(k\right)$
+\end_inset
+
+ are kept explicit is necessary for the description of coherent states,
+ squeezed states.
+ Claude remarks that in this convention,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+the operator is state–dependent
+\begin_inset Quotes erd
+\end_inset
+
+,
+ which is technically correct,
+ but sounds awkward:
+ I was envisioning lots of operators – one per state.
+ Hah.
+\end_layout
+
+\begin_layout Standard
+The resolution is that I misunderstood the sense in which the field operator is an operator.
+ The correct interpretation is that the 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $a^{\dagger}$
+\end_inset
+
+ are operator–valued distributions,
+ so that
+\begin_inset Formula 
+\begin{align*}
+a & :L^{2}\left(\mathbb{R}^{3}\right)\to\mathcal{F}\\
+a & :f\mapsto a\left(f\right)=\int d^{3}k\,a\left(k\right)f\left(k\right)
+\end{align*}
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+\left[a\left(f\right),a^{\dagger}\left(g\right)\right]=\left\langle f,g\right\rangle _{L^{2}\left(\mathbb{R}^{3}\right)}
+\]
+
+\end_inset
+
+Fuck me.
+ I was bone–headed.
 \end_layout
 
 \begin_layout Standard
