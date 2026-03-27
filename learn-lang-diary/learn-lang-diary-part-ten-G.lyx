@@ -4093,7 +4093,7 @@ Superselection sectors
 
 \SpecialChar allowbreak
  or a countable superposition of sectors.
- The non-separability is real —
+ The non–separability is real —
  it parameterizes the landscape of possible phases —
  but no single physical state accesses it uncountably.
  The non–separable ambient space is better thought of as a bookkeeping device for the sector structure.
@@ -4109,6 +4109,7 @@ Superselection sectors
 I don't understand where the uncountability comes from.
  I inquired further;
  see below.
+ It's interesting.
 \end_layout
 
 \begin_layout Standard
@@ -4173,12 +4174,6 @@ Consider quantum statistical mechanics at inverse temperature
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-
-\emph on
 For a finite system,
  
 \begin_inset Formula $Z<\infty$
@@ -4224,12 +4219,6 @@ For a finite system,
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-
-\emph on
 where 
 \begin_inset Formula $\sigma_{t}^{\omega}$
 \end_inset
@@ -4237,7 +4226,7 @@ where
 \SpecialChar allowbreak
  is the modular automorphism group.
  This is the correct replacement for 
-\begin_inset Formula $\mathrm{Tr}(\rho AB)=\mathrm{Tr}(\rho BA\,e^{-\beta H}\cdot e^{\beta H})$
+\begin_inset Formula $\mathrm{Tr}(\rho AB)=foobar$
 \end_inset
 
 .
@@ -4248,8 +4237,74 @@ where
 \end_layout
 
 \begin_layout Standard
-wtf??
- that looks wrong.
+I challenged the last formula,
+ as it was garbled.
+ I got back this reply:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+For a finite system with Gibbs state 
+\begin_inset Formula $\rho=e^{-\beta H}/Z$
+\end_inset
+
+,
+ the KMS condition follows from cyclicity of the trace.
+ The time evolution automorphism is 
+\begin_inset Formula $\sigma_{t}\left(B\right)=e^{iHt}Be^{-iHt}$
+\end_inset
+
+,
+ so analytically continuing to imaginary time gives 
+\begin_inset Formula $\sigma_{i\beta}(B)=e^{-\beta H}Be^{\beta H}$
+\end_inset
+
+ Then:
+\begin_inset Formula 
+\[
+\omega\!\left(A\,\sigma_{i\beta}(B)\right)=\frac{1}{Z}\mathrm{Tr}\!\left(e^{-\beta H}A\,e^{-\beta H}B\,e^{\beta H}\right)=\frac{1}{Z}\mathrm{Tr}\!\left(A\,e^{-\beta H}B\right)
+\]
+
+\end_inset
+
+Independently:
+\begin_inset Formula 
+\[
+\omega(BA)=\frac{1}{Z}\mathrm{Tr}\!\left(e^{-\beta H}BA\right)=\frac{1}{Z}\mathrm{Tr}\!\left(A\,e^{-\beta H}B\right)
+\]
+
+\end_inset
+
+The KMS condition is thus precisely the statement that cyclicity of trace,
+ which is elementary for finite systems,
+ survives as a well–defined algebraic identity in the thermodynamic limit even when 
+\begin_inset Formula $Z\to\infty$
+\end_inset
+
+ and no actual 
+\begin_inset Formula $\rho$
+\end_inset
+
+ exists.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It's fascinating how Claude is such a good simulacrum of intelligence.
+ 
+\end_layout
+
+\begin_layout Standard
+Continuing...
 \end_layout
 
 \begin_layout Standard
@@ -4298,6 +4353,59 @@ The Tomita-Takesaki modular theory is precisely the machinery that handles what 
 \begin_layout Standard
 Well,
  this is all new to me.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+What does KMS stand for?
+\begin_inset Quotes erd
+\end_inset
+
+ I ask.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Kubo–Martin–Schwinger,
+ after Ryogo Kubo,
+ Paul Martin,
+ and Julian Schwinger.
+ Kubo (1957) and Martin–Schwinger (1959) independently discovered the boundary condition on thermal Green's functions that now bears their name —
+ that correlation functions in thermal equilibrium satisfy a periodicity condition in imaginary time with period 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+ Haag,
+ Hugenholtz,
+ and Winnink (1967) later recognized this as the right abstract algebraic criterion for thermal equilibrium states on 
+\begin_inset Formula $C^{*}$
+\end_inset
+
+–algebras,
+ freeing it from the assumption that a density matrix exists.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So OK,
+ then.
+ New to me.
+\end_layout
+
+\begin_layout Standard
+Continuing...
 \end_layout
 
 \begin_layout Standard
@@ -4453,7 +4561,7 @@ The three cases are not entirely independent.
 
 \begin_inset Formula 
 \[
-\text{pure state}\in H\quad\subset\quad\text{mixed state}\in\mathcal{B}_{1}(H)\quad\subset\quad\text{KMS/algebraic state}\in\mathcal{A}^{*}
+\text{pure state}\in H\quad\subset\quad\text{mixed state}\in\mathcal{B}_{1}\left(H\right)\quad\subset\quad\text{KMS/algebraic state}\in\mathcal{A}^{*}
 \]
 
 \end_inset
@@ -4479,6 +4587,95 @@ OK then.
  This feels like writing poetry.
  The artistry is in writing a prompt that gives a pleasing answer.
  The above seems OK for a novice attempt.
+\end_layout
+
+\begin_layout Standard
+I asked about the notation of 
+\begin_inset Formula $\mathcal{B}_{1}\left(H\right)$
+\end_inset
+
+ and got this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+It is the Schatten 
+\begin_inset Formula $p$
+\end_inset
+
+-class with 
+\begin_inset Formula $p=1$
+\end_inset
+
+.
+ The Schatten classes 
+\begin_inset Formula $\mathcal{B}_{p}(H)$
+\end_inset
+
+ are defined by 
+\begin_inset Formula $\|T\|_{p}=\left(\mathrm{Tr}(|T|^{p})\right)^{1/p}<\infty$
+\end_inset
+
+,
+ so:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+\begin_inset Formula $\mathcal{B}_{1}(H)$
+\end_inset
+
+ —
+ trace–class operators (density matrices live here)
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+\begin_inset Formula $\mathcal{B}_{2}(H)$
+\end_inset
+
+ —
+ Hilbert–Schmidt operators
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+\begin_inset Formula $\mathcal{B}_{\infty}(H)=\mathcal{B}(H)$
+\end_inset
+
+ —
+ all bounded operators
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+A density matrix is then a specific element 
+\begin_inset Formula $\rho\in\mathcal{B}_{1}(H)$
+\end_inset
+
+ satisfying additionally 
+\begin_inset Formula $\rho\geq0$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathrm{Tr}(\rho)=1$
+\end_inset
+
+.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4570,7 +4767,7 @@ Well,
 \begin_inset Quotes eld
 \end_inset
 
-What's GNS
+What's GNS?
 \begin_inset Quotes erd
 \end_inset
 
@@ -4679,6 +4876,310 @@ Part of me chides myself for having wasted my life on irrelevant things.
 \end_layout
 
 \begin_layout Standard
+Continuing with the sources of uncountable things:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+2.
+ 
+\series bold
+Broken Symmetry Vacua
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+When a continuous symmetry 
+\begin_inset Formula $G$
+\end_inset
+
+ is spontaneously broken to 
+\begin_inset Formula $H$
+\end_inset
+
+,
+ the space of inequivalent ground states (vacuum sectors) is the coset space 
+\begin_inset Formula $G/H$
+\end_inset
+
+.
+ For any continuous 
+\begin_inset Formula $G$
+\end_inset
+
+ this is a manifold —
+ uncountable.
+ Each point of 
+\begin_inset Formula $G/H$
+\end_inset
+
+ gives an inequivalent,
+ disjoint GNS representation of 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+.
+ These are not related by any unitary in the quasi–local algebra.
+ This is a direct consequence of Haag's theorem:
+ for infinite systems,
+ unitarily inequivalent representations proliferate precisely because Stone–von Neumann uniqueness fails.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Well,
+ of course,
+ now it becomes more urgent to understand GNS.
+\end_layout
+
+\begin_layout Standard
+Continuing:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+3.
+ 
+\series bold
+KMS States as a Continuous Family
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Thermal equilibrium states at inverse temperature 
+\begin_inset Formula $\beta\in(0,\infty)$
+\end_inset
+
+ give a one–parameter family of KMS states.
+ For a system with a phase transition,
+ the KMS state may not be unique at the critical 
+\begin_inset Formula $\beta_{c}$
+\end_inset
+
+,
+ giving an additional convex set of states.
+ Across all 
+\begin_inset Formula $\beta$
+\end_inset
+
+,
+ you have an uncountable family of mutually singular states —
+ each lives in a distinct sector of the GNS representation —
+ parameterized by a continuous parameter.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Damn,
+ duude.
+ Insofar as biological nature appears to be poised at a critical phase transition – the self–organized criticality of sand piles,
+ well,
+ that's one heck of a phase transition to be sitting on.
+\end_layout
+
+\begin_layout Standard
+Here's the part that I don't get:
+ the popular press and the commentariat loves to wring their hands about Bell's theorem and the many–worlds–interpretation,
+ when,
+ fuck it,
+ if you only gave it a little bit of more thought,
+ you might have something like KMS at a critical point being a plausible mechanism.
+ But no one says this,
+ presumably for three reasons:
+ (1) its too abstract on an already abstract issue,
+ and excess abstractness is makes for a poor plot.
+ Popular press is all about capturing eyeballs.
+ It has to be punchy,
+ direct,
+ entertaining.
+ (2) Maybe no one ever thought of this before?
+ and of course (3) it might be flat–out wrong,
+ and yet another example of Linas hallucinating.
+\end_layout
+
+\begin_layout Standard
+Lets continue.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+4.
+ 
+\series bold
+\emph on
+The Full Spectrum of 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Even without any of the above,
+ the space of all pure states on the quasi–local 
+\begin_inset Formula $C^{*}$
+\end_inset
+
+–algebra 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ (its Gelfand spectrum) is a compact topological space of uncountable cardinality in any interacting theory.
+ The DHR superselection sectors are the physically distinguished orbits within this huge space —
+ they are the sectors accessible by local operations from the vacuum.
+ The uncountable full spectrum is being carved into a countable set of DHR sectors plus a vast "remainder" of sectors unreachable by local operations.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+OK.
+ Now say that three times,
+ real fast,
+ while in curved spacetime.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+So the non-separable Hilbert space 
+\begin_inset Formula $H=\bigoplus_{\alpha\in A}H_{\alpha}$
+\end_inset
+
+\SpecialChar allowbreak
+ with uncountable 
+\begin_inset Formula $A$
+\end_inset
+
+ arises when you consider the full representation theory of 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+,
+ or any of the physically motivated generalizations beyond strict DHR.
+ The strict DHR theory itself —
+ which is already the hard theorem —
+ gives only countably many sectors.
+ The uncountability is a feature of the larger landscape within which DHR is a well–behaved countable island.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Well,
+ it certainly appears that,
+ well,
+ damn.
+ my to–do–list got longer,
+ again.
+ Fuck me.
+\end_layout
+
+\begin_layout Standard
+—
+-
+\end_layout
+
+\begin_layout Standard
+I'm starting to get confused about what it is,
+ exactly,
+ that I am doing here.
+ I started out with a rather naive analysis of the rather old B&D textbook.
+ I grew up on that textbook,
+ so I'm comfortable with it.
+ Familiar,
+ in the family sense.
+ Poking at Claude gives me a far more refined answer.
+ Quite annoyingly,
+ I had to spend a huge amount of time copying from Claude to here,
+ and paraphrasing and editing to suit me.
+ I feel like Hermione doing it,
+ but I also know that if I didn't copy it,
+ it would be ephemera,
+ lost forever,
+ and weeks or months or years later,
+ I would be 
+\begin_inset Quotes eld
+\end_inset
+
+what the heck was that?
+ I can't remember.
+\begin_inset Quotes erd
+\end_inset
+
+ This diary has to be a memory prosthesis.
+ Reconstructing the above chat would be hard.
+ I would have felt that I lost something.
+\end_layout
+
+\begin_layout Standard
+So am I wiser?
+ Sort of.
+ I will need to look into the Faddeev–Kulish dressings;
+ soft photons have long irked me.
+ Faddeev seems to have been on a tear;
+ between this and the ghosts,
+ he clearly thought hard about asymptotic states.
+ Also clearly,
+ I need to understand the GNS construction well enough to be able to recite it in my sleep.
+ 
+\end_layout
+
+\begin_layout Standard
+I should finish at least one job I started,
+ which was about the topology of the space of operators.
+ The Claude chat gets me 90% of the way;
+ should go the final bit.
+\end_layout
+
+\begin_layout Standard
+Then I need to sleep on this.
+ Which should be easy,
+ because it is now 1AM.
+\end_layout
+
+\begin_layout Standard
+The meta–question is as before:
+ in what respect can Unruh radiation be understood as some KMS effect or some Faddeev–Kulish dressing?
+ I'm sure Claude will have some surprises in store for me.
+\end_layout
+
+\begin_layout Standard
 x.
 \end_layout
 
@@ -4696,68 +5197,6 @@ x
 
 \begin_layout Standard
 x
-\end_layout
-
-\begin_layout Standard
-x
-\end_layout
-
-\begin_layout Standard
-x
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $E=W^{\left(1\right)}\times M$
-\end_inset
-
- with 
-\begin_inset Formula $W$
-\end_inset
-
- the Weyl/Clifford algebra,
- and 
-\begin_inset Formula $W^{\left(1\right)}$
-\end_inset
-
- the subspace of the algebra generated by 
-\begin_inset Formula $e_{q}$
-\end_inset
-
-,
- and 
-\begin_inset Formula $M$
-\end_inset
-
- being Minkowski space.
- Well,
- I guess it is accurate to say that 
-\begin_inset Formula $W^{\left(1\right)}=\left\{ e_{q}\right\} $
-\end_inset
-
- is trivial,
- just a point,
- 
-\end_layout
-
-\begin_layout Standard
-That is,
- the 
-\begin_inset Quotes eld
-\end_inset
-
-space of operators
-\begin_inset Quotes erd
-\end_inset
-
- is
-\begin_inset Formula 
-\[
-\Sigma=\left\{ s\right\} 
-\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
