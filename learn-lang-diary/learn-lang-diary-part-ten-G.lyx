@@ -5290,13 +5290,22 @@ The resolution is that I misunderstood the sense in which the field operator is 
  so that
 \begin_inset Formula 
 \begin{align*}
-a & :L^{2}\left(\mathbb{R}^{3}\right)\to\mathcal{F}\\
+a & :L^{2}\left(\mathbb{R}^{3}\right)\to\mathcal{F}\left(H\right)\\
 a & :f\mapsto a\left(f\right)=\int d^{3}k\,a\left(k\right)f\left(k\right)
 \end{align*}
 
 \end_inset
 
-and 
+where 
+\begin_inset Formula $\mathcal{F}\left(H\right)$
+\end_inset
+
+ is the Fock space on the (single–oscillator) Hilbert space 
+\begin_inset Formula $H$
+\end_inset
+
+,
+ and 
 \begin_inset Formula 
 \[
 \left[a\left(f\right),a^{\dagger}\left(g\right)\right]=\left\langle f,g\right\rangle _{L^{2}\left(\mathbb{R}^{3}\right)}
@@ -5306,6 +5315,187 @@ and
 
 Fuck me.
  I was bone–headed.
+ Forty-five years ago,
+ Fock space made my eyes glaze over in boredom.
+ Why?
+ Because it was 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+,
+ nothing needed to be said or known or remembered.
+ If and when it would appear in expressions,
+ its meaning,
+ intent and usage was clear and obvious.
+ Or so it seemed.
+ Thus,
+ boring.
+ Ten years ago,
+ I wrote the current version of the Wikipedia article on the tensor algebra,
+ including the bits on it being a Hopf algebra.
+ I laboriously verified by hand the duality,
+ the antipode,
+ all that.
+ I never reconnected the dots between tensor algebra and Fock space.
+ I mean,
+ when I wrote the Wikipedia article on the tensor algebra,
+ I think I barely glanced at Fock space,
+ I nodded 
+\begin_inset Quotes eld
+\end_inset
+
+yeah right
+\begin_inset Quotes erd
+\end_inset
+
+,
+ my eyes glazed over again,
+ and that was that.
+ Time to make amends?
+\end_layout
+
+\begin_layout Standard
+So let me make amends.
+ Its still all obvious,
+ but this time,
+ worth a second glance to make sure noting is missed.
+ Fock space is the tensor algebra,
+ but symmetrized,
+ or anti–symmetrized,
+ from the get–go.
+ The vector space is not finite–dimensional,
+ but is (infinite–dimensional) Hilbert space.
+ For the present purposes,
+ that of the uncharged harmonic oscillator.
+ Anything else?
+\end_layout
+
+\begin_layout Standard
+Well,
+ sure.
+ I just thought of something wrong,
+ and wrote it down,
+ and then realized it was wrong,
+ and erased it.
+ This raises the question of the epistomolgical question of wrong thoughts.
+ This has two answers.
+ One is obvious and pragmatic,
+ the other is vague and philosophical.
+ The pragmatic approach is to do what I just did:
+ oops,
+ it was wrong,
+ just scratch it out and continue.
+ This works great for small thoughts.
+ For bigger thoughts,
+ they can be recorded as wrong as a caution or warning for the future:
+ a lesson of what was attempted,
+ and did not work out.
+ For immense–sized wrong,
+ one might live ones entire life without realizing it,
+ or making amends.
+ The more philosophical approach is to perhaps recognize this as a compute–vs–memory tradeoff.
+ If I make small mistakes,
+ those which I can recognize immediately,
+ then the energetic costs of erasure are minimal.
+ I don't have to memorize the wrong result,
+ in order to recognize it in the future.
+ I can forget it entirely,
+ and if I ever make the same false inference,
+ I will be able to recognize it easily enough,
+ without consulting my list of past mistakes.
+ That is,
+ don't memorize,
+ just recompute.
+\end_layout
+
+\begin_layout Standard
+However,
+ my brain–power is limited,
+ and big mistakes,
+ those that took a lot of time and energy to make,
+ well,
+ those should be recorded and memorized.
+ Why?
+ Because if they took a lot of time and energy,
+ that means the mistakes were non–obvious:
+ investments in time and energy continued for a long time precisely because the mistake was not evident.
+ It was not easy to recognize.
+\end_layout
+
+\begin_layout Standard
+What is the boundary between easily–recognizable mistakes,
+ and the hard–to–recognize ones?
+ This boundary would appear to be defined by compute resources:
+ specifically,
+ the speed of thought plus size of short–term memory.
+ Well,
+ short–term memory is always paging long–term memory;
+ to recognize my mistake,
+ I had to think a bit about tensors and Hilbert spaces both,
+ becfore I realized my mistake.
+ I don't want to write down the mistake,
+ because doing it is brain–damaging.
+ It reminds me a bit of the punishment in Nil Stephenson's Anathem:
+ being forced to reproduce incorrect styles of reasoning is painful and brain–damaging.
+ Did Stephenson invent this out of thin air?
+ Or did he pick up this idea from some prior work in epistomology?
+ Some medieval scholarship,
+ perhaps?
+\end_layout
+
+\begin_layout Standard
+I asked google this:
+ 
+\emph on
+
+\begin_inset Quotes eld
+\end_inset
+
+In Neal Stephenson's Anathem,
+ there is a punishment where the protagonist has to memorize faulty arguments.
+ Is there prior scholarship in epistomology for this kind of punishment,
+ or analysis of wrong inference?
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ and got a charming,
+ diverting reply touching on sophistry,
+ fallacy,
+ and the mental burden of maintaining cognitive dissonance.
+ LLM's as oracles are ...
+ well,
+ they certainly change things around.
+ In the pre–LLM era of the internet,
+ I would have had to search and read.
+ With the LLM,
+ its like ...
+ going to the library,
+ picking a book,
+ and having it fall open to exactly the right page that provides the answer.
+\end_layout
+
+\begin_layout Standard
+Shall I dig this hole any deeper?
+ Clearly,
+ the LLM functions as an oracle.
+ Clearly,
+ this is desirable,
+ as long as the oracle is correct.
+ Clearly,
+ it is a pox,
+ if one has learned to trust the oracle,
+ but it has been poisoned with false beliefs (driven by political ideology,
+ billionaire malfeasance.) What is the theory of faulty oracles?
+ It turns into a game of espionage,
+ of knowing which oracle is lying about what,
+ and why,
+ and countering the effect of lies.
 \end_layout
 
 \begin_layout Standard
