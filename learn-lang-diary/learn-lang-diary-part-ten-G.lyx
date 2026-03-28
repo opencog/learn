@@ -5635,6 +5635,406 @@ Claude gives a great reply.
 \end_layout
 
 \begin_layout Standard
+Synopsis:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+Dynamic Epistemic Logic (DEL)
+\series default
+ developed by Plaza,
+ Gerbrandy,
+ and significantly extended by van Benthem,
+ van Ditmarsch,
+ Kooi,
+ and van Eijck,
+ studies how epistemic states change through actions —
+ announcements,
+ observations,
+ private communications,
+ and crucially,
+ lying.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Formalities:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+a Kripke model 
+\begin_inset Formula $M=(W,R_{1},\ldots,R_{n},V)$
+\end_inset
+
+ where 
+\begin_inset Formula $R_{i}$
+\end_inset
+
+ is agent 
+\begin_inset Formula $i$
+\end_inset
+
+'s accessibility relation (worlds they can't distinguish),
+ and you define update models that transform 
+\begin_inset Formula $M$
+\end_inset
+
+ into 
+\begin_inset Formula $M\otimes U$
+\end_inset
+
+ via a *product update* operation.
+ A **public announcement** 
+\begin_inset Formula $!φ$
+\end_inset
+
+ eliminates worlds where 
+\begin_inset Formula $φ$
+\end_inset
+
+ is false.
+ But a **lying announcement** —
+ formally,
+ announcing 
+\begin_inset Formula $φ$
+\end_inset
+
+ while believing 
+\begin_inset Formula $¬φ$
+\end_inset
+
+ —
+ is also definable:
+ it's an action 
+\begin_inset Formula $\daggerφ$
+\end_inset
+
+ whose precondition is 
+\begin_inset Formula $B_{i}¬φ$
+\end_inset
+
+ (the speaker believes 
+\begin_inset Formula $φ$
+\end_inset
+
+ is false) and whose effect is that listeners update as if 
+\begin_inset Formula $φ$
+\end_inset
+
+ were true,
+ while the speaker's beliefs remain unchanged.
+ Van Ditmarsch has papers specifically on "lying" and "misleading" as first-class operations with distinct formal semantics.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+These have distinct proof–theoretic and model–theoretic properties.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ What?
+ What does this mean?
+\end_layout
+
+\begin_layout Standard
+I'm not sure what the point of copying the reply into this diary is.
+ I'm experimenting.
+ I like the reply.
+ Perhaps I will remember it better if I take the time to copy it?
+ Its a Hermione thing to do.
+ It's an interesting model.
+ I suppose it's worth running the game–theoretic simulations.
+ Maybe.
+\end_layout
+
+\begin_layout Standard
+Part of the point of analytic combinatorics is to develop analytic formulas that explain things,
+ as opposed to be forever reliant on simulations.
+ But simulations are necessarily experimental and exploratory in nature:
+ the theorist can all to easily miss behaviors exposed only in simulations.
+ The two go together.
+\end_layout
+
+\begin_layout Standard
+Well,
+ lets take this seriously,
+ then:
+ if experimentation and theory are dual,
+ to what degree can we raise this to a formal,
+ mathematical duality?
+ I guess it is OK to say that theoretians discover semantic statements,
+ while experimentalists obtain syntactic truths?
+ I suppose I should enquire about this too.
+\end_layout
+
+\begin_layout Standard
+Wait,
+ there's more:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+Belief Revision (AGM Theory)
+\series default
+ Alchourrón,
+ Gärdenfors,
+ and Makinson (1985) gave an axiomatic theory of how a rational agent updates a belief set 
+\begin_inset Formula $K$
+\end_inset
+
+ upon receiving new information 
+\begin_inset Formula $φ$
+\end_inset
+
+.
+ The operations are:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Expansion:
+ 
+\begin_inset Formula $K+φ$
+\end_inset
+
+ (just add it)
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Revision:
+ 
+\begin_inset Formula $K*φ$
+\end_inset
+
+ (add 
+\begin_inset Formula $φ$
+\end_inset
+
+,
+ restore consistency)
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Contraction:
+ 
+\begin_inset Formula $K÷φ$
+\end_inset
+
+ (remove 
+\begin_inset Formula $φ$
+\end_inset
+
+,
+ minimal change)
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The Levi identity connects revision and contraction.
+ The Grove sphere semantics gives a possible–worlds model.
+ Now:
+ deception is simply the injection of false information into a revision process.
+ AGM itself doesn't model the source's intent,
+ but the formal machinery cleanly separates the epistemic state (what the agent believes) from the informational input (what they are told),
+ making deception formally tractable.
+ Extensions like iterated belief revision (Darwiche–Pearl) and social belief revision (how groups of agents update under peer pressure or propaganda) are active research areas.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I like the idea of not modeling the source's intent.
+ In biology,
+ driven by Darwinian evolution,
+ asking for the intent of evolution seems a perennially losing proposition:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+survival of the fittest
+\begin_inset Quotes erd
+\end_inset
+
+ is the classical catch–phrase,
+ while the dynamical–systems language might be more along the lines of systems that do not evaporate or disappear after some passage of time.
+ The non–dissipative systems.
+ There's no 
+\begin_inset Quotes eld
+\end_inset
+
+intent
+\begin_inset Quotes erd
+\end_inset
+
+ in this view.
+ Asking what the intent of a plant was to deceive some insect just won't cut it.
+ Even humans rarely know why they do the things they do.
+ Of course,
+ many human actions are intentional.
+ But this deserves a separate theory.
+ When I row a rowing shell,
+ I intend to make every stroke perfect,
+ and work hard,
+ strive to do so.
+ This is intentional.
+ But why do I row?
+ Oh,
+ that is a much harder question.
+ I intend to attend rowing practice.
+ I tell myself it is good for my health.
+ I do feel much better when I am in shape.
+ My biological body releases endorphins:
+ evolution has found a way to make me desire to be healthy.
+ What was the intent of evolution?
+ For me to survive.
+ Well,
+ for humans to survive,
+ and this requires the discovery of mechanisms that cause organisms to 
+\begin_inset Quotes eld
+\end_inset
+
+want to
+\begin_inset Quotes erd
+\end_inset
+
+ stay healthy and reproduce.
+ I want to have sex.
+ Darwin made me want it.
+\end_layout
+
+\begin_layout Standard
+So that's the reductionist scientific bridge:
+ symplectic geometry makes for a distinction between conservative,
+ ergodic systems,
+ and dissipative regions of space.
+ Hand–wave up through bio–chemistry and into autopoesis to biological organisms,
+ which employ energy gradients to grow in complexity.
+ Well,
+ even as what-iz-face describes,
+ this is even the case for rivers,
+ the water cycle,
+ rock erosion and even geothermal systems driven by the energy gradient of Earths hot core,
+ and the cooler mantle,
+ then crust.
+ Volcanos are fractal for a reason:
+ they exploit the energy gradient.
+ Biology encapsulates such cycles behind barriers:
+ the cell membrane.
+ The cell membrane forms a kind of event horizon:
+ certain events in the cell never get out,
+ or are rather,
+ so shielded and isolated from the environment that they have negligibly small direct effect on the external world.
+ All this despite being in the causal light cone.
+ So,
+ this is kind of the anti–IIT – the anti–integrated–information theory.
+ The causitive network that has been intentionally cut.
+ This is the basic building block of espionage and deceit:
+ the ability to hide.
+ The thing that is hidden is now called the secret.
+ Cell walls provide that boundary between in and out;
+ the metabolism of a prokaryote is ...
+ a secret?
+ Well,
+ no;
+ here,
+ the boundary protects the internal mechanisms from decay and washing out,
+ dissolving into the ocean.
+ But when a sugar molecule crosses the event horizon of the cell wall,
+ to be tortured and dismembered in that internal prison,
+ its pent up energy used to power further cellular activities...
+ I know that I am pushing this analogy too far,
+ but it is the barriers to power,
+ and the control of financial resources that keep the IRGC in power in Iran,
+ controlling a reticent population.
+ There's an operational mechanism there,
+ built out of humans,
+ that survives,
+ endures,
+ and does not dissipate.
+ The point here is that membranes and enclosures,
+ inside and outside,
+ are not only fundamental to the survival of the insides when faced with disturbances acting from the outside,
+ but that this mechanism is scale–free,
+ scaling from prokaryotes to social structures.
+ And again,
+ scale–free systems are symptomatic of (second-order) critical points:
+ self–organizing systems driving to criticality,
+ such as Per Bak's Abelian sandpile.
+\end_layout
+
+\begin_layout Standard
+But I've said all this before,
+ in this diary.
+ Why say it again?
+ Because it is so fantastic,
+ that I marvel at the vista.
+ Because it is so encompassing,
+ I cannot figure out how to grasp it,
+ work with it,
+ theorize with it,
+ experiment with it.
+ Of course,
+ I suppose I could create some experimental petri dish of Kripke agents playing game–theoretic games with one another.
+ Or some AGM belief–update systems that don't have a reason for what they do,
+ they just do it.
+ I could try to axiomatize and write down a category–theoretic framework for agents behind walls – and then ask what the internal language of this category of agents is.
+ Perhaps that language might be the so–called 
+\begin_inset Quotes eld
+\end_inset
+
+membrane computing
+\begin_inset Quotes erd
+\end_inset
+
+ (look it up in Wikipedia)?
+ Surely,
+ assorted rigorous results are possible.
+ Even perhaps analytic results,
+ in the flavor of Flajolet's Analytic Combinatorics?
+ And what of it?
+ What would happen if I expended the effort to develop and expose and prune this agentic model of chemical reality?
+ How should I spend my time?
+\end_layout
+
+\begin_layout Standard
 x.
 \end_layout
 
