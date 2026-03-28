@@ -6811,6 +6811,105 @@ where
 \begin_layout Standard
 OK.
  What is a symplectic map on L^2?
+ Oh.
+ It's any map 
+\begin_inset Formula $S$
+\end_inset
+
+ for which 
+\begin_inset Formula 
+\[
+\mathrm{Im}\langle Sf,Sg\rangle=\mathrm{Im}\langle f,g\rangle
+\]
+
+\end_inset
+
+because 
+\begin_inset Formula $\mathrm{Im}\langle\cdot,\cdot\rangle$
+\end_inset
+
+ is a symplectic form on 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+:
+ it is anti–symmetric 
+\begin_inset Formula $\mathrm{Im}\langle f,g\rangle=-\mathrm{Im}\langle g,f\rangle$
+\end_inset
+
+,
+ it is non–degenerate,
+ and it is real–linear.
+ Huh.
+ How is it I never knew/noticed this before?
+ What was I not paying attention to?
+\end_layout
+
+\begin_layout Standard
+The CCR is then 
+\begin_inset Formula $\left[a\left(f\right),a^{\dagger}\left(g\right)\right]=\langle f,g\rangle$
+\end_inset
+
+ and in the Weyl form 
+\begin_inset Formula $W\left(f\right)W\left(g\right)=e^{-i\,\mathrm{Im}\langle f,g\rangle/2}W\left(f+g\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note every unitary map is symplectic:
+ viz 
+\begin_inset Formula $\langle Uf,Ug\rangle=\langle f,g\rangle$
+\end_inset
+
+ automatically;
+ but not vice–versa;
+ the symplectic maps do not have to preserve the real part.
+ The symplectic group is a supset of the unitary group.
+\begin_inset Formula 
+\[
+\mathrm{Sp}\left(L^{2}\right)\supset U\left(L^{2}\right)\supset O\left(L^{2}\right)
+\]
+
+\end_inset
+
+The extra freedom corresponds to the Bogoliubov transforms:
+\begin_inset Formula 
+\[
+Sa\left(f\right)S^{-1}=a\left(uf\right)+a^{\dagger}\left(vf\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $S$
+\end_inset
+
+ decomposes into linear and antilinear parts:
+ 
+\begin_inset Formula $S=A+B$
+\end_inset
+
+ with 
+\begin_inset Formula $A\left(\lambda f\right)=\lambda A\left(f\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $B\left(\lambda f\right)=\overline{\lambda}B\left(f\right)$
+\end_inset
+
+.
+ Explicitly,
+ 
+\begin_inset Formula $A\left(f\right)=\left(S\left(f\right)-iS\left(if\right)\right)/2$
+\end_inset
+
+ and 
+\begin_inset Formula $B\left(f\right)=\left(S\left(f\right)+iS\left(if\right)\right)/2$
+\end_inset
+
+ and 
 \end_layout
 
 \begin_layout Standard
