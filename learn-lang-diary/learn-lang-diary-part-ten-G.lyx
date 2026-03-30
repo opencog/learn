@@ -7446,6 +7446,245 @@ Anyway,
 \end_layout
 
 \begin_layout Standard
+The question:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Hilbert spaces of square–integrable functions.
+ Suppose I have some space M.
+ I wish to work with functions $M
+\backslash
+to 
+\backslash
+mathbb{C}$ of functions from M to the complex numbers,
+ and then define a Hilbert space out of these functions:
+ that is,
+ the space of square–integrable functions on M.
+ What is the minimal set of axioms that the space M must satisfy,
+ for this to be possible?
+ Naively speaking,
+ to define square–integrability,
+ it seems that integrability is needed,
+ and for that,
+ M needs to be endowed a Borel algebra,
+ and a non–negative,
+ sigma–additive measure on that algebra.
+ Can the requirement for a sigma algebra be loosened?
+ I assume that M does not need to be a manifold,
+ or does it?
+ I assume that M does not need a metric,
+ or does it?
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The reply.
+ As always,
+ its compelling enough that I copy here for completeness.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+Can the σ–algebra be weakened?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The countability in the σ–algebra axiom is not merely convenient —
+ it is load–bearing for completeness.
+ The proof that L² is a Hilbert space (not just a pre–Hilbert space) requires completeness,
+ i.e.,
+ every Cauchy sequence converges.
+ The standard proof (Riesz–Fischer) goes:
+ Given a Cauchy sequence {fₙ},
+ extract a subsequence with ‖fₙₖ₊₁ − fₙₖ‖ < 2⁻ᵏ,
+ define g = Σₖ |fₙₖ₊₁ − fₙₖ|,
+ show g ∈ L² via Monotone Convergence (which requires σ–additivity),
+ conclude the series converges a.e.
+ and in L².
+ Without σ–additivity (countable additivity),
+ monotone convergence fails,
+ and L² need not be complete.
+ With only a finitely additive measure on an algebra of sets,
+ you get a pre–Hilbert space whose completion would require an external argument.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+OK.
+ As suspected.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+There is an axiomatization that avoids σ–algebras as the starting point:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\emph on
+The Daniell–Stone Approach
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Instead of axiomatizing the domain (sets),
+ you axiomatize the integral directly.
+ You postulate:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+A vector lattice L ⊆ {f:
+ M → ℝ} of "elementary" integrable functions,
+ closed under ∧ and ∨
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+A positive linear functional I:
+ L → ℝ (the proto–integral) The Stone condition:
+ if fₙ ↓ 0 pointwise in L,
+ then I(fₙ) → 0
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+From these,
+ one constructs the full L² theory without ever explicitly writing down a σ–algebra.
+ The σ–algebra of measurable sets emerges as a theorem.
+ So the σ–algebra requirement is not so much dropped as it is derived rather than postulated.
+ This is a logically cleaner foundation in some contexts (e.g.,
+ when you have a natural space of test functions but no obvious σ–algebra).
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+OK,
+ that's cool.
+\end_layout
+
+\begin_layout Standard
+Now for something that trips me up,
+ and I don't know how to capture it in words.
+ Let me try.
+ The lab frame of here–and–now,
+ as I sit in this kitchen,
+ is manifestly 3-real-spatial dimensions.
+ So this makes me want to say 
+\begin_inset Quotes eld
+\end_inset
+
+oh,
+ well this space 
+\begin_inset Formula $M$
+\end_inset
+
+ must have tangent spaces that are 3D and that's that,
+ everything is as it's always been
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Yet as I look out the window and see a twinkling star some light–years distant,
+ this too is a part of here–and–now,
+ so somehow,
+ causal structure seems to be a part of it.
+ So,
+ wait,
+ no;
+ its 3D plus extra stuff.
+ But the full causal cone is not needed;
+ only the light–like parts?
+ Or maybe instead,
+ its just 3D plus an explicit photon field (quantized of course) but w.f.
+ collapse means only the on–shell photons and close–to–on–shell matter?
+ What's built in,
+ and what's emergent?
+ Of course,
+ traditional QFT is 4D minkowski and light is a field,
+ but that is somehow insufficient to explain here–and–now.
+ So I am imagining that here–and–now is in fact just/only 
+\begin_inset Formula $U\left(L^{2}\right)$
+\end_inset
+
+ but 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ on what 
+\begin_inset Formula $M$
+\end_inset
+
+?
+ Maybe its just ...3D but maybe its something else;
+ I just don't know.
+ If we just say 4D we're back to the Standard Model,
+ and that's the beaten path I'm trying to get off of.
+ So ...
+ what's 
+\begin_inset Formula $M$
+\end_inset
+
+?
+ What axioms does 
+\begin_inset Formula $M$
+\end_inset
+
+ have to satisfy?
+ Well,
+ the answer is sharply minimal:
+ a sigma algebra.
+ Or less,
+ if the Daniell–Stone approach is taken.
+ But such minimal structure is too minimal.
+\end_layout
+
+\begin_layout Standard
+Well,
+ that's it.
+ I've burned up another day;
+ or rather,
+ real–life means I cannot prattle away 16 hours a day on this.
+ Alas.
+\end_layout
+
+\begin_layout Standard
 x.
 \end_layout
 
