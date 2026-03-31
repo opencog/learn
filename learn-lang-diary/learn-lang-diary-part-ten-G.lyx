@@ -7684,13 +7684,289 @@ Well,
  Alas.
 \end_layout
 
-\begin_layout Standard
-x.
+\begin_layout Subsection*
+30 March 2026
 \end_layout
 
 \begin_layout Standard
-x.
+Catch some minutes.
+ Where were we?
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $M$
+\end_inset
+
+ be some space,
+ any space endowed with a sigma algebra and measure 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $F$
+\end_inset
+
+ be the set of maps 
+\begin_inset Formula $M\to\mathbb{C}$
+\end_inset
+
+ and define an inner product 
+\begin_inset Formula $\left\langle f,g\right\rangle =\int_{M}d\mu\,\overline{f}g$
+\end_inset
+
+ and then let 
+\begin_inset Formula $H\subset F$
+\end_inset
+
+ consisting of 
+\begin_inset Formula $\left\langle f,g\right\rangle <\infty$
+\end_inset
+
+ so that 
+\begin_inset Formula $H$
+\end_inset
+
+ is a Hilbert space,
+ and given the definition of the inner product,
  
+\begin_inset Formula $H=L^{2}\left(M\right)$
+\end_inset
+
+.
+ For the present task,
+ though,
+ we don't really need the measure space;
+ we just need a Hilbert space and an inner product.
+\end_layout
+
+\begin_layout Standard
+So perhaps,
+ let 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ be any Hilbert space having a complex–valued inner product;
+ the only necessary ingredient is that 
+\begin_inset Formula $\left\langle f,g\right\rangle \in\mathbb{C}$
+\end_inset
+
+.
+ This is required,
+ so as to allow 
+\begin_inset Formula $\mathrm{Im}\langle f,g\rangle$
+\end_inset
+
+ to be interpreted as a symplectic form.
+ As noted earlier,
+ it is anti–symmetric 
+\begin_inset Formula $\mathrm{Im}\langle f,g\rangle=-\mathrm{Im}\langle g,f\rangle$
+\end_inset
+
+,
+ it is non–degenerate,
+ and it is linear in the right arg:
+ 
+\begin_inset Formula $\mathrm{Im}\langle f,\lambda g\rangle=\lambda\mathrm{Im}\langle f,g\rangle$
+\end_inset
+
+ and anti–linear in the left 
+\begin_inset Formula $\mathrm{Im}\langle\lambda f,g\rangle=\overline{\lambda}\mathrm{Im}\langle f,g\rangle$
+\end_inset
+
+ and so overall,
+ its real–linear when restricted to 
+\begin_inset Formula $\lambda\in\mathbb{R}$
+\end_inset
+
+.
+ The real–linear property is sufficient for it to be a symplectic product.
+\end_layout
+
+\begin_layout Standard
+A symplectic map 
+\begin_inset Formula $S:H\to H$
+\end_inset
+
+ is any real–linear map 
+\begin_inset Formula $S$
+\end_inset
+
+ for which 
+\begin_inset Formula 
+\[
+\mathrm{Im}\langle Sf,Sg\rangle=\mathrm{Im}\langle f,g\rangle
+\]
+
+\end_inset
+
+Denote the set of all such maps as 
+\begin_inset Formula $\mathrm{Sp}\left(H\right)$
+\end_inset
+
+.
+ There is a subset 
+\begin_inset Formula $U\left(H\right)\subset\mathrm{Sp}\left(H\right)$
+\end_inset
+
+ of unitary maps,
+ defined as 
+\begin_inset Formula 
+\[
+\langle Uf,Ug\rangle=\langle f,g\rangle
+\]
+
+\end_inset
+
+The symplectic maps can be decomposed into linear and anti–linear parts
+\begin_inset Formula 
+\[
+Sf=Uf+Af
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $U\left(\lambda f\right)=\lambda Uf$
+\end_inset
+
+ whereas 
+\begin_inset Formula $A\left(\lambda f\right)=\overline{\lambda}Af$
+\end_inset
+
+ and specifically 
+\begin_inset Formula $A\left(if\right)=-iAf$
+\end_inset
+
+.
+ These are given explicitly as 
+\begin_inset Formula $Uf=\frac{1}{2}\left(Sf-iS\left(if\right)\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $Af=\frac{1}{2}\left(Sf+iS\left(if\right)\right)$
+\end_inset
+
+ and for 
+\begin_inset Formula $f=\alpha+i\beta$
+\end_inset
+
+ with 
+\begin_inset Formula $\alpha,\beta$
+\end_inset
+
+ real,
+ then 
+\begin_inset Formula $U\left(\alpha+i\beta\right)=U\alpha+iU\beta$
+\end_inset
+
+ and 
+\begin_inset Formula $A\left(\alpha+i\beta\right)=A\alpha-iA\beta$
+\end_inset
+
+ and so 
+\begin_inset Formula $Af=\overline{Af}$
+\end_inset
+
+.
+ Bleekh.
+\end_layout
+
+\begin_layout Standard
+The anti–linear 
+\begin_inset Formula $A$
+\end_inset
+
+ is annoying,
+ so write instead 
+\begin_inset Formula $V=\overline{A}$
+\end_inset
+
+ and so 
+\begin_inset Formula $V\left(\lambda f\right)=\lambda Vf$
+\end_inset
+
+ and 
+\begin_inset Formula $V\overline{f}=\overline{Vf}$
+\end_inset
+
+ which is just like 
+\begin_inset Formula $U\overline{f}=\overline{Uf}$
+\end_inset
+
+ so both parts are linear,
+ and the decomposition is written as
+\begin_inset Formula 
+\[
+Sf=Uf+\overline{Vf}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Crapsicle.
+ I want to write the below but the dots aren't connecting for me:
+\end_layout
+
+\begin_layout Standard
+The CCR is 
+\begin_inset Formula $\left[a\left(f\right),a^{\dagger}\left(g\right)\right]=\langle f,g\rangle$
+\end_inset
+
+ The Bogoliubov transforms are:
+\begin_inset Formula 
+\[
+Sa\left(f\right)S^{-1}=a\left(Uf\right)+a^{\dagger}\left(Vf\right)
+\]
+
+\end_inset
+
+and the Bogoliuov conditions are
+\begin_inset Formula 
+\begin{align*}
+UU^{\dagger}-VV^{\dagger} & =I\\
+UV^{T}-VU^{T} & =0
+\end{align*}
+
+\end_inset
+
+I'm a dolt.
+ So I ask Claude and it says something along the lines of 
+\begin_inset Quotes eld
+\end_inset
+
+oh,
+ it's Shale's theorem (1962)
+\begin_inset Quotes erd
+\end_inset
+
+,
+ which is apparently defines 
+\begin_inset Formula 
+\[
+\mathrm{Sp_{Restricted}}\left(H\right)=\left\{ S\in\mathrm{Sp}\left(H\right):\left\langle Vf,Vf\right\rangle <\infty\right\} 
+\]
+
+\end_inset
+
+and the condition 
+\begin_inset Formula $\left\langle Vf,Vf\right\rangle <\infty$
+\end_inset
+
+ is called the Shale condition.
+ This condition has multiple 
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+x 
 \end_layout
 
 \begin_layout Standard
