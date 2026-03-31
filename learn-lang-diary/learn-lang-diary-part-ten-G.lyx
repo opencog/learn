@@ -7908,6 +7908,11 @@ Sf=Uf+\overline{Vf}
 \end_layout
 
 \begin_layout Standard
+The upshot of the above is that we can define symplectic operators on *any* Hilbert space with a complex–valued inner product.
+ 
+\end_layout
+
+\begin_layout Standard
 Crapsicle.
  I want to write the below but the dots aren't connecting for me:
 \end_layout
@@ -7958,7 +7963,121 @@ and the condition
 \end_inset
 
  is called the Shale condition.
- This condition has multiple 
+ This condition has multiple implications:
+\end_layout
+
+\begin_layout Itemize
+It implies that 
+\begin_inset Formula $V$
+\end_inset
+
+ is small enough to be Hilbert–Schmidt,
+ which means that the Bogoliubov xform is small enough to be implemented in the same Fock space.
+\end_layout
+
+\begin_layout Itemize
+When 
+\begin_inset Formula $V$
+\end_inset
+
+ does not meet this condition,
+ then Bogoliubov maps between inequivalent Fock spaces.
+\end_layout
+
+\begin_layout Itemize
+Apparently,
+ the original statement of Shale's thm was that when the condition is met,
+ then 
+\begin_inset Formula $S$
+\end_inset
+
+ has a unitary representation on Segal–Bargmann space.
+ This is if and only if,
+ necessary and sufficient.
+\end_layout
+
+\begin_layout Standard
+I'm dazed and confused,
+ now.
+ What are the minimum conditions needed to have a CCR?
+ Well,
+ I guess we need only to have a Weyl algebra.
+ Now,
+ a Weyl algebra is just a Clifford algebra on any vector space that posses a symplectic form.
+ But this is getting circular,
+ because 
+\begin_inset Formula $\mathrm{Im}\langle f,g\rangle$
+\end_inset
+
+ is a symplectic product,
+ and thus,
+ given a tensor algebra 
+\begin_inset Formula $TV$
+\end_inset
+
+ on *any* complex vector space 
+\begin_inset Formula $V$
+\end_inset
+
+ we can build a Clifford algebra on it;
+ the symmetric sector being Fock space aka 
+\begin_inset Quotes eld
+\end_inset
+
+bosons
+\begin_inset Quotes erd
+\end_inset
+
+ and the anti–symmetric part allowing spinors to be constructed via the Clifford algebra.
+ So this is generic:
+ given any complex vector space 
+\begin_inset Formula $V$
+\end_inset
+
+ this provides a formula to build CCR on it (via the tensor algebra aka Fock space).
+ Not only that,
+ but I have a generic way of building inequivalent representations;
+ these appear when Shale's condition is violated.
+\end_layout
+
+\begin_layout Standard
+The above construction requires no Hamiltonians,
+ no positions or momenta,
+ no symplectic manifolds,
+ and not even manifolds of any kind.
+ It does require a complex vector space with a complex inner–product.
+ And that's all.
+\end_layout
+
+\begin_layout Standard
+OK.
+ But I continue to be befuddled.
+ The above construction allows the operators 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $a^{\dagger}$
+\end_inset
+
+ to be defined,
+ and so a Hamiltonian does appear:
+ its 
+\begin_inset Formula $H=a^{\dagger}a$
+\end_inset
+
+.
+ So now we have a hamiltonian appear out of thin air.
+ I'm now even more confused.
+ Does this imply that the Hamiltonian is a Casimir operator (in the sense of PBW?) Entirely remarkable how this all appears out of thin air.
+\end_layout
+
+\begin_layout Standard
+My Claude subscription has run out,
+ I no longer get it for free.
+ I need to renew and get a cheaper version and then I have to pose it all of the above paragraph to sanity check my thinking.
+ Anyway,
+ good night.
 \end_layout
 
 \begin_layout Standard
