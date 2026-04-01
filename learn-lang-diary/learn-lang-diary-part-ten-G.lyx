@@ -8424,12 +8424,30 @@ then define
 \end_inset
 
  out of that,
- then the Clifford algebra 
-\begin_inset Formula $TV/I$
+ then the symplectic Clifford algebra 
+\begin_inset Formula $TV_{\mathbb{R}}/I$
 \end_inset
 
  is the Weyl algebra.
- This construction should work for suitable fields that have skew–symmetric imaginary elements.
+ (I'm writing 
+\begin_inset Formula $V_{\mathbb{R}}$
+\end_inset
+
+ for the real vector space that has 
+\begin_inset Quotes eld
+\end_inset
+
+forgotten
+\begin_inset Quotes erd
+\end_inset
+
+ its a complex vector space.
+ Forgetful functor,
+ etc.)
+\end_layout
+
+\begin_layout Standard
+This construction should work for suitable fields that have skew–symmetric imaginary elements.
  The interesting cases are where the field has more than one non–trivial involution.
  Another case arises when the field has some interesting automorphism group;
  how might the above construction generalize to that?
@@ -8438,11 +8456,11 @@ then define
 \begin_layout Standard
 Continuing ...
  define 
-\begin_inset Formula $a_{n}=\frac{1}{2}\left(e_{n}^{\left(q\right)}-e_{n}^{\left(p\right)}\right)$
+\begin_inset Formula $a_{n}=\left(e_{n}^{\left(q\right)}-e_{n}^{\left(p\right)}\right)/\sqrt{2}$
 \end_inset
 
  and 
-\begin_inset Formula $a_{n}^{\dagger}=\frac{1}{2}\left(e_{n}^{\left(q\right)}+e_{n}^{\left(p\right)}\right)$
+\begin_inset Formula $a_{n}^{\dagger}=\left(e_{n}^{\left(q\right)}+e_{n}^{\left(p\right)}\right)/\sqrt{2}$
 \end_inset
 
  from which we conclude
@@ -8453,6 +8471,119 @@ a_{n}\otimes a_{n}^{\dagger}-a_{n}^{\dagger}\otimes a_{n}=1
 
 \end_inset
 
+Note that there is no imaginary 
+\begin_inset Formula $i$
+\end_inset
+
+ in the expressions above;
+ it was already absorbed into the definition of 
+\begin_inset Formula $e_{n}^{\left(p\right)}$
+\end_inset
+
+ so as to keep the vector space real.
+ The use of the 
+\begin_inset Formula $\dagger$
+\end_inset
+
+ symbol here is also perhaps misleading or confusing;
+ it is meant to be neither 
+\begin_inset Quotes eld
+\end_inset
+
+complex
+\begin_inset Quotes erd
+\end_inset
+
+ conjugate,
+ nor transpose;
+ instead its just a distinguishing mark,
+ to distinguish the two 
+\begin_inset Quotes eld
+\end_inset
+
+conjugates
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The symbol 
+\begin_inset Formula $\dagger$
+\end_inset
+
+ can be elevated to a bona–fide map on the entire space by defining 
+\begin_inset Formula $e_{n}^{\left(q\right)\dagger}=e_{n}^{\left(q\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{n}^{\left(p\right)\dagger}=-e_{n}^{\left(p\right)}$
+\end_inset
+
+.
+ This is a definition,
+ and not an inference,
+ because we'd previously forgotten the complex structure,
+ and now need to define it back in.
+ By the 
+\begin_inset Quotes eld
+\end_inset
+
+free lemma
+\begin_inset Quotes erd
+\end_inset
+
+,
+ the 
+\begin_inset Formula $\dagger$
+\end_inset
+
+ map extends 
+\begin_inset Quotes eld
+\end_inset
+
+freely
+\begin_inset Quotes erd
+\end_inset
+
+ to the entire vector space 
+\begin_inset Formula $V_{\mathbb{R}}$
+\end_inset
+
+ and to the tensor algebra 
+\begin_inset Formula $TV_{\mathbb{R}}$
+\end_inset
+
+ and to the Weyl algebra 
+\begin_inset Formula $TV_{\mathbb{R}}/I$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Since the complex structure was forgotten,
+ we also have to define the symplectic map 
+\begin_inset Formula $J:e_{n}^{\left(q\right)}\mapsto e_{n}^{\left(p\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $J:e_{n}^{\left(p\right)}\mapsto-e_{n}^{\left(q\right)}$
+\end_inset
+
+ and again,
+ by the free lemma,
+ this freely extends to the tensor and Weyl algebras.
+\end_layout
+
+\begin_layout Standard
+With a little extra hand–waving,
+ I guess this can be repackaged into an antisymmetric bilinear form,
+ but I don't see the need for this just yet.
+\end_layout
+
+\begin_layout Standard
 A change of basis then allows the Bogoliubov trick to pass through.
  If the dimension of the vector space is finite,
  then the Shale condition means that,
@@ -8527,6 +8658,61 @@ effectively real
 
  of the simple harmonic oscillator.
  It would seem that there is some sort of analogy here that can be pushed.
+ Even weirder,
+ I can hallucinate some sort of profinite–like construction,
+ with 
+\begin_inset Formula $\bigoplus_{k_{0}\in K}a_{w}$
+\end_inset
+
+ for the field case,
+ and 
+\begin_inset Formula $\bigoplus_{\omega\in\mathbb{R}^{+}}a\left(\omega\right)$
+\end_inset
+
+ for the harmonic oscillators.
+ I don't have the time in the day to figure out if this is an insane idea,
+ or if its a good idea.
+ Woe is me.
+\end_layout
+
+\begin_layout Standard
+I did ask Claude;
+ it tells me that the case of any quadratic extension of 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ or of the 
+\begin_inset Formula $p$
+\end_inset
+
+–adics 
+\begin_inset Formula $\mathbb{Q}_{p}$
+\end_inset
+
+ was explored by Volovich and Vladimirov;
+ this is the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $p$
+\end_inset
+
+–adic QM
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The case of the quaternions is developed by Adler et al.
+ and goes by 
+\begin_inset Quotes eld
+\end_inset
+
+quaternionic QM
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
