@@ -8263,6 +8263,272 @@ Infinite Galois theory
 Let's return to the topic at hand.
 \end_layout
 
+\begin_layout Subsection*
+1 April 2026
+\end_layout
+
+\begin_layout Standard
+Time flies like a banana.
+\end_layout
+
+\begin_layout Standard
+The vector space does not have to be over the complex numbers;
+ any field with an involution should do:
+ so for 
+\begin_inset Formula $k\in K$
+\end_inset
+
+ and marking the involution as 
+\begin_inset Formula $\overline{k}$
+\end_inset
+
+ then one has 
+\begin_inset Quotes eld
+\end_inset
+
+real
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $k+\overline{k}\in K$
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+imaginary
+\begin_inset Quotes erd
+\end_inset
+
+ parts 
+\begin_inset Formula $k-\overline{k}\in K$
+\end_inset
+
+.
+ Then any vector 
+\begin_inset Formula $\sum_{n}k_{n}e_{n}$
+\end_inset
+
+ over a set of basis elements 
+\begin_inset Formula $\left\{ e_{n}\right\} $
+\end_inset
+
+ can be decomposed into 
+\begin_inset Quotes eld
+\end_inset
+
+real
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+imaginary
+\begin_inset Quotes erd
+\end_inset
+
+ parts 
+\begin_inset Formula 
+\[
+\sum_{n}k_{n}e_{n}=\sum_{n}\frac{k_{n}+\overline{k}_{n}}{2}e_{n}+\sum_{n}\frac{k_{n}-\overline{k}_{n}}{2}e_{n}
+\]
+
+\end_inset
+
+At this point,
+ disclaimers about fields of characteristic 2,
+ and other oddball cases apply.
+ There are also interesting cases where there may be more than one (non–trivial) involution.
+ More generally,
+ questions about constructions involving the automorphism group come up.
+ This might be worth looking at later(?).
+\end_layout
+
+\begin_layout Standard
+Pick some element (any element) 
+\begin_inset Formula $k\in K$
+\end_inset
+
+ then define 
+\begin_inset Formula $w=k-\overline{k}$
+\end_inset
+
+ then this 
+\begin_inset Formula $w$
+\end_inset
+
+ is skew–symmetric:
+ 
+\begin_inset Formula $\overline{w}=-w$
+\end_inset
+
+.
+ Well,
+ but then I need the field to be a quadratic extension,
+ and blah blah blah,
+ and more exceptions,
+ asterisks and qualifications,
+ so I don't see the point.
+ Lets stick to 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+ to keep things easy.
+\end_layout
+
+\begin_layout Standard
+In this case,
+ split a complex vector space into real and imaginary parts,
+ then double up each of the basis vectors to get a real vector space of twice the size:
+ 
+\begin_inset Formula 
+\[
+\sum_{n}c_{n}e_{n}=\sum x_{n}e_{n}+\sum_{n}y_{n}\left(ie_{n}\right)
+\]
+
+\end_inset
+
+then define 
+\begin_inset Formula $e_{n}^{\left(q\right)}=e_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{n}^{\left(p\right)}=ie_{n}$
+\end_inset
+
+ so that it's now a real vector space with basis 
+\begin_inset Formula $\left\{ e_{n}^{\left(q\right)},e_{n}^{\left(p\right)}\right\} $
+\end_inset
+
+.
+ Define 
+\begin_inset Formula $TV$
+\end_inset
+
+ as the tensor algebra.
+ Impose an equivalence relation 
+\begin_inset Formula $e_{n}^{\left(q\right)}\otimes e_{n}^{\left(p\right)}-e_{n}^{\left(p\right)}\otimes e_{n}^{\left(q\right)}=1$
+\end_inset
+
+,
+ build the ideal 
+\begin_inset Formula $I$
+\end_inset
+
+ out of that,
+ then the Clifford algebra 
+\begin_inset Formula $TV/I$
+\end_inset
+
+ is the Weyl algebra.
+ This construction should work for suitable fields that have skew–symmetric imaginary elements.
+ The interesting cases are where the field has more than one non–trivial involution.
+ Another case arises when the field has some interesting automorphism group;
+ how might the above construction generalize to that?
+\end_layout
+
+\begin_layout Standard
+Continuing ...
+ define 
+\begin_inset Formula $a_{n}=\frac{1}{2}\left(e_{n}^{\left(q\right)}-e_{n}^{\left(p\right)}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $a_{n}^{\dagger}=\frac{1}{2}\left(e_{n}^{\left(q\right)}+e_{n}^{\left(p\right)}\right)$
+\end_inset
+
+ from which we conclude
+\begin_inset Formula 
+\[
+a_{n}\otimes a_{n}^{\dagger}-a_{n}^{\dagger}\otimes a_{n}=1
+\]
+
+\end_inset
+
+A change of basis then allows the Bogoliubov trick to pass through.
+ If the dimension of the vector space is finite,
+ then the Shale condition means that,
+ after a symplectic transform,
+ the result can continue to live in the same Fock space.
+ Thus,
+ it seems that the only way to to get inequivalent,
+ uhh,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+vacua
+\begin_inset Quotes erd
+\end_inset
+
+ is to have a basis that is at least countable.
+\end_layout
+
+\begin_layout Standard
+There are several things here that trip me up,
+ that I don't understand.
+ When working with a field 
+\begin_inset Formula $K$
+\end_inset
+
+ that was a quadratic extension,
+ we built the skew–symmetric element 
+\begin_inset Formula $w=k_{0}-\overline{k_{0}}$
+\end_inset
+
+ after selecting a distinguished element 
+\begin_inset Formula $k_{0}\in K$
+\end_inset
+
+ and in general,
+ 
+\begin_inset Formula $w^{2}\ne-1$
+\end_inset
+
+ because if it was,
+ we would have an 
+\begin_inset Quotes eld
+\end_inset
+
+effectively real
+\begin_inset Quotes erd
+\end_inset
+
+ field.
+ So,
+ for the construction to pass through,
+ we would need to track where 
+\begin_inset Formula $w$
+\end_inset
+
+ goes.
+ I'm too lazy to do that;
+ however,
+ it seems that something along the lines of 
+\begin_inset Formula $we_{n}^{\left(q\right)}-e_{n}^{\left(p\right)}$
+\end_inset
+
+ would be needed.
+ What's remarkable about this expression is the notational similarity between the skew–symmetric element 
+\begin_inset Formula $w$
+\end_inset
+
+ and the frequency 
+\begin_inset Formula $\omega$
+\end_inset
+
+ of the simple harmonic oscillator.
+ It would seem that there is some sort of analogy here that can be pushed.
+\end_layout
+
 \begin_layout Standard
 x
 \end_layout
