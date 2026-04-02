@@ -8644,11 +8644,11 @@ effectively real
  I'm too lazy to do that;
  however,
  it seems that something along the lines of 
-\begin_inset Formula $we_{n}^{\left(q\right)}-e_{n}^{\left(p\right)}$
+\begin_inset Formula $a_{n}=\left(we_{n}^{\left(q\right)}-e_{n}^{\left(p\right)}\right)/\sqrt{2}$
 \end_inset
 
- would be needed.
- What's remarkable about this expression is the notational similarity between the skew–symmetric element 
+ or something like that would be needed.
+ What's remarkable about this expression is the notational resemblance between the skew–symmetric element 
 \begin_inset Formula $w$
 \end_inset
 
@@ -8716,7 +8716,686 @@ quaternionic QM
 \end_layout
 
 \begin_layout Standard
-x
+I asked about notation,
+ and Claude says 
+\begin_inset Quotes eld
+\end_inset
+
+sure thing,
+ boss
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Given quadratic extension 
+\begin_inset Formula $K=\mathbb{R}\left(\sqrt{-d}\right)$
+\end_inset
+
+ for some 
+\begin_inset Formula $d>0$
+\end_inset
+
+ and picking 
+\begin_inset Formula $k_{0}=\sqrt{-d}$
+\end_inset
+
+ gives 
+\begin_inset Formula $w=2\sqrt{-d}$
+\end_inset
+
+ and then it blargle–bungles some algebra but it does make some interesting remarks:
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+norm form
+\begin_inset Quotes erd
+\end_inset
+
+ of a quadratic extension is 
+\begin_inset Formula $N\left(q+wp\right)=\left(q+wp\right)\left(q-wp\right)=q^{2}-w^{2}p^{2}$
+\end_inset
+
+ which is effectively the SHO Hamiltonian.
+ Then 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+the SHO is,
+ at its algebraic core,
+ the theory of a quadratic extension of 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The ladder operators are the irreducible elements of 
+\begin_inset Formula $K$
+\end_inset
+
+ viewed as a two–dimensional real algebra
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Well,
+ OK then.
+ Claude proceeds very confidently,
+ so I challenge it:
+ does this appear in some textbook or paper.
+ Well,
+ blow me down,
+ here's the reply:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Quotes eld
+\end_inset
+
+The statement "the SHO is the theory of a quadratic extension of 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+" was my own synthesis,
+ connecting:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The standard metaplectic/symplectic literature
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The algebraic theory of involutions
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Your observation about 
+\begin_inset Formula $w=k-\sigma(k)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+It is the kind of statement that,
+ once made,
+ seems obvious and inevitable —
+ but I cannot point you to a paper or textbook that states it in precisely those terms.
+ It may exist somewhere in the mathematical physics literature that I am not recalling,
+ or it may be genuinely a observation that falls between the fields and has not been written up explicitly.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So it's obvious but no one bothered to note it before.
+ Perhaps that is because it's too trivial t mess with.
+ whatever.
+ After more prodding and poking,
+ some notable remarks:
+\end_layout
+
+\begin_layout Standard
+The SHO lives in real symplectic space;
+ the compatible complex structure is given by 
+\begin_inset Formula 
+\begin{align*}
+J_{\omega}: & e_{q}\mapsto\frac{1}{\omega}e_{p}\\
+ & e_{p}\mapsto-\omega e_{q}
+\end{align*}
+
+\end_inset
+
+so that 
+\begin_inset Formula $J^{2}=-1$
+\end_inset
+
+.
+ Then 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Different values of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ give different but equivalent complex structures on the same real symplectic space,
+ related by a symplectic transformation (specifically,
+ a squeeze).
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ Next,
+ it reminds me of this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+The Metaplectic/Oscillator Representation
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The deeper formalization goes through the Segal–Shale–Weil (or oscillator) representation.
+ The group 
+\begin_inset Formula $\mathrm{Sp}(2,\mathbb{R})=\mathrm{SL}(2,\mathbb{R})$
+\end_inset
+
+ acts on the phase plane,
+ and the metaplectic group 
+\begin_inset Formula $\mathrm{Mp}(2,\mathbb{R})$
+\end_inset
+
+ acts on 
+\begin_inset Formula $L^{2}(\mathbb{R})$
+\end_inset
+
+ by the oscillator representation.
+ The different SHO frequencies correspond to the orbit of the standard complex structure under the action of the diagonal subgroup:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Formula 
+\[
+\begin{pmatrix}\sqrt{\omega} & 0\\
+0 & 1/\sqrt{\omega}
+\end{pmatrix}\in\mathrm{Sp}(2,\mathbb{R})
+\]
+
+\end_inset
+
+which sends 
+\begin_inset Formula $(q,p)\mapsto(\sqrt{\omega}\,q,\,p/\sqrt{\omega})$
+\end_inset
+
+ and thereby transforms 
+\begin_inset Formula $a_{\omega=1}$
+\end_inset
+
+\SpecialChar allowbreak
+ to 
+\begin_inset Formula $a_{\omega}$
+\end_inset
+
+\SpecialChar allowbreak
+.
+ So all SHO frequencies are in the same 
+\begin_inset Formula $\mathrm{Sp}(2,\mathbb{R})$
+\end_inset
+
+ orbit —
+ they are all equivalent up to a symplectic (squeeze) transformation.
+ The different values of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ label points in the Siegel upper half–plane 
+\begin_inset Formula $\mathfrak{H}=\mathrm{Sp}(2,\mathbb{R})/U(1)$
+\end_inset
+
+,
+ which parameterizes compatible complex structures on 
+\begin_inset Formula $\mathbb{R}^{2}$
+\end_inset
+
+.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Claude is quite the wordcel.
+ It would take me a fair bit of work and effort to come up with wording that conformed to this canonical expository style.
+ This reminds me of the idea of phrasebooks for writing Latin in the style of Cicero.
+\end_layout
+
+\begin_layout Standard
+I challenge Claude about the fact that 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is real and the Siegal upper half–plane is 2D.
+ I get back some blargle about squeezed states:
+ viz,
+ for 
+\begin_inset Formula $z=x+iy\in\mathfrak{H}$
+\end_inset
+
+ write 
+\begin_inset Formula 
+\[
+a_{z}=\frac{1}{\sqrt{2y}}\left(\overline{z}e_{q}+ie_{p}\right)
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula $y$
+\end_inset
+
+ corresponds to the frequency and the 
+\begin_inset Formula $x$
+\end_inset
+
+ corresponds to the squeezing angle.
+ Claude snuck in an extra factor of 
+\begin_inset Formula $i$
+\end_inset
+
+ while I wasn't looking.
+ The stuff about squeezed states is interesting,
+ but wanders afield from my original path.
+ I have enough distractions,
+ for now.
+\end_layout
+
+\begin_layout Standard
+The reason that it's
+\emph on
+ 
+\emph default
+
+\begin_inset Formula $\mathfrak{H}=\mathrm{Sp}(2,\mathbb{R})/U(1)$
+\end_inset
+
+ is that earlier,
+ we noted that 
+\begin_inset Formula $\mathrm{Sp}\supset U$
+\end_inset
+
+ and so we mod out the unitary xforms to get 
+\begin_inset Formula $\mathfrak{H}$
+\end_inset
+
+ as what's left.
+ The U(1) xforms are just an overall phase 
+\begin_inset Formula $a\mapsto e^{i\theta}a$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+References:
+\end_layout
+
+\begin_layout Itemize
+Folland's "Harmonic Analysis in Phase Space" (1989) covers complex structures on symplectic spaces,
+ the Siegel upper half-plane,
+ and ladder operators.
+\end_layout
+
+\begin_layout Itemize
+The Segal–Shale–Weil oscillator representation and 
+\begin_inset Formula $\mathrm{Sp}(2n,\mathbb{R})$
+\end_inset
+
+ is Howe,
+ "Quantum mechanics and partial differential equations" (1980)
+\end_layout
+
+\begin_layout Standard
+Well,
+ there are still a few lacunae in the story above,
+ but we've got enough to move forward.
+ (The lacuna include the detailed map for symplectic xforms inducing Bogoliubov xforms,
+ and moving from the general TV/I to the even subset:
+ the symmetrized Fock space.
+ A formal exposition needs to spell this out without the Claude blargle and algebraic errors.) So:
+ to summarize (again) for any complex vector space,
+ we can forget the complex structure,
+ give it a real symplectic structure instead,
+ and construct the ladder operators.
+ This construction does not require any inner products on the vector space,
+ nor any symplectic forms,
+ nor does it require any sigma algebras or measures.
+\end_layout
+
+\begin_layout Standard
+The next step revolves around the representation theory.
+ This needs a compatible inner product,
+ and from before,
+ it seems that a measure space is sufficient to provide that.
+ At this point,
+ I should probably stop writing,
+ and read Folland's Harmonic Analysis instead.
+ I also need to review Faddeev's soft photons and the relationship to the Shale condition.
+ Part of me suggests that I should rework this diary into a somewhat more organized review.
+ Part of me says,
+ no,
+ that's a distraction.
+ But I need something more organized because the current state of affairs is mildly disjointed and has gaps in the algebra.
+ Hmm.
+\end_layout
+
+\begin_layout Standard
+Fuck me.
+ https://en.wikipedia.org/wiki/Oscillator_representation is stunningly long.
+ After a quick scroll,
+ my heart sinks.
+ Its like – I've been over all this material before.
+ Mostly,
+ more or less.
+ Yet,
+ on the other hand,
+ its lost in the fog of time,
+ and I should really review it.
+ Will I be excited and interested,
+ or will it be some overwhelming barrage of semi–important details I've long forgotten?
+ Some years ago,
+ I overhauled the Wikipedia article for 
+\begin_inset Quotes eld
+\end_inset
+
+capacitance of a set
+\begin_inset Quotes erd
+\end_inset
+
+.
+ At first,
+ I'm thinking,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+gee what is this?
+ Sounds interesting!
+\begin_inset Quotes erd
+\end_inset
+
+ and after a short sprint,
+ my heart sinks – 
+\begin_inset Quotes eld
+\end_inset
+
+oh,
+ this is just the formal math setting for the concept of capacitance from electrodynamics
+\begin_inset Quotes erd
+\end_inset
+
+,
+ something I'd covered as an undergrad.
+ I did finish cleaning it up.
+ It was vaguely interesting to be reminded that,
+ in 2D,
+ the Green's function is a logarithm.
+ Cause Laplacian,
+ and all that.
+ It was easy enough to see how this would/should generalize to generic Riemannian spaces.
+ Its a a specific,
+ simple subset of generic harmonic analysis.
+ Which I should study more,
+ because I'm pretty sure I now understand enough to do my PhD thesis correctly,
+ this time,
+ by correctly quantizing the axial anomaly.
+ And that unfinished side–journey into Majorana that I never fully completed.
+ Well,
+ that's for later.
+\end_layout
+
+\begin_layout Standard
+Tonight,
+ I have to finish fixing mom's computer.
+ Crap.
+\end_layout
+
+\begin_layout Standard
+But first,
+ some more open questions:
+ So,
+ I got the explanation that one subset of the symplectic xforms map oscillators of different frequencies to one–another.
+ These need to be connected back to Lorentz xforms.
+ Going in the other direction gives me the squeezed states,
+ but the detailed articulation to Bogoliubov remains undone.
+\end_layout
+
+\begin_layout Standard
+Well,
+ I'm still rolling,
+ can't quit yet...
+ For the 
+\begin_inset Formula $n$
+\end_inset
+
+–dimensional complex vector space,
+ we forget the complex structure to get a 
+\begin_inset Formula $2n$
+\end_inset
+
+–dimensional real symplectic space.
+ The symplectic xforms are now 
+\begin_inset Formula $\mathrm{Sp}\left(2n,\mathbb{R}\right)$
+\end_inset
+
+ and the unitary subspace is 
+\begin_inset Formula $U\left(n\right)$
+\end_inset
+
+ and the Siegel half–space is 
+\begin_inset Formula $\mathfrak{H_{n}}=\mathrm{Sp}\left(2n,\mathbb{R}\right)/U\left(n\right)$
+\end_inset
+
+ and the Bogoliubov xforms are 
+\begin_inset Formula $n\left(n+1\right)$
+\end_inset
+
+ real parameters.
+\end_layout
+
+\begin_layout Standard
+For a vector field in 3D,
+ we have 
+\begin_inset Formula $n=3$
+\end_inset
+
+...
+ I'm a lazy turd,
+ so I ask Claude ...
+ and Claude is a fucking moron.
+ It makes up some blargle about 
+\begin_inset Quotes eld
+\end_inset
+
+isospin squeezed states
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So I push on this,
+ and get a nice reply,
+ verbatim below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+What Is Solidly Established
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Squeezed states in heavy–ion collisions is a genuine research area.
+ The key observable is Hanbury Brown–Twiss (HBT) interferometry —
+ two–pion correlations in momentum space.
+ The connection to squeezing was made explicitly by:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Yuen (1976) and subsequently Walls and Milburn established the general squeezed state formalism in quantum optics
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Aichelin and Bertsch (1985) and others applied two–particle correlations to heavy–ion physics
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Andreev,
+ Betman,
+ and Siemens —
+ and more explicitly Sinyukov and collaborators in the 1990s —
+ noted that the pion source in heavy–ion collisions could produce squeezed coherent states.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The most explicit connection between squeezed pion states and HBT correlations was developed by:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Agarwal and collaborators
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Cernigoi,
+ Fabbri and others in the Italian school
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Most explicitly:
+ M.
+ Asakawa,
+ T.
+ Csörgő,
+ and M.
+ Gyulassy —
+ "Little Bang Squeezed Pion States" —
+ who argued that back–to–back pion correlations (as opposed to same–direction HBT correlations) are a direct signature of squeezed vacuum states produced in the quark–gluon plasma
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\emph on
+The Back–to–Back Correlation Signature
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+This is the most concrete physical prediction.
+ A squeezed vacuum at fixed 
+\begin_inset Formula $\mathbf{k}$
+\end_inset
+
+ generates correlations between modes 
+\begin_inset Formula $\mathbf{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $-\mathbf{k}$
+\end_inset
+
+ —
+ exactly the off–diagonal Bogoliubov structure we identified.
+ This produces an enhancement in the back–to–back pion pair distribution:
+ 
+\begin_inset Formula 
+\[
+C(\mathbf{k},-\mathbf{k})=1+\left|\frac{\langle a(\mathbf{k})a(-\mathbf{k})\rangle}{\langle a^{\dagger}(\mathbf{k})a(\mathbf{k})\rangle}\right|^{2}>1
+\]
+
+\end_inset
+
+This is distinct from the usual HBT effect which correlates 
+\begin_inset Formula $(\mathbf{k},\mathbf{k})$
+\end_inset
+
+ pairs.
+ The back–to–back signal is a direct quantum signature of the Bogoliubov mixing of the vacuum.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Well,
+ this is kind of fun!
+ I could search social media for years before I got something this nice.
+ I suppose a subscription to Physics Today would offer this level of satisfaction,
+ maybe.
+ But you know me.
+ Ain't gonna happen.
+\end_layout
+
+\begin_layout Standard
+I need Claude to explain Hanbury–Brown–Twiss for me.
+ Every time I sit down to read about it,
+ I get vaguely lost and confused.
+ Perhaps it is time to put an end to that?
+\end_layout
+
+\begin_layout Standard
+Clearly,
+ my to–do list remains out of control.
+\end_layout
+
+\begin_layout Standard
+x 
 \end_layout
 
 \begin_layout Standard
