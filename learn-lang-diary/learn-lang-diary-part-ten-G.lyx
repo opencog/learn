@@ -12295,6 +12295,649 @@ Talked to Michael Heller (socioprophet) by phone.
  and could brainstorm some more.
 \end_layout
 
+\begin_layout Subsection*
+27 April 2026
+\end_layout
+
+\begin_layout Standard
+My letter to Amir (extract):
+\end_layout
+
+\begin_layout Standard
+As I explained long ago,
+ I can map generic hypergraphs to
+\end_layout
+
+\begin_layout Standard
+link-grammar,
+ and back again.
+ And,
+ as I explained long ago,
+ I view the
+\end_layout
+
+\begin_layout Standard
+link-grammar parser-codebase as a kind of optimized layer for doing
+\end_layout
+
+\begin_layout Standard
+hypergraph processing.
+ That's the general idea.
+ The practice has
+\end_layout
+
+\begin_layout Standard
+proven to be more difficult.
+ Where shall I begin?
+\end_layout
+
+\begin_layout Standard
+-- Of course,
+ the concept of jigsaws is insanely generic:
+ what's
+\end_layout
+
+\begin_layout Standard
+connected to what is fundamental.
+ Biochemsitry is all about proteins
+\end_layout
+
+\begin_layout Standard
+that fit together,
+ or don't.
+ The individual reactions in the Krebs
+\end_layout
+
+\begin_layout Standard
+cycle are clearly jigsaw pieces.
+ In economics,
+ one can do the same
+\end_layout
+
+\begin_layout Standard
+with the inputs and outputs of factories.
+ I recently digitized very
+\end_layout
+
+\begin_layout Standard
+old family photographs (100,
+ 150 years old),
+ stuck them on the LDS
+\end_layout
+
+\begin_layout Standard
+genealogy website,
+ and discovered that a lot of genealogy proceeds as
+\end_layout
+
+\begin_layout Standard
+a jigsaw puzzle assembly:
+ these two people have the same name,
+ they
+\end_layout
+
+\begin_layout Standard
+are born on the same day,
+ in the same city,
+ and the mothers name is
+\end_layout
+
+\begin_layout Standard
+the same.
+ Ergo,
+ they must be the same person.
+ You can attach the
+\end_layout
+
+\begin_layout Standard
+connectors.
+ What's curious about this process is that often,
+ the match
+\end_layout
+
+\begin_layout Standard
+is incomplete:
+ some names are missing,
+ mis-spelled.
+ Some dates are
+\end_layout
+
+\begin_layout Standard
+off.
+ Yet,
+ there is other circumstantial or indirect evidence:
+ the
+\end_layout
+
+\begin_layout Standard
+mothers maiden name is the same.
+ So there is a certain confidence of
+\end_layout
+
+\begin_layout Standard
+matching;
+ the confidence is driven by evidence,
+ similar to
+\end_layout
+
+\begin_layout Standard
+court-room/police-detective evidence.
+ At any rate,
+ experiences like
+\end_layout
+
+\begin_layout Standard
+this provides the primary driver,
+ the conviction that "this is the
+\end_layout
+
+\begin_layout Standard
+right way".
+ That everything is made of connectors and disjuncts.
+\end_layout
+
+\begin_layout Standard
+-- I think I showed you a paper where I explain how link-grammar
+\end_layout
+
+\begin_layout Standard
+concepts can be applied to vision and sound processing.
+ If not,
+ let me
+\end_layout
+
+\begin_layout Standard
+know.
+ Last year,
+ I thought I would sit down and vibe-code this,
+ should
+\end_layout
+
+\begin_layout Standard
+be "easy enough".
+ But first,
+ as a trial run,
+ a generic sensori-motor
+\end_layout
+
+\begin_layout Standard
+infrastructure,
+ loosely envisioned as "here are some connector tabs,
+\end_layout
+
+\begin_layout Standard
+on which some information can flow in",
+ and "here are some connector
+\end_layout
+
+\begin_layout Standard
+tabs,
+ which move things (location,
+ position,
+ view direction,
+\end_layout
+
+\begin_layout Standard
+attention)" and I would use link-grammar style rules,
+ if not link
+\end_layout
+
+\begin_layout Standard
+grammar directly,
+ to connect them up.
+ Rather than vision or sound,
+ I
+\end_layout
+
+\begin_layout Standard
+picked the filesystem as a domain:
+ I can "view" directory contents and
+\end_layout
+
+\begin_layout Standard
+file metadata,
+ and I can "move" from directory to directory.
+ I coded
+\end_layout
+
+\begin_layout Standard
+that up,
+ it works.
+ I then tried to write down precise connector and
+\end_layout
+
+\begin_layout Standard
+disjunct rules.
+ This is possible,
+ but becomes verbose,
+ tedious,
+\end_layout
+
+\begin_layout Standard
+boring,
+ error prone.
+ Somehow this needs to be automated.
+ I have ideas
+\end_layout
+
+\begin_layout Standard
+for this,
+ but ...
+ well,
+ this email is long enough.
+ Meta-issues and
+\end_layout
+
+\begin_layout Standard
+meta-solutions pop into mind,
+ and exploring each of these seems
+\end_layout
+
+\begin_layout Standard
+intractable.
+\end_layout
+
+\begin_layout Standard
+-- A completely different project was the idea of making Atomese run
+\end_layout
+
+\begin_layout Standard
+natively on GPU's.
+ The brute force solution is to code (to vibe-code)
+\end_layout
+
+\begin_layout Standard
+a compiler.
+ (from Atomese,
+ to GPU) It's hard,
+ but doable:
+ the path is
+\end_layout
+
+\begin_layout Standard
+clear,
+ compiler technology is generally understood.
+ But brute-forcing
+\end_layout
+
+\begin_layout Standard
+is so ..
+ unappealing.
+ Inelegant.
+ What I'd like to do is to have a
+\end_layout
+
+\begin_layout Standard
+machine description of the GPU,
+ represented as a metagraph,
+ a machine
+\end_layout
+
+\begin_layout Standard
+description of the fabric (the bus,
+ the bandwidth) represented as a
+\end_layout
+
+\begin_layout Standard
+metagraph,
+ and then,
+ some rewrite rules to morph a code base from one
+\end_layout
+
+\begin_layout Standard
+target architecture (e.g.
+ the CPU) to the other (the GPU).
+ So,
+\end_layout
+
+\begin_layout Standard
+something that is like a dynamic compiler,
+ able to move from one
+\end_layout
+
+\begin_layout Standard
+representation to another.
+ The sensori-motor ideas,
+ built on the
+\end_layout
+
+\begin_layout Standard
+link-grammar conception of jigsaws,
+ seems like the right conceptual
+\end_layout
+
+\begin_layout Standard
+foundation.
+ The difficulty of describing the individual disjuncts
+\end_layout
+
+\begin_layout Standard
+needed for such transformations is overwhelming.
+ Again,
+ this needs
+\end_layout
+
+\begin_layout Standard
+automation.
+ Again,
+ there are more meta-issues,
+ and meta-solutions,
+ and
+\end_layout
+
+\begin_layout Standard
+they all spiral out of control.
+\end_layout
+
+\begin_layout Standard
+-- Here's a version of the above that you might enjoy.
+ Write down the
+\end_layout
+
+\begin_layout Standard
+pseudo-code for the LG parser algo.
+ Convert this pseudocode into a
+\end_layout
+
+\begin_layout Standard
+hypergraph;
+ from the hypergraph,
+ figure out what the connectors and
+\end_layout
+
+\begin_layout Standard
+disjuncts are.
+ So now you have that algo,
+ expressed as if it was
+\end_layout
+
+\begin_layout Standard
+assembled from smaller computational -pieces-parts.
+ Now,
+ these
+\end_layout
+
+\begin_layout Standard
+pieces-parts can be converted to ...
+ C,
+ C++,
+ Jaa,
+ python ..
+ or to run
+\end_layout
+
+\begin_layout Standard
+in GPU.
+ The performance would be terrible;
+ most optimizations would be
+\end_layout
+
+\begin_layout Standard
+lost.
+ But the idea that there is some metagraph that expresses
+\end_layout
+
+\begin_layout Standard
+algorithms becomes exposed.
+ That metagraph can be retargeted to
+\end_layout
+
+\begin_layout Standard
+different compute fabrics.
+ But since that metagraph is built up out of
+\end_layout
+
+\begin_layout Standard
+disjuncts,
+ we have infrastructure for working with it.
+ This seems like
+\end_layout
+
+\begin_layout Standard
+a worthy project.
+ It's sufficiently limited in scope to maybe be
+\end_layout
+
+\begin_layout Standard
+doable,
+ but sufficiently broad to expose key issues and draw attention
+\end_layout
+
+\begin_layout Standard
+and expand the state of the art.
+\end_layout
+
+\begin_layout Standard
+-- Returning to Link Grammar directly and immediately,
+ I very much
+\end_layout
+
+\begin_layout Standard
+like the idea of running it in the "generate" mode.
+ But,
+ where I last
+\end_layout
+
+\begin_layout Standard
+left it,
+ there was a problem with combinatoric explosion.
+ As you
+\end_layout
+
+\begin_layout Standard
+recall,
+ I had connector sets numbering in the millions or more,
+ and
+\end_layout
+
+\begin_layout Standard
+this does not scale.
+ Part of the problem is that the link grammar
+\end_layout
+
+\begin_layout Standard
+parser algorithm exhaustively examines all possibilities.
+ Somehow,
+\end_layout
+
+\begin_layout Standard
+this needs to be reigned in,
+ with some sort of prioritization
+\end_layout
+
+\begin_layout Standard
+mechanism that narrows the search.
+ It's easy to imagine solutions,
+\end_layout
+
+\begin_layout Standard
+but,
+ as you know,
+ almost all solutions seem to clash with the algo
+\end_layout
+
+\begin_layout Standard
+itself.
+ Are there other solutions we have not thought of?
+ Perhaps we
+\end_layout
+
+\begin_layout Standard
+should look at other algos?
+ Perhaps we are just being stupid,
+ and not
+\end_layout
+
+\begin_layout Standard
+seeing what is in front of us?
+ I don't know.
+\end_layout
+
+\begin_layout Standard
+-- This last part is ultimately experimental,
+ not theoretical.
+ You
+\end_layout
+
+\begin_layout Standard
+wrote code,
+ I ran experiments,
+ things blew up here or there,
+ these got
+\end_layout
+
+\begin_layout Standard
+fixed,
+ then the next round of experiments.
+ But there need to be
+\end_layout
+
+\begin_layout Standard
+experiments lined up:
+ some target,
+ some goal to make something work.
+\end_layout
+
+\begin_layout Standard
+I'm a bit at a loss,
+ for now.
+ The meta-meta-meta-issues ate my lunch.
+\end_layout
+
+\begin_layout Standard
+-- One issue was the language-learning experiment.
+ It was batched,
+ and
+\end_layout
+
+\begin_layout Standard
+the batching pipeline was fragile and hard to manage.
+ It felt like
+\end_layout
+
+\begin_layout Standard
+doing laundry:
+ I would baby-sit the job -- for days -- until something
+\end_layout
+
+\begin_layout Standard
+blew up,
+ fix that,
+ and restart it.
+ Or maybe like watching paint dry.
+\end_layout
+
+\begin_layout Standard
+Tedious.
+ So I decided to redesign this as a dynamic system,
+ which lead
+\end_layout
+
+\begin_layout Standard
+me down to the idea of sensori-motor agents crawling over a file
+\end_layout
+
+\begin_layout Standard
+system,
+ ingesting text,
+ parsing it,
+ and (of course) those
+\end_layout
+
+\begin_layout Standard
+sensori-motor agents would be described as,
+ composed of jigsaws -- of
+\end_layout
+
+\begin_layout Standard
+course,
+ cause the whole idea is that its "jigsaws all the way down".
+\end_layout
+
+\begin_layout Standard
+Where does this leave things?
+ It would seem I've tackled an
+\end_layout
+
+\begin_layout Standard
+overwhelmingly large project,
+ and link-grammar sits off to the side:
+\end_layout
+
+\begin_layout Standard
+conceptually and fundamentally important,
+ but marooned for the moment.
+\end_layout
+
+\begin_layout Standard
+I've been muddling my way through the mea-issues above.
+\end_layout
+
+\begin_layout Standard
+Should you work on link-grammar?
+ Yes.
+ Would I love to see patches and
+\end_layout
+
+\begin_layout Standard
+enhancements?
+ Yes.
+ Will your work have a disinterested user base of
+\end_layout
+
+\begin_layout Standard
+approximately zero users?
+ For now,
+ that seems inevitable.
+ Everyone is
+\end_layout
+
+\begin_layout Standard
+astounded by LLM's,
+ and things like LG seem irrelevant for that crowd.
+\end_layout
+
+\begin_layout Standard
+There are very few who are thinking about symbolic alternatives to
+\end_layout
+
+\begin_layout Standard
+LLM's,
+ and those that are,
+ I think they are wrestling with meta-issues
+\end_layout
+
+\begin_layout Standard
+similar to what I describe above.
+ LG itself does not yet have the
+\end_layout
+
+\begin_layout Standard
+breadth and depth and power to rescue the situation,
+ to attract
+\end_layout
+
+\begin_layout Standard
+attention.
+ It could,
+ I think,
+ but this is more of a daydream.
+\end_layout
+
+\begin_layout Standard
+Of course,
+ there is some old Buddhist saying:
+ a journey of a thousand
+\end_layout
+
+\begin_layout Standard
+miles begins with one step.
+\end_layout
+
+\begin_layout Standard
+Linas.
+\end_layout
+
 \begin_layout Standard
 x
 \end_layout
