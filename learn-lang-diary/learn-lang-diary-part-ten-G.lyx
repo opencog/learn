@@ -12560,8 +12560,172 @@ I'm famous!
  https://halluworld.kessel.media/posts/pst_84bb799badbe442189b3f5c6dd15962e/jeffrey-epstein-lhomme-qui-voulait-une-machine-a-mentir
 \end_layout
 
+\begin_layout Subsection*
+29 April 2026
+\end_layout
+
 \begin_layout Standard
-x
+Short note.
+ Perhaps by writing it down,
+ I won't forget.
+ Put it on my TODO list of things to work on.
+ It goes like this:
+\end_layout
+
+\begin_layout Standard
+Some years ago I wrote a paper saying that CCG (combinatorial categorial grammar) is identical to LG (link grammar).
+ And this is mostly true.
+ In that paper,
+ I gave a formal correspondence for some 90% of the features in both.
+ An isomorphism,
+ of sorts.
+ Then I noted,
+ at the end,
+ the remaining 10% of the isomorphism.
+ one has multiple choices.
+ One can complete the mapping several ways,
+ having pros and cons to each.
+ Most or all of these completions were not entirely satisfying,
+ and there was not any one choice that towered over the rest.
+\end_layout
+
+\begin_layout Standard
+At the time that I wrote that text,
+ this irked me.
+ A week or two ago,
+ it shot into my head that this situation resembled various cases in mathematics,
+ where some sort of morphism or some homotopy is blocked by some sort of (global) structure.
+ And that this blockage is important:
+ the sphere is not homotopic to a torus.
+ This is not an annoyance,
+ but the symptom of something fundamental.
+ So perhaps here,
+ too.
+ Perhaps I should go back and quantify the failure to align.
+\end_layout
+
+\begin_layout Standard
+A lot of what I talk (think) about in AI/AGI research has to do with representations:
+ how can I represent structures and relations observed in the exterior world?
+ To what degree are different representations isomorphic,
+ and when are they not?
+ Representations,
+ at the level of algebraic statements,
+ at the level of lambda calculus,
+ at the level of axioms and inference rules,
+ can generally be homotopically transformed into one–another.
+ Except when they cannot.
+\end_layout
+
+\begin_layout Standard
+From the software point of view,
+ I want to have two things:
+ a general algorithm that will perform homotopic deformations from one representation to another,
+ and a different algorithm that will show when this is not possible,
+ and why.
+ For example,
+ say I have some code written in C++,
+ and I want to port it to Java.
+ One way to accomplish this is to use the Atomese as the intermediate representation,
+ and have compilers from Atomese to Java,
+ and a 
+\begin_inset Quotes eld
+\end_inset
+
+disassembler
+\begin_inset Quotes erd
+\end_inset
+
+ from C++ to Atomese.
+ This is a bit brute–force,
+ but it should work.
+\end_layout
+
+\begin_layout Standard
+More abstractly,
+ I want to morph structure perceived by the sensory system into any one of a number of different Atomese formats.
+ Atomese has no preferred representational form;
+ there are many that are possible.
+ They're generally interchangable,
+ and one can morph on representation to another.
+ Except when one can't.
+ I want to get a handle on that variability,
+ and control it.
+\end_layout
+
+\begin_layout Standard
+If you don't understand the previous paragraph,
+ here is a concrete example.
+ If one has some C code,
+ one can compile it with –O0,
+ –O2 and –O3 flags,
+ each providing a different amount of optimization.
+ The functional results are the same.
+ The performance is not.
+ Register assignments and assembly code is radically different.
+ The compiler can guarantee the homotopic equivalence of the optimized and non–optimized versions of the assembly,
+ because it is applying a large collection of graph rewrite rules to perform each optimization,
+ in turn.
+ Now,
+ if one wanted to be perverse,
+ one could generate billions of equivalent binaries,
+ identical in function but differing in assembly,
+ by simply choosing to randomly apply each optimization,
+ or not,
+ at that one location where it could be applied.
+ This would generate a combinatoric explosion of possibilities.
+\end_layout
+
+\begin_layout Standard
+Compiler people would never do this,
+ because it's insane.
+ They have one goal:
+ make the code run as fast as possible,
+ period.
+ For Atomese,
+ there's no sch principle.
+ Sure,
+ we want the representation to be small,
+ and use less RAM.
+ But we also want to be able to apply various operations to it,
+ or perhaps perform queries on it,
+ and this requires a non–minimal graph.
+ Perhaps the Atomese represents an algorithm,
+ and we want to vectorize it.
+ Doing so almost surely requires massive rewrites and blow–ups of the graphical representation of that algorithm.
+ Transformation from one form to another may require a lot of morphing.
+ I want to have a better grasp of the general theory of doing this.
+\end_layout
+
+\begin_layout Standard
+I want to look at collections of such transformations as a dynamical system.
+ I want to think about all possible transformations at once,
+ all possible morphological changes...
+ 
+\end_layout
+
+\begin_layout Standard
+Grr.
+ As I write these words,
+ these ideas all seem so shallow and obvious and useless.
+ I mean,
+ I think its fun to think about this,
+ and its fun to implement and explore them in Atomese,
+ but none of this solves any specific economically important problem that would light up the interests of venture capitalists,
+ or be celebrated by technology geeks,
+ or by scientists as some sort of magic,
+ majestic breakthrough.
+ So its my little sandbox of seemingly pointless games.
+ But,
+ but ...
+\end_layout
+
+\begin_layout Standard
+Well,
+ shit.
+ Have to break for dinner.
+ Dinner is being served with white wine,
+ so I may not be coherent after this.
 \end_layout
 
 \begin_layout Standard
