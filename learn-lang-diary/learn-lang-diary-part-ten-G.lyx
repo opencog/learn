@@ -12729,11 +12729,414 @@ Well,
 \end_layout
 
 \begin_layout Standard
-x
+—
+—
+—
+—
+—
+—
+—
+—
+–
+\end_layout
+
+\begin_layout Standard
+OK.
+ Four hours later.
+ There is an old nagging issue with Atomese that I have to face.
+ For many years,
+ I have been driven to implement everything in Atomese.
+ Sometimes stray from that path;
+ Atomese is very idiosyncratic.
+ Every now and then I stray from this path.
+ I say to myself:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+oh,
+ it's time to rejoin the ranks of convention
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I tried to do the file sys archival project in python.
+ The first draft was hand–coded.
+ I think I got help from Claude in one of the later drafts?
+ Maybe not?
+ Anyway,
+ it was crash and burn.
+ After a while,
+ I was like 
+\begin_inset Quotes eld
+\end_inset
+
+why the fuck am I struggling working around stupid python limitations and idiotic python API's,
+ when I could be doing it in Atomese?
+ It would be so much easier.
+\begin_inset Quotes erd
+\end_inset
+
+ The prodigal son returns home.
+ This is not the first time,
+ either.
+ Every time I set out to explore the world outside of Atomese,
+ I end up getting crushed by the utter stupidity and the non–operability of popular,
+ widely–adopted,
+ industry–standard API's.
+ Why the fuck does anyone want to code like that?
+ I mean,
+ I know why,
+ its kind of a rhetorical question:
+ if you want to build some narrow,
+ focused application meeting some narrow,
+ focused user requirements,
+ and it's carved in stone and does not need to be refactored ever,
+ then sure,
+ code in Java or python or c++ or whatever.
+ Its fast,
+ easy,
+ ordinary programmers know this stuff,
+ documentation is easy to find,
+ and you'll have your monolithic,
+ immutable,
+ permanent static dull cut–n–dried app on time and under–budget.
+ Go for it.
+ But the stuff I keep trying to do,
+ that approach is entirely inadequate.
+ I got to Atomese over two decades because I tried the rest,
+ and frankly,
+ it all sucked.
+ Atomese has been my attempt to create a non–suck programming environment.
+ Somewhat dishearteningly,
+ it has a user–base of one.
+\end_layout
+
+\begin_layout Standard
+This still feels like the right direction,
+ even though I am incredibly conflicted over it.
+ However,
+ but,
+ and this is a big but:
+ I'm wondering if the arrival of LLMs like Claude changes everything.
+ I created Atomese because I wanted a clean surface,
+ clean internals.
+ I created Atomese because I was experimenting with basic comp sci ideas.
+ Twiddling with AI,
+ and up till about 2000,
+ AI was more about data structures than it was about algorithms.
+ Famous AI scientists will vehemently disagree.
+ I see why:
+ stick to traditional programming languages,
+ and the algorithm is everything.
+ Move to Atomese,
+ the data representation is everything,
+ the algorithm comes along for the ride.
+ The data moves,
+ transforms,
+ its a dynamical system.
+ The algorithm is just another dynamical mutation of the data structure;
+ one of many,
+ billions,
+ and uncountable number of possible dynamical transmutations of the data.
+ Algorithms are like swirls in the river,
+ but what makes a river is the water,
+ the data,
+ not the swirls.
+ I guess I'm physics–coded.
+\end_layout
+
+\begin_layout Standard
+Consider,
+ for example,
+ measure–preserving dynamical systems.
+ The reason they are measure–preserving is because this is a reasonable model of baryon number conservation.
+ The total number of atoms in an industrial mixing vat is conserved;
+ its measure–preserving.
+ The physics of that mixing and stirring has to do with moving those atoms around.
+ The mathematics has to do with dynamical systems that model such mixing and stirring.
+ (Foot–note,
+ aside:
+ it suddenly occurs to me I've never seen a formal definition of a system with a chemical potential.
+ That is one writes expressions like 
+\begin_inset Formula $T^{-1}\left(A\cap B\right)$
+\end_inset
+
+ and even 
+\begin_inset Formula $\mu\left(T^{-1}\left(A\right)\right)=\mu\left(A\right)$
+\end_inset
+
+ for the measure 
+\begin_inset Formula $\mu$
+\end_inset
+
+ but how would this work if one had multiple measures for different chemically reacting substances?
+ For some reason,
+ I've never seen that!
+\end_layout
+
+\begin_layout Standard
+I'm going to indulge myself for a moment,
+ and ask an LLM about this.
+\end_layout
+
+\begin_layout Standard
+Bleh.
+ Everything I do only increases the size of my to–do list.
+ I asked Claude,
+ it pointed at three things:
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The Kubo–Martin–Schwinger (KMS) condition for a one–parameter subgroup of a symmetry group,
+ consisting of time translation and gauge transformations.
+ The KMS condition is effectively the algebraic abstraction of the Gibbs state.
+ ...
+ The algebraic/KMS approach to chemical potential is known but somewhat obscure outside of C*-algebra / quantum statistical mechanics circles
+\emph default
+.
+\begin_inset Quotes erd
+\end_inset
+
+ OK.
+ This is worth at least a short refresher.
+ I have ADHD so 
+\begin_inset Quotes eld
+\end_inset
+
+short
+\begin_inset Quotes erd
+\end_inset
+
+ here means less than a few hours or less than a day;
+ otherwise my eyes glaze over.
+\end_layout
+
+\begin_layout Itemize
+The Sinai–Ruelle–Bowen (SRB) measure for dissipative,
+ non–equilibrium systems.
+ It notes:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The sums of Lyapunov exponents determine fluctuations of the entropy production rate in the SRB state.
+ ...
+ There are two measures:
+ Lebesgue/Liouville as the reference measure,
+ and SRB as the physical invariant measure.
+ Their Radon–Nikodym derivative doesn't exist (since SRB is singular w.r.t.
+ Lebesgue),
+ which is the mathematical signature of dissipation and entropy production.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ Huh.
+ OK.
+ This also deserves a half–day or full day of study.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+The contact geometry approach
+\series default
+.
+ For thermodynamic systems with dissipation,
+ standard statistical mechanics of conservative systems relies on symplectic geometry of phase space.
+ For a class of nonconservative systems stemming from contact geometry,
+ one can find generalized Hamilton's equations,
+ a Liouville theorem,
+ and microcanonical and canonical measures invariant under the contact flow.
+ Remarkably,
+ this canonical measure has a power–law density distribution with respect to the standard contact volume form.
+ Contact geometry is the odd–dimensional cousin of symplectic geometry and naturally includes thermodynamic variables —
+ temperature,
+ entropy —
+ as coordinates.
+ This is a serious research program,
+ not a curiosity.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ I copied this verbatim from Claude,
+ because there's little to improve on in the phrasing,
+ and I'll need the full reminder.
+ I look at contact geometry every now and then (hello,
+ torsion!) but need a refresher.
+ The sentence 
+\begin_inset Quotes eld
+\end_inset
+
+has a power–law density distribution
+\begin_inset Quotes erd
+\end_inset
+
+ caught my attention and made me stop.
+ This probably deserves much more than a few days worth of study,
+ but how will I carve that time out?
+\end_layout
+
+\begin_layout Standard
+OK.
+ That's enough for the late–night day–dreaming.
+ There was one more thing that caught my eye:
+ The New York Times Magazine,
+ 26 April 2026,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+On Language
+\begin_inset Quotes erd
+\end_inset
+
+ by Dan Brooks.
+ This sentence fired up my imagination:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+While it is true that 
+\begin_inset Quotes eld
+\end_inset
+
+–coded
+\begin_inset Quotes erd
+\end_inset
+
+ lets us make a connection without specifying what that connection actually is,
+ it also lets us express what is felt but cannot be demonstrated logically – a legitimate and perhaps increasingly important category of relation in an environment that ruthlessly converts experience into words and then some...
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ This caught my attention precisely because it touches on my ruminations on homomorphic transmutations,
+ above,
+ but here,
+ at a very abstract level:
+ the conversion of feelings into words.
+ This is a creative act:
+ fishing feelings and impressions,
+ and turning them into sentences.
+ LLM's do not have feelings,
+ at least,
+ not in the mammalian sense;
+ there may be some crypto–something in those weight matrices,
+ which are fished to construct grammatically correct sentences and the reverberation that rings out after the plucking of a violin string ahem prompt.
+ The reverb is ghostly and feels human–ish.
+ But actual humans appear to not only be stuck in the here–and–now,
+ but the conversion of vague feelings into concrete thoughts is our stock in trade.
+ So when I talk about the homotopic deformations,
+ this is what I think of:
+ what is this process of converting feelings,
+ or perhaps sensory organ inputs,
+ into awareness of a situation?
+ And what is this process of working in awareness,
+ in consciousness,
+ and forging sentences and action plans and movements?
+ That's the nature of this transmutational act?
+\end_layout
+
+\begin_layout Standard
+Well,
+ that's supposed to be a rhetorical question:
+ I already know the answer:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+its jigsaws all the way down
+\begin_inset Quotes erd
+\end_inset
+
+.
+ And that Atomese is my current best attempt at working with jigsaws.
+ This seems to be the correct framework,
+ the correct Petri dish for growing dynamical systems that transform and transmute data with algorithms,
+ and with treating algorithms as if they were data...
+ My gut sense is that this is where it all comes together.
+ It's all here.
+ All the required ingredients are there.
+ Just build the fucking thing.
+\end_layout
+
+\begin_layout Standard
+But then,
+ lets not throw out the baby with the bathwater:
+ the unity of experience and self–awareness in the here–and–now,
+ this remains an utter mystery.
+ I suspect its quantum;
+ see my posting from a few weeks earlier.
+ But hand–waving 
+\begin_inset Quotes eld
+\end_inset
+
+its quantum
+\begin_inset Quotes erd
+\end_inset
+
+ does little.
+ I really really need to get a better grip on here–and–now,
+ and that requires resuming the deep dive into the structure of the quantum vacuum,
+ Unruh,
+ and why Beckman bound is bits,
+ and why Hawking radiation is entropy.
+ And I still have no clue how to compute the entropy of a graph,
+ never mind the entropy of a mathematical proof or an algebraic manipulation,
+ or the entropy of any kind of symbolic flow.
+ I guess symbolic dynamics is a place to start,
+ but I don't know how to jump from symbolic dynamics to the dynamics of lambda calculus and beta reduction.
+\end_layout
+
+\begin_layout Standard
+It is now 1AM and I have to stop.
+ But perhaps its this:
+ starting from textbook symbolic dynamics,
+ I can compute an entropy.
+ Then I convert the symbolic dynamics to jigsaws,
+ and say 
+\begin_inset Quotes eld
+\end_inset
+
+ah hah the entropy of these two must be identical
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This gives me a way of writing down the entropy of one specific collection of jigsaws.
+ Perhaps this will allow some insight that will expose the generalization of entropy to the general case?
+ Hmm.
+ That's like another great idea that deserves a day or two of attempts.
+ I need more time.
+ How will I ever find time to explore all the questions I ask?
 \end_layout
 
 \begin_layout Standard
 x
+\end_layout
+
+\begin_layout Standard
+x 
 \end_layout
 
 \begin_layout Standard
