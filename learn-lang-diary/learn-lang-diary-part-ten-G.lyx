@@ -13131,6 +13131,673 @@ ah hah the entropy of these two must be identical
  How will I ever find time to explore all the questions I ask?
 \end_layout
 
+\begin_layout Subsection*
+30 April 2026
+\end_layout
+
+\begin_layout Standard
+Research update,
+ letter to Amir:
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+On Wed,
+ Apr 29,
+ 2026 at 9:12 PM Amir P <amirpli@gmail.com> wrote:
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> It may still be that the Viterbi algorithm is suitable for extracting the best parses from Parse_set.
+ At least,
+ that is what GPT tells me.
+ After it inspected extract-links.c,
+ it suggested that implementing it should be easy.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+Huh.
+ OK.
+ This sounds plausible.
+ The algos can pick though algebraic complexities more deeply than I can,
+ juggling them in my head.
+ I guess this is a bit like using a chess computer:
+ chess grandmasters can imagine what might happen,
+ but the computer can brute–force punch deeper.
+ Huh.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> I might try this soon,
+ after I convert Parse_set to use super-disjuncts so I do not have to do the work twice.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+Yes.
+ Please do the super–disjuncts.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+I've been daydreaming converting the algorithm readme into a more formal paper PDF.
+ I'm thinking three or four sections:
+ a description of the original CMU algo,
+ the changes for jets,
+ the new caches,
+ and the upcoming superdisjuncts.
+ And perhaps Viterbi,
+ if that works out.
+ And perhaps if it doesn't,
+ it would be a cautionary tale.
+ Again,
+ I may wake tomorrow morning with the overwhelming urge to do this,
+ or it might take months.
+ :-/
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> Maybe you are already doing this,
+ but if not,
+ you might want to try this approach.
+ Instead of asking it to implement an idea immediately,
+ try asking it to create a plan for how exactly it is going to implement it.
+ You can then continue to refine the plan until it looks perfect.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+Yes,
+ I'd been using plan mode since the moment when it first showed up.
+ It's fine,
+ it works.
+ I have not made custom–tailored agents;
+ I notice that Claude automatically creates agents,
+ and it seems like "they do something",
+ but I have not taken a close look.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+My issues have been at the meta–meta level,
+ at the research level.
+ I'll try again,
+ when I get the opportunity.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+When I say it "knows everything,
+ understands nothing",
+ this is evident even in non–coding tasks.
+ I regularly see authoritative answers which seem to miss the point.
+ Sophisticated answers containing elementary mistakes.
+ Failures to realize the B follows from A until I point it out.
+ When writing code,
+ it either compiles or it doesn't,
+ so syntax errors are caught automatically.
+ Unit tests pass,
+ or they don't,
+ so structural failures are caught.
+ But for free–form questions,
+ here's no cross–checking available.
+ The system does not (yet!?) know how to think through it's own responses to make sure they're not insane.
+ Although I do notice it is getting better.
+ Claude has a "show thinking" button,
+ which gives a verbose dump,
+ and you can see it catching it's own mistakes in there.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>> Good.
+ But I would also like to get you interested in my old
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>> code/algo/idea of counting word–pairs,
+ re–parsing with pairs to obtain
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>> disjuncts,
+ then reparsing with disjuncts to ...
+ well walk up a
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>> hierarchical ladder.
+ If nothing else,
+ I want to get you some of those
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>> datasets to work with.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> Yes.
+ Should I just clone the "learn" repository locally and use your datasets?
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+No.
+ There are docker containers in https://github.com/opencog/docker that do this.
+ There's a base–system container,
+ an atomspace container,
+ an "everything" container,
+ and several learn containers.
+ The first three are rock–solid.
+ The first,
+ and the third include LG (to solve a chicken–and–egg problem compiling) The learn containers have bit–rotted,
+ because I moved aside the version-1 learn subsystem in prep for version-2,
+ and then never did version 2.
+ Version 1 still works,
+ but the docker,
+ and the scripts are almost surely broken due to the changed paths.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+When these worked,
+ they automatically ingested text,
+ did pair counting,
+ then ran the next step and ran disjuncts.
+ Use these;
+ it automates the tedious process.
+ I'll need to fix them,
+ however,
+ to get them running again.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>> Cross–linking is semi–solved ...
+ or solvable.
+ When you get to that
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>> ping me,
+ I can recap where it was last left at.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> Two years ago,
+ I almost finished it but stopped because of an open question:
+ how to describe the conditions under which specific cross–links are allowed,
+ without introducing yet another definition file.
+ Now that we have #define in the dictionary,
+ I can just use any convenient format for that.
+ I also did not like that allowing cross–linking for a single connector could reduce the parsing speed by tens of percent for most sentences,
+ not only for those that actually need cross–links,
+ due to poorer pruning.
+ So,
+ maybe we should add a parse–option to allow it.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+OK,
+ Here goes.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+I think you already know this,
+ but let me review.
+ My grand insight from way back when was to realize that electrical circuits,
+ fundamentally non–planar,
+ can be drawn on flat sheets of paper.
+ What's the secret?
+ That little bridge–jump symbol.
+ I realized I could replicate that with connectors.
+ If I have link A and I want it to cross link B,
+ I pick one,
+ and declare it the bridge.
+ Say I pick B.
+ Then I write the disjunct for A+ as `A+ or (Bx- & A+ & Bx+)` This passes through the B to the other side,
+ and the subscript "x" says "this is a bridge".
+ It confirms that B is just passing through.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+This is easy,
+ it works,
+ it requires no changes to the code,
+ just the dictionary.
+ Limiting it to dictionary–only changes is nice,
+ because it strongly restricts where crossing is allowed:
+ we can explicitly restrict which links are allowed to cross,
+ and which not.
+ This is the preferred,
+ desirable way to solve this for the current en dict.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+Another possible solution is to auto–generate Bx- & A+ & Bx+ everywhere,
+ for everything.
+ This will break the current en dict,
+ as the no–crossing constraint is used implicitly to prevent bad parses.
+ Also,
+ as you note,
+ it creates huge pruning and performance issues.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+At one point,
+ I did think about actually writing an LG dictionary for actual,
+ real–life electronics.
+ A dictionary of capacitors,
+ resistors,
+ transistors.
+ I looked at SPICE,
+ the language used for discrete electronics (small circuits) and discovered a stunningly ugly prehistoric mess.
+ Entirely fine for the 1970's or 1980's or whenever it was created,
+ but a monstrosity by today's standards.
+ So I gave up.
+ Now,
+ with LLM's,
+ there's a new hope that this could be doable.
+ There are two interesting topics that come up.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+One is the issue of commutativity.
+ For example,
+ it does not matter if B crosses A,
+ or A crosses B.
+ Another example:
+ there may be cases where B has to cross two links (wires) when written one way,
+ but only one,
+ if written another way.
+ As a general rule,
+ fewer crossings are better.
+ This is like taking a tangle ("skein") of threads,
+ and rearranging them to minimize the number of crossings.
+ There is a well–developed mathematical theory for how to do this,
+ called knot theory.
+ If I recall,
+ the uncrossing move is called the "Rademacher move".
+ Something like that.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+If we did this for LG,
+ we would need an engine that applied collections of rules for such moves.
+ This is ...
+ intellectually interesting,
+ but as you might guess,
+ the complexity can spiral upwards.
+ I don't recall,
+ but I think there are theorems that show that determining if two knots are equivalent is Turing–unsolvable.
+ (Same reason that the equivalence of group presentations is Turing undecidable.) Something like that.
+ Also,
+ knots are possible only in 3D,
+ they can always untangled in higher dimensions.
+ There's another branch of mathematics called "surgery" (on low dimensional manifolds) that involves making cuts in manifolds,
+ and sewing things back together again,
+ in a different way.
+ I recently saw a lecture,
+ about invariants on 5D manifolds;
+ the boundaries are 4D,
+ and these are joined in 3D,
+ and you can then stick arbitrary knots into those 3D spaces,
+ and those knots create inequivalent 5D manifolds (having different Betti numbers) Crap like that.
+ Fun,
+ but we would have to step back and ask:
+ 'what is this can of worms that we open when we allow arbitrary link crossing?'
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+A side issue is that I would want such algos done in core Atomese,
+ so that they would be accessible to generic systems.
+ This might be solvable by extending Atomese wrappers for LG.
+ There are current Atomese wrappers for LG,
+ but they are "linguistic",
+ and not very general.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+A different issue is this:
+ how can SPICE dictionaries and circuit diagrams be converted to LG and/or Atomese?
+ Of course,
+ we can ask Claude,
+ Codex to do this for us,
+ "hard–coding" a solution.
+ I'm interested in the general problem:
+ how do I convert one representation to another,
+ generically?
+ What is the general process for conversion between representations?
+ What's allowed?
+ What's not?
+ What are the "obstructions"?
+ ("Obstructions" is another math term;
+ these are conditions that prevent you from making a move that you want to make.
+ For example,
+ you cannot turn a sphere into a torus,
+ not without surgery.
+ Classifying and categorizing and studying obstructions is itself a field of study.) Homotopy theory is well–studied for manifolds;
+ its badly understood when the spaces are spaces of algebraic expressions or software programs or datasets:
+ e.g.
+ "deforming" SPICE into LG.
+ Or converting some C++ code to Java.
+ Or refactoring an algo.
+ Or re-arranging some database ...
+ etc.
+ All this is ...
+ possible ...
+ and LLM's make some of this easy ...
+ but the general theory is unknown,
+ not understood,
+ I (we) don't know how to work with it in general,
+ and yet,
+ it seems to be a fundamental things that "intelligence" engages in.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+(The simplest examples are exchanging the order of a pair of nested loops,
+ and possibly vectorizing (loop–unrolling) the inner loop.
+ Compilers can handle the easy cases today.
+ Claude and Codex can do much deeper and more complicated cases.
+ But they seem to do it "by accident",
+ whereas compilers are engineered to work right.
+ I understand compilers.
+ I sort of understand LLM's.
+ I want to understand this generic act.)
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> I just did two tests to automatically fix and enhance the "en" dictionary.
+ First,
+ I chose a random sentence from corpus-basic that is marked as wrong,
+ but the current dictionary parses it:
+ "Nearly 1 million 1/4 people work here every day".
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> I then asked Codex to patch the dictionary to fix this,
+ and run the batches to test that nothing else got damaged.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> It told me the reason for the problem,
+ made a minimal patch to the dictionary,
+ ran m4 on it (I never told it that this was needed),
+ ran tests on the batches,
+ and notified me that only this sentence became unparsable and no other parse states had changed.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> I next told it to invent a correct sentence that the dictionary does not support.
+ It told me that this one is not supported:
+ "More people than I expected would arrive did arrive".
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> It explained why it is not supported and exactly how it should be fixed,
+ and why a different fix would cause a cross-link.
+ Its fix worked fine (and it,
+ of course,
+ tested it using the batches) and it even invented some more sentences,
+ both good and bad,
+ to test it (I did not ask for that).
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> By mistake,
+ I used the lowest reasoning mode (out of 5 modes) in these two tests.
+ But it was enough to do these successful dictionary patches on the first try.
+ Maybe the most advanced reasoning mode,
+ "xhigh",
+ would make better patches,
+ but I have not tested that.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> I also asked it for a plan to patch the dictionary so it supports English better.
+ It said that I can just repeat the process using a corpus,
+ and that it usually knows by itself if a sentence is grammatical or not.
+ So it seems that an LLM might be able to enhance the dictionary automatically.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+>
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> After I saw that writing LG rules is a no-brainer for it,
+ I could not go to sleep before seeing what it can do with Hebrew.
+ I asked it to create a new Hebrew dictionary in data/he-new/,
+ equivalent to the "en" tiny.dict.
+ It told me it should be done incrementally.
+ The first thing it did was change the makefiles to support that (even though I did not even think of that).
+ It then implemented a very nice dictionary that fully supports the current Hebrew corpus,
+ and added new examples that are now supported in the dictionary it created.
+ It even pointed out that I marked a sentence as incorrect that,
+ although it is not regular prose,
+ can still be considered correct despite being strange (it was right,
+ I originally missed that).
+ I asked it to do several more incremental steps.
+ It is not yet at the level of en/tiny.dict,
+ but it is very clean and much more advanced and correct than the current "he" dictionary.
+ I guess it can make the equivalent of the current "en" dictionary with just some more work.
+ So now I have another thing to send.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+Wow!!
+ I never thought of doing this,
+ but now that you mention it,
+ its obvious,
+ I guess.
+ Send patches,
+ as you wish.
+ All new and large Hebrew is fine.
+ Small changes to English is fine.
+ Large changes concern me;
+ how will we know that it's not LLM slop?
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+Then there's the meta–question,
+ I've long struggled with and partly avoided:
+ great!
+ Now what?
+ What do we do with those parses?
+ There are a few classical things.
+ Anaphora resolution:
+ determining that "it" in one sentence refers to "her purse" in another sentence,
+ and that "her" refers to "Jane" in yet another.
+ Another task would be mapping to the MTT abstractions (meaning–text theory) Another task would be mapping between words,
+ and items in a photograph.
+ Well,
+ then I need a symbolic representation for the photograph ...
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+After this,
+ I have many more questions.
+ Most of them seem to reduce to questions about transformations.
+ Above I said "How can I automatically convert from SPICE to LG?" Here,
+ I am asking "How do I convert a bunch of pixels to a deconstructed symbolic image/cartoon?" and "How do I convert a symbolic cartoon of a visual image to text,
+ or vice–versa?"
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+I can sense this is all possible;
+ it's just wildly out of control.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+> I have also investigated such graphs to see if I could find better parsing algorithms.
+ I have no results yet,
+ but I feel I need to look into it again.
+ In any case,
+ I think the combinatorial explosion can be partially reduced by tightening the grammar.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+Yes.
+ This is generically the case:
+ tightening the grammar reduces the combinatorial explosion.
+ However,
+ the combinatorial explosion remains:
+ it has just been moved to a different location.
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+LLM's seem to fuzz over this,
+ by skipping over or blurring or pruning certain branches that would have lead to combinatorial explosions,
+ if they were pursued in depth.
+ I would like to know what the nature of this pruning is.
+ What are the search–regions that the LLM's skipping over?
+ (And how do we know that nothing important was skipped?)
+\end_layout
+
+\begin_layout Standard
+
+\lang american
+--linas
+\end_layout
+
 \begin_layout Standard
 x
 \end_layout
