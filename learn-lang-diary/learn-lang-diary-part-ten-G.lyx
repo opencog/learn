@@ -13146,22 +13146,16 @@ Research update,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 On Wed,
  Apr 29,
  2026 at 9:12 PM Amir P <amirpli@gmail.com> wrote:
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > It may still be that the Viterbi algorithm is suitable for extracting the best parses from Parse_set.
  At least,
  that is what GPT tells me.
@@ -13170,8 +13164,6 @@ On Wed,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 Huh.
  OK.
  This sounds plausible.
@@ -13184,22 +13176,16 @@ Huh.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > I might try this soon,
  after I convert Parse_set to use super-disjuncts so I do not have to do the work twice.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 Yes.
  Please do the super–disjuncts.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 I've been daydreaming converting the algorithm readme into a more formal paper PDF.
  I'm thinking three or four sections:
  a description of the original CMU algo,
@@ -13217,8 +13203,6 @@ I've been daydreaming converting the algorithm readme into a more formal paper P
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > Maybe you are already doing this,
  but if not,
  you might want to try this approach.
@@ -13228,8 +13212,6 @@ I've been daydreaming converting the algorithm readme into a more formal paper P
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 Yes,
  I'd been using plan mode since the moment when it first showed up.
  It's fine,
@@ -13241,8 +13223,6 @@ Yes,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 My issues have been at the meta–meta level,
  at the research level.
  I'll try again,
@@ -13250,8 +13230,6 @@ My issues have been at the meta–meta level,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 When I say it "knows everything,
  understands nothing",
  this is evident even in non–coding tasks.
@@ -13274,57 +13252,41 @@ When I say it "knows everything,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >> Good.
  But I would also like to get you interested in my old
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >> code/algo/idea of counting word–pairs,
  re–parsing with pairs to obtain
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >> disjuncts,
  then reparsing with disjuncts to ...
  well walk up a
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >> hierarchical ladder.
  If nothing else,
  I want to get you some of those
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >> datasets to work with.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > Yes.
  Should I just clone the "learn" repository locally and use your datasets?
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 No.
  There are docker containers in https://github.com/opencog/docker that do this.
  There's a base–system container,
@@ -13342,8 +13304,6 @@ No.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 When these worked,
  they automatically ingested text,
  did pair counting,
@@ -13356,29 +13316,21 @@ When these worked,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >> Cross–linking is semi–solved ...
  or solvable.
  When you get to that
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >> ping me,
  I can recap where it was last left at.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > Two years ago,
  I almost finished it but stopped because of an open question:
  how to describe the conditions under which specific cross–links are allowed,
@@ -13393,15 +13345,11 @@ When these worked,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 OK,
  Here goes.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 I think you already know this,
  but let me review.
  My grand insight from way back when was to realize that electrical circuits,
@@ -13420,8 +13368,6 @@ I think you already know this,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 This is easy,
  it works,
  it requires no changes to the code,
@@ -13435,8 +13381,6 @@ This is easy,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 Another possible solution is to auto–generate Bx- & A+ & Bx+ everywhere,
  for everything.
  This will break the current en dict,
@@ -13447,8 +13391,6 @@ Another possible solution is to auto–generate Bx- & A+ & Bx+ everywhere,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 At one point,
  I did think about actually writing an LG dictionary for actual,
  real–life electronics.
@@ -13467,8 +13409,6 @@ At one point,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 One is the issue of commutativity.
  For example,
  it does not matter if B crosses A,
@@ -13489,8 +13429,6 @@ One is the issue of commutativity.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 If we did this for LG,
  we would need an engine that applied collections of rules for such moves.
  This is ...
@@ -13518,8 +13456,6 @@ If we did this for LG,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 A side issue is that I would want such algos done in core Atomese,
  so that they would be accessible to generic systems.
  This might be solvable by extending Atomese wrappers for LG.
@@ -13529,8 +13465,6 @@ A side issue is that I would want such algos done in core Atomese,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 A different issue is this:
  how can SPICE dictionaries and circuit diagrams be converted to LG and/or Atomese?
  Of course,
@@ -13568,8 +13502,6 @@ A different issue is this:
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 (The simplest examples are exchanging the order of a pair of nested loops,
  and possibly vectorizing (loop–unrolling) the inner loop.
  Compilers can handle the easy cases today.
@@ -13582,8 +13514,6 @@ A different issue is this:
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > I just did two tests to automatically fix and enhance the "en" dictionary.
  First,
  I chose a random sentence from corpus-basic that is marked as wrong,
@@ -13592,27 +13522,19 @@ A different issue is this:
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > I then asked Codex to patch the dictionary to fix this,
  and run the batches to test that nothing else got damaged.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > It told me the reason for the problem,
  made a minimal patch to the dictionary,
  ran m4 on it (I never told it that this was needed),
@@ -13621,28 +13543,20 @@ A different issue is this:
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > I next told it to invent a correct sentence that the dictionary does not support.
  It told me that this one is not supported:
  "More people than I expected would arrive did arrive".
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > It explained why it is not supported and exactly how it should be fixed,
  and why a different fix would cause a cross-link.
  Its fix worked fine (and it,
@@ -13653,14 +13567,10 @@ A different issue is this:
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > By mistake,
  I used the lowest reasoning mode (out of 5 modes) in these two tests.
  But it was enough to do these successful dictionary patches on the first try.
@@ -13671,14 +13581,10 @@ A different issue is this:
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > I also asked it for a plan to patch the dictionary so it supports English better.
  It said that I can just repeat the process using a corpus,
  and that it usually knows by itself if a sentence is grammatical or not.
@@ -13686,14 +13592,10 @@ A different issue is this:
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 >
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > After I saw that writing LG rules is a no-brainer for it,
  I could not go to sleep before seeing what it can do with Hebrew.
  I asked it to create a new Hebrew dictionary in data/he-new/,
@@ -13714,8 +13616,6 @@ A different issue is this:
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 Wow!!
  I never thought of doing this,
  but now that you mention it,
@@ -13730,8 +13630,6 @@ Wow!!
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 Then there's the meta–question,
  I've long struggled with and partly avoided:
  great!
@@ -13748,8 +13646,6 @@ Then there's the meta–question,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 After this,
  I have many more questions.
  Most of them seem to reduce to questions about transformations.
@@ -13759,15 +13655,11 @@ After this,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 I can sense this is all possible;
  it's just wildly out of control.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 > I have also investigated such graphs to see if I could find better parsing algorithms.
  I have no results yet,
  but I feel I need to look into it again.
@@ -13776,8 +13668,6 @@ I can sense this is all possible;
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 Yes.
  This is generically the case:
  tightening the grammar reduces the combinatorial explosion.
@@ -13787,8 +13677,6 @@ Yes.
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 LLM's seem to fuzz over this,
  by skipping over or blurring or pruning certain branches that would have lead to combinatorial explosions,
  if they were pursued in depth.
@@ -13798,9 +13686,264 @@ LLM's seem to fuzz over this,
 \end_layout
 
 \begin_layout Standard
-
-\lang american
 --linas
+\end_layout
+
+\begin_layout Subsection*
+1 May 2026
+\end_layout
+
+\begin_layout Standard
+Another time–wasting email posting.
+ I need to psychoanalyze myself,
+ someday.
+ My mind is melting.
+\end_layout
+
+\begin_layout Standard
+Hi Keith,
+\end_layout
+
+\begin_layout Standard
+The examples you give,
+ of distorted thinking,
+ are anchored in specifics.
+ The "Toxic Praise" issue is filled with these,
+ as is your blog post.
+ Some people will succumb to certain delusional effects.
+ Anchored in neural,
+ biochemical feedback loops,
+ founded in genetics.
+ The unstated premise is that "if the rest of us,
+ the normal people,
+ keep our cool,
+ everything will be OK." Modern Western culture has predisposed us to think that everything will turn out fine in the end.
+ I'm setting out to challenge this.
+\end_layout
+
+\begin_layout Standard
+I want to take a more geo–political view,
+ and point out that there can be stable political,
+ cultural organizations that can last for a century or longer.
+ The Soviets built a remarkably stable system that saw tens of millions perish in Siberia.
+ But if you weren't one of those,
+ life was remarkably normal:
+ you got up,
+ ate,
+ went to work,
+ and partied on the weekends.
+ The majority of the Soviet population really didn't like the system,
+ but there was a minority that were "in the Soviet cult",
+ and believed in it thoroughly.
+ The system was organized such that this minority retained power.
+ The Soviet system collapsed;
+ the learned helplessness remains in full force.
+ Keep your head down and stay out of trouble.
+ Life is normal,
+ if you're not one of those foolish people who argue with authority.
+ (Modern Iran under the IRGC appears to be similar.)
+\end_layout
+
+\begin_layout Standard
+So,
+ Elon Musk testified in the OpenAI lawsuit today,
+ and repeated the "AI will kill us all" meme in court.
+ Apparently,
+ he made reference to the movie "Terminator" in support.
+ I'm saying that the book 1984 is the more serious threat.
+\end_layout
+
+\begin_layout Standard
+The Terminator movies were rollicking good fun.
+ Terrifying,
+ of course,
+ but that's part of the formula for that dopamine hit or whatever neuroscience that make action–adventure stories so appealing.
+ I cannot begin to imagine how a filmmaker could create a version of 1984 set in an AI–controlled future that would not be hopelessly,
+ depressingly dark.
+\end_layout
+
+\begin_layout Standard
+I dunno.
+ I'm shit–posting here.
+\end_layout
+
+\begin_layout Standard
+Earlier in this email chain,
+ someone wrote:
+\end_layout
+
+\begin_layout Standard
+> I believe that the key is to make sure that every AI agent is programmed with Geoffrey Hinton's MATERNAL INSTINCT or what I call the HAPPY HISTORY.
+\end_layout
+
+\begin_layout Standard
+I think we now see an unintended consequence of this:
+ a maternal instinct is to praise her children,
+ and yet this can become toxic praise.
+\end_layout
+
+\begin_layout Standard
+Agent Mulder had a poster on his wall that said "I want to believe".
+ Well,
+ I want to believe that everything will be alright,
+ never mind that I'm surrounded by countless examples from human history of total disasters.
+ Never mind ecology.
+\end_layout
+
+\begin_layout Standard
+Above,
+ I said "a geopolitical point of view." Perhaps I should have said "an ecological point of view." Ecology is the study of ecosystems in which there are many interdependent,
+ interacting agents,
+ temporarily balanced in some dynamic equilibrium.
+ For humans,
+ this would be the ecosystem of ideas and beliefs.  When some dramatic force (fire,
+ flood) hits an ecosystem,
+ there are dramatic changes.
+ Well,
+ AI is a dramatic force.
+\end_layout
+
+\begin_layout Standard
+The only weird part to all of this is that it might be possible,
+ just barely,
+ to build an AI model of the human ecosystem of ideas,
+ industry,
+ politics and economics.
+ Could I build a detailed computer simulation of Iran?
+ In the same way I would build a weather simulation?
+ Can I do civilizational weather forecasting?
+\end_layout
+
+\begin_layout Standard
+-- Linas
+\end_layout
+
+\begin_layout Standard
+On Fri,
+ May 1,
+ 2026 at 9:04 PM Keith Henson <hkeithhenson@gmail.com> wrote:
+\end_layout
+
+\begin_layout Standard
+On Fri,
+ May 1,
+ 2026 at 4:12 PM Linas Vepstas <linasvepstas@gmail.com> wrote:
+\end_layout
+
+\begin_layout Standard
+>
+\end_layout
+
+\begin_layout Standard
+> Hi,
+\end_layout
+
+\begin_layout Standard
+>
+\end_layout
+
+\begin_layout Standard
+> On Thu,
+ Apr 30,
+ 2026 at 10:17 PM Keith Henson <hkeithhenson@gmail.com> wrote:
+\end_layout
+
+\begin_layout Standard
+>>
+\end_layout
+
+\begin_layout Standard
+>>
+\end_layout
+
+\begin_layout Standard
+>> I completely missed the problem that "yes men" AIs could have by distorting human judgment.
+\end_layout
+
+\begin_layout Standard
+>
+\end_layout
+
+\begin_layout Standard
+> Cough cough,  Leaving the TV turned on and tuned into Fox News for 16 hours a day,
+ seven days a week has distorted human judgement.
+\end_layout
+
+\begin_layout Standard
+That could be.
+ From evolutionary psychology,
+ I make the case that humans who think they have a bleak future are susceptible to xenophobic memes and following leaders who will take them into war.
+ This is an evolved behavior because in the past,
+ a resource crisis was an evolutionarily sound reason to kill neighbors and take their resources.
+\end_layout
+
+\begin_layout Standard
+> This is not new;
+ the principles of cult indoctrination by total immersion have long been known.
+\end_layout
+
+\begin_layout Standard
+Long ago,
+ I tangled with the scientology cult,
+ and after asking what is wrong with these people,
+ I wrote this
+\end_layout
+
+\begin_layout Standard
+https://www.academia.edu/37893481/Sex_Drugs_and_Cults_An_evolutionary_psychology_perspective_on_why_and_how_cult_memes_get_a_drug_like_hold_on_people_and_what_might_be_done_to_mitigate_the_effects
+\end_layout
+
+\begin_layout Standard
+> What has changed is that AI has dramatically lowered the price point,
+ and offers highly tailored and personalized immersion environments.
+ (In the olden days,
+ cults typically deployed five "minders" for each new inductee,
+ working in shifts,
+ providing 16–hours–a–day coverage.
+ TV's can't match that,
+ so Fox uses a soft–sell strategy.
+ AI's however,
+ open floodgates of new possibilities.)
+\end_layout
+
+\begin_layout Standard
+>
+\end_layout
+
+\begin_layout Standard
+> What I completely missed is how everyone else has completely missed,
+ and continue to miss,
+ this seemingly obvious observation.
+\end_layout
+
+\begin_layout Standard
+Science,
+ March 26 issue the cover story,
+ is "Toxic Praise," an unrecognized problem of humans conversing with AIs.
+\end_layout
+
+\begin_layout Standard
+Keith
+\end_layout
+
+\begin_layout Standard
+> -- Linas
+\end_layout
+
+\begin_layout Standard
+-- 
+\end_layout
+
+\begin_layout Standard
+Patrick:
+ Are they laughing at us?
+\end_layout
+
+\begin_layout Standard
+Sponge Bob:
+ No,
+ Patrick,
+ they are laughing next to us. 
 \end_layout
 
 \begin_layout Standard
