@@ -1227,7 +1227,11 @@ This is problematic because it exchanges order,
 \begin_inset Formula $\otimes$
 \end_inset
 
- in the middle of the brak-ket looks like a weirdo inner product or some expectation value or something crazy like that,
+ in the middle of the brak-ket looks like a weirdo inner product or some expectation value or so 
+\begin_inset Formula $N=100K$
+\end_inset
+
+mething crazy like that,
  and its not.
  So the bra–ket notation can become awkward here.
  It's awkward for LG,
@@ -1270,6 +1274,229 @@ hey,
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsection
+Dimensional embedding
+\end_layout
+
+\begin_layout Standard
+Everything above has been nothing more than a very verbose exercise in notation.
+ Nothing has been accomplished other than to gyrate and flip and do gymnastic exercises while juggling symbols around on a page.
+\end_layout
+
+\begin_layout Standard
+Now for the gut–punch.
+ (I'll keep this short.
+ It is after midnight and I want to go to bed.
+ Resume tomorrow.)
+\end_layout
+
+\begin_layout Standard
+Way back at the beginning,
+ I said 
+\begin_inset Quotes eld
+\end_inset
+
+set 
+\begin_inset Formula $v_{i,L}=v_{i,R}=e_{i}$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ If I have 
+\begin_inset Formula $N$
+\end_inset
+
+ vocabulary words,
+ these basis vectors are 
+\begin_inset Formula $N$
+\end_inset
+
+ dimensional.
+ One of the large breakthroughs of deep–learning,
+ neural net theory was that you can work with much much smaller vectors.
+ Specifically,
+ pick a dimension 
+\begin_inset Formula $D=64$
+\end_inset
+
+ or 128 or 256 or 1024 as your heart pleases,
+ but power-of-two to keep the GPU's happy.
+ And pick 
+\begin_inset Formula $N$
+\end_inset
+
+ 
+\emph on
+random
+\emph default
+ 
+\begin_inset Formula $D$
+\end_inset
+
+-dimensional vectors.
+ Ideally,
+ they are uniformly distributed on a 
+\begin_inset Formula $D$
+\end_inset
+
+-dimensional gaussian.
+ (High dimensional gaussians approximate spheres more and more closely as the dimension increases.
+ Its a weird math trick.) Turns out that 
+\begin_inset Formula $D$
+\end_inset
+
+-dimensional spheres have a lot of room.
+ A metric fuck-ton.
+ Consider the 
+\begin_inset Formula $D$
+\end_inset
+
+-dimensional cube.
+ It has 
+\begin_inset Formula $2^{D}$
+\end_inset
+
+ corners.
+ Note that,
+ for English,
+ there are about 
+\begin_inset Formula $N=100K$
+\end_inset
+
+ words in common use,
+ maybe 
+\begin_inset Formula $N=250K$
+\end_inset
+
+ in the Oxford English Dictionary,
+ maybe more if you add geographical place–names.
+ Note that 
+\begin_inset Formula 
+\[
+2^{64}\gg100K
+\]
+
+\end_inset
+
+and so you can take a 64-dimensional hypercube,
+ and stick each word on a distinct corner,
+ and the corner labels will be extremely sparse:
+ almost all corners have no word on them at all.
+\end_layout
+
+\begin_layout Standard
+So the algo is this:
+ generate 
+\begin_inset Formula $N=100K$
+\end_inset
+
+ random 64-bit words.
+ Write them as either zeros and ones,
+ or write them as +1.0 and -1.0 (so that the cube is centered on the origin.) It doesn't really matter if you center the cube or not,
+ but centering is is usually better.
+\end_layout
+
+\begin_layout Standard
+So,
+ now,
+ in that goofball expression,
+ 
+\begin_inset Formula 
+\[
+v_{i,R}^{T}\cdot M\cdot v_{j,L}
+\]
+
+\end_inset
+
+the matrix 
+\begin_inset Formula $M$
+\end_inset
+
+ becomes a 
+\begin_inset Formula $D\times D$
+\end_inset
+
+ dimensional matrix.
+ For 
+\begin_inset Formula $D=64,$
+\end_inset
+
+it is quite tiny.
+ You *will* need to use a good sigmoid for 
+\begin_inset Formula $\sigma,$
+\end_inset
+
+so if the cube is centered,
+ use arctan,
+ otherwise 1/sinh of whatever is popular,
+ doesn't much matter.
+\end_layout
+
+\begin_layout Subsection
+Disjuncts redux
+\end_layout
+
+\begin_layout Standard
+I can hear you thinking 
+\begin_inset Quotes eld
+\end_inset
+
+wtf?
+ Disjuncts have link types,
+ but here we have words
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Well,
+ right.
+ If the goal is to learn grammars,
+ then we do not yet know what the disjuncts are.
+ The PDF titled 
+\begin_inset Quotes eld
+\end_inset
+
+structuralism
+\begin_inset Quotes erd
+\end_inset
+
+ that I sent earlier explains how.
+\end_layout
+
+\begin_layout Standard
+For parsing ...
+ well,
+ it is a completely different matter.
+ We already know what the 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ tensors are;
+ they are encoded in the dicts.
+ We don't know what the dimensionally reduced (embedded) tensors are;
+ one eithe produces them randomly and does gradient descent to fix them,
+ or one does something else.
+ I'll have to think about that,
+ and I'll have to read the rest of whatt google Gemini wrote and see what's in there.
+ The above might be enough to get you started,
+ though.
+\end_layout
+
+\begin_layout Standard
+Although,
+ duhh,
+ the notational gymnastics is the easy part.
+ it gets herder from here.
+ But not tonight.
 \end_layout
 
 \begin_layout Section*
