@@ -152,7 +152,14 @@ The formula appears,
 \end_inset
 
 This formula can be given multiple interpretations.
- The simplest and most obvious one provides good mental exercise,
+\end_layout
+
+\begin_layout Subsection
+The basic interpretation
+\end_layout
+
+\begin_layout Standard
+The simplest and most obvious one provides good mental exercise,
  but is not directly useful,
  because it does nothing new that is not already implicit in the basic definition of LG.
  It's this:
@@ -368,6 +375,10 @@ but this is crazy!
  so I'm hoping this will provide a translation.
 \end_layout
 
+\begin_layout Subsection
+Styles of notation
+\end_layout
+
 \begin_layout Standard
 First,
  this notation 
@@ -518,7 +529,113 @@ What's a tensor?
  That's all it is,
  nothing more,
  nothing less.
+\end_layout
+
+\begin_layout Standard
+Lets return the the earlier expression
+\begin_inset Formula 
+\[
+v_{i,R}^{T}\cdot M\cdot v_{j,L}
+\]
+
+\end_inset
+
+This is perhaps confusing.
+ The confusion here is that there are many vectors:
  
+\begin_inset Formula $v_{j,L}$
+\end_inset
+
+ is just one vector out of a whol bunch of them.
+ In Einstein notation,
+ we write
+\begin_inset Formula 
+\[
+v_{i,R}^{T}\cdot M\cdot v_{j,L}=M_{ab}v_{i,R,a}v_{j,L,b}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $a,b$
+\end_inset
+
+ are the summation indexes,
+ 
+\begin_inset Formula $L,R$
+\end_inset
+
+ are just markers,
+ and 
+\begin_inset Formula $i,j$
+\end_inset
+
+ tell you which of the many vectors 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ we are talking about.
+ Note that,
+ in this notation 
+\begin_inset Formula $v_{j,L,b}$
+\end_inset
+
+ looks like a matrix (a 2-tensor) because it has two indexes:
+ 
+\begin_inset Formula $j$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ Well,
+ not a surprise:
+ if I take a bunch of column vectors,
+ and write them one after another,
+ splat splat splat,
+ its a matrix.
+ Huh.
+\end_layout
+
+\begin_layout Standard
+Note that this does not have to be a square matrix.
+ There might be 
+\begin_inset Formula $N$
+\end_inset
+
+ vectors,
+ and each vector is of length 
+\begin_inset Formula $D$
+\end_inset
+
+ so stacking them together gives an 
+\begin_inset Formula $N\times D$
+\end_inset
+
+ dimensional matrix.
+\end_layout
+
+\begin_layout Standard
+Note that if I write 
+\begin_inset Formula $v_{j,\alpha,b}$
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha\in\left\{ L,R\right\} $
+\end_inset
+
+ then 
+\begin_inset Formula $v_{j,\alpha,b}$
+\end_inset
+
+ is a 3-tensor.
+ Fancy that.
+\end_layout
+
+\begin_layout Subsection
+Basis vectors
 \end_layout
 
 \begin_layout Section*
