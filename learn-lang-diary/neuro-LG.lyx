@@ -122,8 +122,243 @@ Unpacking a google Gemini chat log that develops the idea of neuro–LG.
  if I cannot get this into future models.)
 \end_layout
 
+\begin_layout Section*
+Preface
+\end_layout
+
+\begin_layout Standard
+I'm going to write this as I read along.
+ There may be unexpected surprises.
+ Section titles match those of the original chatlog.
+ I am going to start with very basic explanations,
+ excuse me if they are too simple.
+\end_layout
+
 \begin_layout Section
-Introduction
+The Representation:
+ From Symbols to Tensors
+\end_layout
+
+\begin_layout Standard
+The formula appears,
+ with inadequate explanation:
+\begin_inset Formula 
+\[
+\mbox{Link}\left(i,j\right)=\sigma\left(v_{i,R}^{T}\cdot M\cdot v_{j,L}\right)
+\]
+
+\end_inset
+
+This formula can be given multiple interpretations.
+ The simplest and most obvious one provides good mental exercise,
+ but is not directly useful,
+ because it does nothing new that is not already implicit in the basic definition of LG.
+ It's this:
+\end_layout
+
+\begin_layout Standard
+Write 
+\begin_inset Formula $W=\left\{ w_{i}:i=1,\cdots,N\right\} $
+\end_inset
+
+ the set of all the words in the vocabulary (there are 
+\begin_inset Formula $N$
+\end_inset
+
+ of these).
+ Write 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ for the 
+\begin_inset Formula $i$
+\end_inset
+
+'th basis vector.
+ This is the vector having 1 in the 
+\begin_inset Formula $i$
+\end_inset
+
+'th position,
+ and zero everywhere else.
+ Vectors are normally column vectors,
+ so 
+\begin_inset Formula $e_{i}^{T}$
+\end_inset
+
+ is it's transpose,
+ a row vector,
+ which I can write as 
+\begin_inset Formula 
+\[
+e_{i}^{T}=\underbrace{\;0\;\cdots\;0\;}_{\left(i-1\right) \text{zeros}}\underbrace{\;1\;}_{\;\text{position }i\;\;}\underbrace{\;0\;\cdots\;0\;}_{\left(N-i\right)\text{zeros}}
+\]
+
+\end_inset
+
+Then set 
+\begin_inset Formula $v_{i,L}=v_{i,R}=e_{i}$
+\end_inset
+
+.
+ The matrix 
+\begin_inset Formula $M$
+\end_inset
+
+ is an 
+\begin_inset Formula $N\times N$
+\end_inset
+
+ square matrix,
+ having a 1 in it if a link between word 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ and word 
+\begin_inset Formula $w_{j}$
+\end_inset
+
+ is allowed,
+ else zero:
+\begin_inset Formula 
+\[
+M_{ij}=\begin{cases}
+1 & \text{link between }w_{i}\text{ and }w_{j}\text{ allowed}\\
+0 & \text{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+But,
+ in my mind,
+ I hear you say 
+\begin_inset Quotes eld
+\end_inset
+
+what kind of link?
+\begin_inset Quotes erd
+\end_inset
+
+ Ah hah!
+ One way to answer this is to say 
+\begin_inset Quotes eld
+\end_inset
+
+oh,
+ gee,
+ we have to have one 
+\begin_inset Formula $M$
+\end_inset
+
+ for the 
+\begin_inset Formula $\mathtt{S}$
+\end_inset
+
+ link and another for the 
+\begin_inset Formula $\mathtt{O}$
+\end_inset
+
+ link and another for ...
+ well,
+ yuck.
+ Write 
+\begin_inset Formula $M=M^{\left(k\right)}$
+\end_inset
+
+ for 
+\begin_inset Formula $k$
+\end_inset
+
+ the link kind (link type) 
+\begin_inset Formula $k\in K=\left\{ \mathtt{A},\mathtt{\mathtt{D},MJ},\mathtt{S},\cdots\right\} $
+\end_inset
+
+ the set of all link types,
+ or possibly,
+ god help us,
+ all types and subtypes:
+ 
+\begin_inset Formula $K=\left\{ \mathtt{A},\mathtt{\mathtt{Ds**c},Dp},\mathtt{Osm},\mathtt{Ss*b},\cdots\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All of the above is just a very verbose way of saying 
+\begin_inset Quotes eld
+\end_inset
+
+if 
+\begin_inset Formula $M_{ij}^{\left(k\right)}=1$
+\end_inset
+
+ then a link of kind 
+\begin_inset Formula $k$
+\end_inset
+
+ is allowed between word 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ and word 
+\begin_inset Formula $w_{j}$
+\end_inset
+
+,
+ else it is not.
+\begin_inset Quotes erd
+\end_inset
+
+ This is not deep.
+ It's just notational gymnastics.
+ Oh,
+ to complete this picture,
+ let 
+\begin_inset Formula $\sigma\left(x\right)$
+\end_inset
+
+ be any function such that 
+\begin_inset Formula $\sigma\left(0\right)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma\left(1\right)=1$
+\end_inset
+
+.
+ This is the 
+\begin_inset Quotes eld
+\end_inset
+
+sigmoid
+\begin_inset Quotes erd
+\end_inset
+
+.
+ For the above,
+ 
+\begin_inset Formula $\sigma\left(x\right)=x$
+\end_inset
+
+ is enough.
+\end_layout
+
+\begin_layout Standard
+Next,
+ I hear you saying:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+but this is crazy!
+ Where's the disjunct?
+ LG uses disjuncts!
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
