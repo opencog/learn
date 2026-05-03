@@ -710,7 +710,32 @@ where
 \end_inset
 
 .
- The notation 
+ They sometimes write 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ which stands for 
+\begin_inset Quotes eld
+\end_inset
+
+the diagonal
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Also called 
+\begin_inset Quotes eld
+\end_inset
+
+the coproduct
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The notation 
 \begin_inset Formula 
 \[
 M=\left[M_{ij}\right]
@@ -928,6 +953,45 @@ The bra
 \end_layout
 
 \begin_layout Subsection
+Orthonormality
+\end_layout
+
+\begin_layout Standard
+I forgot to mention.
+ The basis vector 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ are orthonormal,
+ so that 
+\begin_inset Formula 
+\[
+\hat{e}_{i}\cdot\hat{e}_{j}=\delta_{ij}
+\]
+
+\end_inset
+
+where I took the liberty of writing a hat to remind you that these are vectors.
+ The corresponding quantum notation is 
+\begin_inset Quotes eld
+\end_inset
+
+famous
+\begin_inset Quotes erd
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\left\langle i\right|\left.j\right\rangle =\delta_{ij}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 The tensor product
 \end_layout
 
@@ -1009,8 +1073,203 @@ T=T_{ijk}e_{i}\otimes e_{j}\otimes e_{k}
 
 \end_layout
 
+\begin_layout Standard
+Again,
+ keep in mind that each 
+\begin_inset Formula $T_{ijk}$
+\end_inset
+
+ is a single solitary floating point number,
+ and 
+\begin_inset Formula $e_{i}\otimes e_{j}\otimes e_{k}$
+\end_inset
+
+ is a cube of mostly zeros and a lone one.
+\end_layout
+
 \begin_layout Subsection
 Link Grammar disjuncts
+\end_layout
+
+\begin_layout Standard
+The rest is just yet another notational trick.
+ If I have an LG disjunct,
+ say 
+\begin_inset Formula $\mathtt{S-\&\,O+}$
+\end_inset
+
+ for the transitive verb,
+ and lets say it has the cost 
+\begin_inset Formula $c$
+\end_inset
+
+ then well – hey – this is a tensor.
+ Trivially.
+ Obviously.
+ Stupidly and directly.
+ Just change the notation:
+\begin_inset Formula 
+\[
+\mathtt{S-\&\,O+}=e_{\mathtt{S}}^{T}\otimes e_{\mathtt{O}}=\left|\mathtt{O}\right\rangle \otimes\left\langle \mathtt{S}\right|
+\]
+
+\end_inset
+
+where if 
+\begin_inset Formula $\left\{ \mathtt{A},\mathtt{\mathtt{D},MJ},\mathtt{S},\cdots\right\} $
+\end_inset
+
+ is my set of link-types,
+ then the corresponding basis vectors are 
+\begin_inset Formula $\left\{ e_{\mathtt{A}},e_{\mathtt{D}},e_{\mathtt{MJ}},e_{\mathtt{S}},\cdots\right\} $
+\end_inset
+
+ or 
+\begin_inset Formula $\left\{ \left|\mathtt{A}\right\rangle ,\mathtt{\left|\mathtt{D}\right\rangle ,\left|MJ\right\rangle },\mathtt{\left|S\right\rangle },\cdots\right\} $
+\end_inset
+
+ and the disjunction symbol 
+\begin_inset Formula $\mathtt{\&}$
+\end_inset
+
+ is nothing other than the tensor product 
+\begin_inset Formula $\otimes$
+\end_inset
+
+.
+ They are exactly the same thing.
+ Just different notation.
+\end_layout
+
+\begin_layout Standard
+For the above,
+ I interpreted the LG notation of + and - (connect to the right,
+ connect to the left) as transpose.
+ I did this to make dot–products easier.
+ A different very common notation is upper and lower indices,
+ aka covariant and contravariant indices,
+ where one writes
+\begin_inset Formula 
+\[
+e^{i}=\left(e_{i}\right)^{T}
+\]
+
+\end_inset
+
+so that raising the index is the transpose,
+ and one might have things like 
+\begin_inset Formula 
+\[
+e^{i}\otimes e_{j}\otimes e_{k}
+\]
+
+\end_inset
+
+The Einstein notation rule becomes 
+\begin_inset Quotes eld
+\end_inset
+
+one index must be high,
+ and the other low,
+ so that,
+ e.g.
+ 
+\begin_inset Formula 
+\[
+T=T_{i}^{\,jk}e^{i}\otimes e_{j}\otimes e_{k}
+\]
+
+\end_inset
+
+This is still a 
+\begin_inset Quotes eld
+\end_inset
+
+cube of numbers
+\begin_inset Quotes erd
+\end_inset
+
+ but the some of the cube faces 
+\begin_inset Quotes eld
+\end_inset
+
+point left
+\begin_inset Quotes erd
+\end_inset
+
+ and others 
+\begin_inset Quotes eld
+\end_inset
+
+point right
+\begin_inset Quotes erd
+\end_inset
+
+ and it becomes really awkward to think of cubes of numbers at this point,
+ because it leads to confusion and mental fog.
+ Basically,
+ just don't go there,
+ and stick to just upper/lower.
+\end_layout
+
+\begin_layout Standard
+The bra-ket notation also can be problematic.
+ I kind of want to write
+\begin_inset Formula 
+\[
+\left|\mathtt{O}\right\rangle \otimes\left\langle \mathtt{S}\right|=\left\langle \mathtt{S}\right|\otimes\left|\mathtt{O}\right\rangle \quad\text{Wrong!}
+\]
+
+\end_inset
+
+This is problematic because it exchanges order,
+ and the 
+\begin_inset Formula $\otimes$
+\end_inset
+
+ in the middle of the brak-ket looks like a weirdo inner product or some expectation value or something crazy like that,
+ and its not.
+ So the bra–ket notation can become awkward here.
+ It's awkward for LG,
+ its fine for QM;
+ the QM axioms have additional symmetries that LG does not.
+ (QM is a 
+\begin_inset Quotes eld
+\end_inset
+
+dagger-symmetric category
+\begin_inset Quotes erd
+\end_inset
+
+,
+ while LG is only a 
+\begin_inset Quotes eld
+\end_inset
+
+monoidal category
+\begin_inset Quotes erd
+\end_inset
+
+.
+ All dagger-symmetric categories are monoidal,
+ but not vice–versa,
+ and notational awkwardness can catch up to you here.
+ So mostly in what follows,
+ I'll just write 
+\begin_inset Formula $\mathtt{S-\&\,O+}$
+\end_inset
+
+ and then maybe switch to other notation to remind you 
+\begin_inset Quotes eld
+\end_inset
+
+hey,
+ these are just tensors,
+ in the end
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section*
