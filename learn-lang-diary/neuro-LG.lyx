@@ -414,7 +414,9 @@ is popular in the DL/NN world,
 \end_inset
 
  is a row vector),
- and centerdot 
+ and 
+\backslash
+centerdot 
 \begin_inset Formula $\cdot$
 \end_inset
 
@@ -486,7 +488,7 @@ This just drops the sum symbols because they clutter the page and can be underst
  then sum over it.
  (It cannot appear three times,
  that would be a syntax error.
- I can appear once,
+ It can appear once,
  and then there is no sum,
  that index just 
 \begin_inset Quotes eld
@@ -546,7 +548,7 @@ This is perhaps confusing.
 \begin_inset Formula $v_{j,L}$
 \end_inset
 
- is just one vector out of a whol bunch of them.
+ is just one vector out of a whole bunch of them.
  In Einstein notation,
  we write
 \begin_inset Formula 
@@ -763,7 +765,8 @@ is supposed to mean
 \begin_inset Formula $\left[\;\right]$
 \end_inset
 
- are popular Some people like curly brackets or parens.
+ are supposed to be a reminder of the squareness of it.
+ Some people like curly brackets or parens.
  Whatever.
  All the same.
  Note that some people write 
@@ -931,7 +934,7 @@ The bra
 \end_inset
 
  is just the transpose so that 
-\begin_inset Formula $\left\langle a\right.\left|b\right\rangle $
+\begin_inset Formula $\left\langle a\right.\left|\,b\right\rangle $
 \end_inset
 
  is the dot–product (inner product) of the vectors 
@@ -983,7 +986,7 @@ famous
 :
 \begin_inset Formula 
 \[
-\left\langle i\right|\left.j\right\rangle =\delta_{ij}
+\left\langle i\,\right|\left.j\right\rangle =\delta_{ij}
 \]
 
 \end_inset
@@ -1146,7 +1149,8 @@ For the above,
  I interpreted the LG notation of + and - (connect to the right,
  connect to the left) as transpose.
  I did this to make dot–products easier.
- A different very common notation is upper and lower indices,
+ A different,
+ very common notation is upper and lower indices,
  aka covariant and contravariant indices,
  where one writes
 \begin_inset Formula 
@@ -1170,7 +1174,11 @@ The Einstein notation rule becomes
 \end_inset
 
 one index must be high,
- and the other low,
+ and the other low
+\begin_inset Quotes erd
+\end_inset
+
+,
  so that,
  e.g.
  
@@ -1213,7 +1221,7 @@ point right
 \end_layout
 
 \begin_layout Standard
-The bra-ket notation also can be problematic.
+The bra–ket notation also can be problematic.
  I kind of want to write
 \begin_inset Formula 
 \[
@@ -1227,11 +1235,7 @@ This is problematic because it exchanges order,
 \begin_inset Formula $\otimes$
 \end_inset
 
- in the middle of the brak-ket looks like a weirdo inner product or some expectation value or so 
-\begin_inset Formula $N=100K$
-\end_inset
-
-mething crazy like that,
+ in the middle of the bra–ket looks like a weirdo inner product or some expectation value or something crazy like that,
  and its not.
  So the bra–ket notation can become awkward here.
  It's awkward for LG,
@@ -1241,7 +1245,7 @@ mething crazy like that,
 \begin_inset Quotes eld
 \end_inset
 
-dagger-symmetric category
+dagger–symmetric category
 \begin_inset Quotes erd
 \end_inset
 
@@ -1255,7 +1259,7 @@ monoidal category
 \end_inset
 
 .
- All dagger-symmetric categories are monoidal,
+ All dagger–symmetric categories are monoidal,
  but not vice–versa,
  and notational awkwardness can catch up to you here.
  So mostly in what follows,
@@ -1325,7 +1329,7 @@ set
 \end_inset
 
  or 128 or 256 or 1024 as your heart pleases,
- but power-of-two to keep the GPU's happy.
+ but power–of–two to keep the GPU's happy.
  And pick 
 \begin_inset Formula $N$
 \end_inset
@@ -1483,10 +1487,10 @@ raw
  tensors are;
  they are encoded in the dicts.
  We don't know what the dimensionally reduced (embedded) tensors are;
- one eithe produces them randomly and does gradient descent to fix them,
+ one either produces them randomly and does gradient descent to fix them,
  or one does something else.
  I'll have to think about that,
- and I'll have to read the rest of whatt google Gemini wrote and see what's in there.
+ and I'll have to read the rest of what google Gemini wrote and see what's in there.
  The above might be enough to get you started,
  though.
 \end_layout
