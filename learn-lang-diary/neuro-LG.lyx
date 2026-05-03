@@ -132,6 +132,8 @@ I'm going to write this as I read along.
  Section titles match those of the original chatlog.
  I am going to start with very basic explanations,
  excuse me if they are too simple.
+ I'd rather oversimplify and be clear,
+ than to be opaque.
 \end_layout
 
 \begin_layout Section
@@ -358,7 +360,165 @@ but this is crazy!
 \begin_inset Quotes erd
 \end_inset
 
+.
+ Well,
+ disjuncts are tensors.
+ Some more notational gymnastics to follow.
+ Different people love to use different notations,
+ so I'm hoping this will provide a translation.
+\end_layout
 
+\begin_layout Standard
+First,
+ this notation 
+\begin_inset Formula 
+\[
+a^{T}\cdot M\cdot b
+\]
+
+\end_inset
+
+is popular in the DL/NN world,
+ but quite awkward.
+ The intended reading is that 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ are (column) vectors,
+ 
+\begin_inset Formula $M$
+\end_inset
+
+ a matrix,
+ superscript 
+\begin_inset Formula $T$
+\end_inset
+
+ denotes transpose (so 
+\begin_inset Formula $b^{T}$
+\end_inset
+
+ is a row vector),
+ and centerdot 
+\begin_inset Formula $\cdot$
+\end_inset
+
+ denotes the dot product.
+\end_layout
+
+\begin_layout Standard
+The conventional notation found in undergrad linear algebra books is the double sum
+\begin_inset Formula 
+\[
+a^{T}\cdot M\cdot b=\sum_{i=1}^{n}\sum_{j=1}^{n}M_{ij}a_{i}b_{j}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ is the (floating point) value found in vector 
+\begin_inset Formula $a$
+\end_inset
+
+ at position 
+\begin_inset Formula $i$
+\end_inset
+
+,
+ and 
+\begin_inset Formula $M_{ij}$
+\end_inset
+
+ is the (floating point) value found in row–column 
+\begin_inset Formula $\left(i,j\right)$
+\end_inset
+
+ for matrix 
+\begin_inset Formula $M$
+\end_inset
+
+,
+ and so on.
+\end_layout
+
+\begin_layout Standard
+Next,
+ there is something called 
+\begin_inset Quotes eld
+\end_inset
+
+Einstein notation
+\begin_inset Quotes erd
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\sum_{i=1}^{n}\sum_{j=1}^{n}M_{ij}a_{i}b_{j}=M_{ij}a_{i}b_{j}
+\]
+
+\end_inset
+
+This just drops the sum symbols because they clutter the page and can be understood from context:
+ if a roman subscript 
+\begin_inset Formula $i$
+\end_inset
+
+ appears exactly twice,
+ then sum over it.
+ (It cannot appear three times,
+ that would be a syntax error.
+ I can appear once,
+ and then there is no sum,
+ that index just 
+\begin_inset Quotes eld
+\end_inset
+
+is
+\begin_inset Quotes erd
+\end_inset
+
+,
+ exposed and naked.)
+\end_layout
+
+\begin_layout Standard
+What's a tensor?
+ Well,
+ if 
+\begin_inset Formula $M_{ij}$
+\end_inset
+
+ is a square matrix,
+ then 
+\begin_inset Formula $T_{ijk}$
+\end_inset
+
+ is a 3D cube of numbers.
+ And 
+\begin_inset Formula $T_{ijkl}$
+\end_inset
+
+ is a 4-D hypercube of numbers,
+ etc.
+ Of course,
+ 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ is a 1-tensor:
+ its just a line of numbers.
+ That's all it is,
+ nothing more,
+ nothing less.
+ 
 \end_layout
 
 \begin_layout Section*
