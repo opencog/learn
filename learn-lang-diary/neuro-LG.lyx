@@ -635,7 +635,382 @@ Note that if I write
 \end_layout
 
 \begin_layout Subsection
-Basis vectors
+Basis vector notation
+\end_layout
+
+\begin_layout Standard
+Earlier,
+ I defined the basis vector 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+.
+ Note that this has a 1 in the 
+\begin_inset Formula $i$
+\end_inset
+
+'th location,
+ and a zero everywhere else.
+ That means that the 
+\begin_inset Formula $a$
+\end_inset
+
+'th location of the 
+\begin_inset Formula $i$
+\end_inset
+
+'th vector is
+\begin_inset Formula 
+\[
+e_{i,a}=\delta_{ij}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\delta_{ij}$
+\end_inset
+
+ the Kronecker delta
+\begin_inset Formula 
+\[
+\delta_{ij}=\begin{cases}
+1 & \text{if }i=j\\
+0 & \text{if }i\ne j
+\end{cases}
+\]
+
+\end_inset
+
+This is the unit matrix:
+\begin_inset Formula 
+\[
+\delta=\left[\delta_{ij}\right]=I=1=\mathbf{1}=\left[\begin{array}{ccccc}
+1 & 0 & 0 & \cdots & 0\\
+0 & 1 & 0 & \cdots & 0\\
+\vdots &  & \ddots &  & \vdots\\
+0 & 0 & \cdots & 1 & 0\\
+0 & 0 & \cdots & 0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $I$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{1}$
+\end_inset
+
+ are alternate popular notations for the unit matrix.
+ Almost no one ever writes the naked 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+ The notation 
+\begin_inset Formula 
+\[
+M=\left[M_{ij}\right]
+\]
+
+\end_inset
+
+is supposed to mean 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $M$
+\end_inset
+
+ is the matrix whose matrix elements are 
+\begin_inset Formula $M_{ij}$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ so the square brackets 
+\begin_inset Formula $\left[\;\right]$
+\end_inset
+
+ are popular Some people like curly brackets or parens.
+ Whatever.
+ All the same.
+ Note that some people write 
+\begin_inset Formula $\hat{e_{i}}$
+\end_inset
+
+ for 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ with the hat denoting the unit–length vector.
+ Some people write 
+\begin_inset Formula $\vec{e}_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $e_{i}.$
+\end_inset
+
+ The hat notation is common in undergrad physics books,
+ the vector notation is common in engineering texts,
+ and the naked 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is standard in math texts.
+ The use of the letter 
+\begin_inset Formula $e$
+\end_inset
+
+ is universal and 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is universally understood to always be the unit–length basis vector.
+ It is always that,
+ and it never means anything else.
+\end_layout
+
+\begin_layout Standard
+These are called 
+\begin_inset Quotes eld
+\end_inset
+
+basis vectors
+\begin_inset Quotes erd
+\end_inset
+
+ for the following reason:
+ if I have a vector
+\begin_inset Formula 
+\[
+c=\left[\begin{array}{c}
+c_{1}\\
+c_{2}\\
+\vdots\\
+c_{n}
+\end{array}\right]
+\]
+
+\end_inset
+
+then I can write
+\begin_inset Formula 
+\[
+c=\sum_{i=1}^{n}c_{i}e_{i}=c_{i}e_{i}
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ is a number,
+ and 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is a vector.
+ This can lead to confusion,
+ which is why some texts write 
+\begin_inset Formula $\hat{e_{i}}$
+\end_inset
+
+ or 
+\begin_inset Formula $\vec{e}_{i}$
+\end_inset
+
+ – this is a visual reminder that 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is a vector,
+ and 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ is a number.
+ Notational confusion is very common among undergrads,
+ so textbooks in each field (engineering,
+ physics,
+ math) take pains to get the notation correct.
+\end_layout
+
+\begin_layout Standard
+You'll love the quantum notation.
+ It's this:
+\begin_inset Formula 
+\[
+e_{i}=\left|e_{i}\right\rangle =\left|i\right\rangle 
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left\langle \;\right|$
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+bra
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Formula $\left|\;\right\rangle $
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+ket
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Kets are nice because you have room to jam extra symbols into them and still keep the fonts large enough to read without squinting:
+\begin_inset Formula 
+\[
+\psi_{klm}^{\alpha}=\left|\alpha;k,l,m\right\rangle 
+\]
+
+\end_inset
+
+Stuff like that.
+ You'll also get shortcuts:
+\begin_inset Formula 
+\[
+\psi_{klm}^{\alpha}=\left|\psi\right\rangle 
+\]
+
+\end_inset
+
+and the extra indices are implicit,
+ inferred from context.
+\end_layout
+
+\begin_layout Standard
+The bra 
+\begin_inset Formula $\left\langle \;\right|$
+\end_inset
+
+ is just the transpose so that 
+\begin_inset Formula $\left\langle a\right.\left|b\right\rangle $
+\end_inset
+
+ is the dot–product (inner product) of the vectors 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ Math books will often use the notation 
+\begin_inset Formula $\left\langle a,b\right\rangle $
+\end_inset
+
+ for the dot product.
+ There's much more to be said here,
+ but this is enough.
+\end_layout
+
+\begin_layout Subsection
+The tensor product
+\end_layout
+
+\begin_layout Standard
+Lots can be said about the tensor product 
+\begin_inset Formula $\otimes$
+\end_inset
+
+,
+ and I'll keep this minimal.
+ The tensor product
+\begin_inset Formula 
+\[
+e_{i}\otimes e_{j}
+\]
+
+\end_inset
+
+is a matrix with a one at location 
+\begin_inset Formula $\left(i,j\right)$
+\end_inset
+
+ and a zero everywhere else.
+ Note that a matrix 
+\begin_inset Formula $M$
+\end_inset
+
+ can be written
+\begin_inset Formula 
+\[
+M=\sum_{i}\sum_{j}M_{ij}e_{i}\otimes e_{j}=M_{ij}e_{i}\otimes e_{j}
+\]
+
+\end_inset
+
+and I want to use Einstein notation from now on because writing sums 
+\begin_inset Formula $\sum$
+\end_inset
+
+ is tedious.
+ The quantum people write 
+\begin_inset Formula 
+\[
+e_{i}\otimes e_{j}=\left|i\right\rangle \otimes\left|j\right\rangle =\left|ij\right\rangle 
+\]
+
+\end_inset
+
+and now you see why the bra-ket notation is so nice.
+\end_layout
+
+\begin_layout Standard
+For the general case of tensors,
+ 
+\begin_inset Formula 
+\[
+e_{i}\otimes e_{j}\otimes e_{k}
+\]
+
+\end_inset
+
+is the 3-tensor (cube of numbers) with a one at location 
+\begin_inset Formula $\left(i,j,k\right)$
+\end_inset
+
+ and a zero everywhere else.
+ A 3-tensor 
+\begin_inset Formula $T$
+\end_inset
+
+ can then be written at 
+\begin_inset Formula 
+\[
+T=T_{ijk}e_{i}\otimes e_{j}\otimes e_{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Link Grammar disjuncts
 \end_layout
 
 \begin_layout Section*
