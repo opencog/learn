@@ -1,6 +1,13 @@
 
 Things to read:
 
+* Canonical Art as Informational Paradox (1973) Juri Lotman
+  Sign Sysmtems Studies Journal on OJS
+  The narrative, plot, artistic form are fixed by canonical rules.
+  The canon acts as a background of zero information which allows the
+  listener/viewer to perceive subtle micro-variations as highly
+  significant and informative.
+
 * Modeling & Graph Grammars - Paul Merrell
   Example-Based Procedural Modeling Using Graph Grammars
   https://paulmerrell.org/grammar/
