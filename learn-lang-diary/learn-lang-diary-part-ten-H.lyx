@@ -5688,16 +5688,217 @@ Lets imagine a hypercube,
  on each corner,
  living on a circle,
  so modulo 
-\begin_inset Formula $2\pi$
+\begin_inset Formula $1$
 \end_inset
 
 .
- The global state is 
+ (It seems the convention is 
+\begin_inset Formula $\theta\in\left[0,1\right)$
+\end_inset
+
+ and not 
+\begin_inset Formula $\theta\in\left[0,2\pi\right)$
+\end_inset
+
+ so I'll stick to convention.) The global state is 
 \begin_inset Formula $\left\{ \theta\left(x\right):x\in2^{N}\right\} $
 \end_inset
 
 .
  Each corner is connected to it's nearest neighbors by a weak spring.
+\end_layout
+
+\begin_layout Standard
+For the zero–dimensional model,
+ 
+\begin_inset Formula $N=0$
+\end_inset
+
+,
+ the dynamics is given by 
+\begin_inset Formula $\theta_{i+1}=\theta_{i}+\Omega+\frac{K}{2\pi}\sin\left(2\pi\theta_{i}\right)$
+\end_inset
+
+ and the driving frequency is 
+\begin_inset Formula $\Omega\in\left[0,1\right)$
+\end_inset
+
+.
+ There's only one oscillator,
+ and it is driven.
+\end_layout
+
+\begin_layout Standard
+For the network case,
+ the time evolution of the un–driven nodes is given by
+\begin_inset Formula 
+\[
+\theta_{i+1}\left(x\right)=\theta_{i}\left(x\right)+\alpha\sum_{y\in nn(x)}\theta_{i}\left(y\right)+\frac{K}{2\pi}\sin\left(2\pi\theta_{i}\left(x\right)\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $nn(x)$
+\end_inset
+
+ is the set of nearest neighbors of 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ The driving force 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ is replaced by the mean–field of nearest neighbors,
+ with coupling strength (spring constant??) 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ I imagine the mode–locking term provides a kind of 
+\begin_inset Quotes eld
+\end_inset
+
+inertia
+\begin_inset Quotes erd
+\end_inset
+
+,
+ in that the system attempts to be stable until knocked off course.
+\end_layout
+
+\begin_layout Standard
+Why this model?
+ I dunno;
+ it shot into my mind;
+ I'm familiar with the zero–D case.
+ This would be a good time to survey other lattice models.
+ Some gut–feel intuitions,
+ unsupported by facts:
+ The high–dimensional Ising model has a stable mean–field solution.
+ Here,
+ I'm guessing the mode–locking acts to partition the system into various,
+ uhh,
+ chaotic?
+ regimes.
+ It's not obviously solvable as a mean–field problem.
+ But my intuition may be wrong.
+\end_layout
+
+\begin_layout Standard
+More interesting is to compare this to assorted neural–net models,
+ where the mode–locking term is replaced by a sigmoid,
+ and/or the coupling strength 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is replaced by a sigmoid.
+ Or,
+ conversely,
+ take some (simple) recurrent neural net wiring diagrams,
+ and replace the sigmoids by the mode–locking sine function.
+ Sort of fuck around and explore the properties of 
+\begin_inset Quotes eld
+\end_inset
+
+algebraically similar
+\begin_inset Quotes erd
+\end_inset
+
+ models.
+ These will presumably have wild(?) behaviors (I guess?) but it is hard to guess what they would be (they might also be 
+\begin_inset Quotes eld
+\end_inset
+
+tame
+\begin_inset Quotes erd
+\end_inset
+
+).
+ The motivation is weak or absent:
+ I've no 
+\begin_inset Quotes eld
+\end_inset
+
+physical
+\begin_inset Quotes erd
+\end_inset
+
+ basis to think any such models might be 
+\begin_inset Quotes eld
+\end_inset
+
+physically
+\begin_inset Quotes erd
+\end_inset
+
+ interesting for any reason at all;
+ I am instead exploring the dynamics of curious algebraic structures,
+ just to see 
+\begin_inset Quotes eld
+\end_inset
+
+what's out there
+\begin_inset Quotes erd
+\end_inset
+
+.
+ A survey.
+\end_layout
+
+\begin_layout Standard
+Then there's the Chirikov map aka standard map.
+ And finally:
+ what terms have to be added,
+ modified or removed to bring this into line with conventional lattices of harmonic oscillators?
+ The convention SHO is the simplest,
+ most commonly studied corner of the collection of such crazier models.
+\end_layout
+
+\begin_layout Standard
+All this would again be a large research program.
+ Again,
+ Claude would be immensely useful for the initial survey.
+\end_layout
+
+\begin_layout Standard
+The journey back from this algebraic abstraction to the original question of 
+\begin_inset Quotes eld
+\end_inset
+
+resonant communication of emotional states of awareness
+\begin_inset Quotes erd
+\end_inset
+
+ seems impossible:
+ the abstractions here are far to great to touch with subject experience of being.
+ On the other hand,
+ if we take seriously the reductive program that subjective states are realized in objective networks,
+ well,
+ then,
+ a survey of objective networks is required.
+ The RNN's,
+ the Ising models,
+ these are a very small and narrow subset of what is out there,
+ and what is out there,
+ I venture to guess,
+ is completely unknown and unexplored.
+\end_layout
+
+\begin_layout Standard
+Well,
+ this is the best idea I've got on this so far,
+ and this exposes the conventional problem with ideas:
+ its 1% inspiration and 99% perspiration.
+ I don't have a hundred years to figure this all out.
+\end_layout
+
+\begin_layout Standard
+Later.
+ Its friday night.
+ I got shit to do.
 \end_layout
 
 \begin_layout Standard
