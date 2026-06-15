@@ -8276,6 +8276,204 @@ dimensions.
 \end_layout
 
 \begin_layout Standard
+Such a system,
+ as described above,
+ may or may not exist;
+ it might be a mathematical fantasy,
+ or it might be realizable.
+ The point 
+\begin_inset Formula $\gamma\left(t_{0}\right)$
+\end_inset
+
+ plays the role of the stagnation point,
+ where a branch can be taken.
+ Or perhaps one should imagine something like the inverse of a blue–sky catastrophe (technical term;
+ look it up on Wikipedia,
+ except the Wikipedia article sucks,
+ the Scholarpedia article is good.) 
+\end_layout
+
+\begin_layout Standard
+Lets suppose this bifurcation system exists.
+ Then I hold it up as a plausible model of here–and–now.
+ The future is unwritten;
+ or perhaps,
+ all possible futures 
+\begin_inset Quotes eld
+\end_inset
+
+exist
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The present is the branch–point;
+ we are forever floating on these branch–points.
+ The past,
+ well,
+ its the trajectory that was actually taken,
+ up until 
+\begin_inset Quotes eld
+\end_inset
+
+now
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that this model is NOT quantum–mechanical!
+ But it does seem to have QM–like features,
+ in that there is a w.f.
+ collapse that has to occur at each branch point.
+ Now,
+ one of the characteristics of QM is the partition function 
+\begin_inset Formula $Z=\int\left[d\phi\right]e^{iS\left(\phi,\dot{\phi}\right)}$
+\end_inset
+
+ for the action 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ Can we fish this out of this model?
+ Well,
+ OK,
+ this would require our imagined 
+\begin_inset Formula $N=10^{23}$
+\end_inset
+
+ dimensional diffeq to be derivable from some Lagrangian.
+ That's plausible,
+ a reasonable thing to ask for and expect.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+field
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is no longer a literal field,
+ but an 
+\begin_inset Formula $N=10^{23}$
+\end_inset
+
+ dimensional vector.
+ Or is it a tensor?
+ On the one hand,
+ I imagine a vector,
+ because the configuration space is 
+\begin_inset Formula $N=10^{23}$
+\end_inset
+
+ dimensional.
+ On the other hand,
+ maybe its a tensor,
+ because I should think of 
+\begin_inset Formula $N=10^{23}$
+\end_inset
+
+ particles.
+ The integral 
+\begin_inset Formula $\int\left[d\phi\right]$
+\end_inset
+
+ gets replaced by a sum over all branches.
+ That is,
+ if 
+\begin_inset Formula $E$
+\end_inset
+
+ is the covering space,
+ then the sum runs over all the sheets in the covering space.
+ Since these alternatives exist only in the future,
+ the sum has to be somehow causally restricted.
+ That is,
+ the implicit time coordinate in 
+\begin_inset Formula $S\left(\phi,\dot{\phi}\right)=\int dtA\left(\phi,\dot{\phi}\right)$
+\end_inset
+
+ has to be pulled out,
+ so that instead of writing 
+\begin_inset Formula $Z=\int\left[d\phi\right]e^{i\int dtA\left(\phi,\dot{\phi}\right)}$
+\end_inset
+
+ one has to use a measure given by the https://en.wikipedia.org/wiki/Natural_filtration (again,
+ this is a Wikipedia article,
+ of which I wrote almost all of.)
+\end_layout
+
+\begin_layout Standard
+So,
+ for example,
+ earlier I proposed a model of 
+\begin_inset Formula $N$
+\end_inset
+
+ weakly coupled circle maps (and asked about the mode–locking Arnold tongues in them.) Suppose I now imagine 
+\begin_inset Formula $N$
+\end_inset
+
+ weakly coupled Lorenz systems.
+ That is,
+ let
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\dot{x_{i}} & =\sigma\left(y_{i}-x_{i}\right)\\
+\dot{y_{i}} & =x_{i}\left(\rho-z_{i}\right)-y_{i}\\
+\dot{z}_{i} & =x_{i}y_{i}-\beta z_{i}
+\end{align*}
+
+\end_inset
+
+be the 
+\begin_inset Formula $i$
+\end_inset
+
+'th copy of the system.
+ Now imagine some graph of vertices and edges,
+ also labeled by 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Whenever there is an edge 
+\begin_inset Formula $e_{ij}$
+\end_inset
+
+ in the graph,
+ then there is some coupling term.
+ What might this coupling term look like?
+ I dunno.
+ I'm getting tired,
+ and my imagination is running out,
+ and I've other things to do.
+ So,
+ taking a weak stab:
+ perhaps something like 
+\begin_inset Formula 
+\[
+\dot{z}_{i}=x_{i}y_{i}-\beta z_{i}+K\sin2\pi a\left(z_{i}-z_{j}\right)
+\]
+
+\end_inset
+
+or something like that.
+ Would this have the bifurcation properties sketched above?
+ Is this a toy model of here–and–now?
+\end_layout
+
+\begin_layout Standard
 x
 \end_layout
 
