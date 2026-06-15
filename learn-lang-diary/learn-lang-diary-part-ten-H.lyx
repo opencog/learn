@@ -7826,6 +7826,268 @@ FWIW,
 – Linas
 \end_layout
 
+\begin_layout Subsection*
+15 June 2026
+\end_layout
+
+\begin_layout Standard
+My morning lessons are now onto Juozas Baltušis,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Parduotos vasaros
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It is a thick jam of country life from a much earlier time,
+ evoked with archaic language.
+ If I don't know the meaning of a word,
+ then neither does google translate.
+ However,
+ google AI does an excellent job of explaining all these terms and phrases.
+ I started with 
+\begin_inset Quotes eld
+\end_inset
+
+linmark
+\begin_inset Quotes erd
+\end_inset
+
+,
+ which is a ditch in which flax is soaked.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Spaliai
+\begin_inset Quotes erd
+\end_inset
+
+ – the fine woody chaff that separates from flax.
+ And on.
+ This book is a work of art.
+ It's tough.
+ It's authentic.
+\end_layout
+
+\begin_layout Standard
+Anyway,
+ I was wrong about free will.
+ Or deeply confused.
+ I have two very contradictory impressions that I cannot reconcile.
+ The first and most pondered comes from physics,
+ or more correctly,
+ from differential equations.
+ Here,
+ one imagines a particle trajectory,
+ say,
+ of a single path.
+ The initial conditions are fully specified to infinite precision.
+ The motion is fully deterministic.
+ Suppose this path is of an air particle,
+ hitting the leading edge of a wing,
+ exactly at the stagnation point.
+ In conventional diffeq,
+ this path just ends there.
+ It is not continuable past this point.
+ Alternately,
+ imagining some Morse–theory–like saddle point,
+ that air molecule gets to make decision:
+ go above,
+ or go below?
+ Formally,
+ there,
+ there's no mystery:
+ air is not conscious,
+ it does not decide;
+ thermodynamic fluctuations bounce it either up or down.
+ Anyway,
+ the trajectory that leads to the separetrix,
+ the stagnation point,
+ forms a set of measure zero,
+ and is thus ignorable.
+ The flow lines are fully deterministic.
+ For air,
+ and airplane wings,
+ there is no engineering difficulty or mystery,
+ here.
+\end_layout
+
+\begin_layout Standard
+But I was trying to use this as an evocative picture,
+ but now for 
+\begin_inset Formula $10^{23}$
+\end_inset
+
+ particles,
+ not in air,
+ but some complex structure:
+ a flower,
+ a prokaryote,
+ a frog.
+ It would seem there are also 
+\begin_inset Formula $10^{23}$
+\end_inset
+
+ stagnation points for the motion in here,
+ where a 
+\begin_inset Quotes eld
+\end_inset
+
+decision
+\begin_inset Quotes erd
+\end_inset
+
+ to go one way or another has to be made.
+ Call them saddle points:
+ this is a chaotic system:
+ they are everywhere.
+ Or heck,
+ the Lorenz attractor.
+ There are 
+\begin_inset Quotes eld
+\end_inset
+
+decision points
+\begin_inset Quotes erd
+\end_inset
+
+ everywhere.
+ How is the 
+\begin_inset Quotes eld
+\end_inset
+
+decision
+\begin_inset Quotes erd
+\end_inset
+
+ made?
+ I know this is a flawed analogy,
+ but I want to pick apart the flaw.
+ In the Lorenz attractor,
+ I assume there's some Cantor dust in there,
+ and if you want to know about some trajectory,
+ you have to specify initial conditions to infinite precision.
+ And even then,
+ it does not work.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+ be the Cantor set.
+ The mapping 
+\begin_inset Formula $\mathcal{C}\to\mathbb{R}$
+\end_inset
+
+ from the Cantor set to the reals is onto,
+ surjective.
+ No problem.
+ The mapping 
+\begin_inset Formula $\mathbb{R}\to\mathcal{C}$
+\end_inset
+
+ is injective,
+ and worse:
+ it requires a choice at every rational number.
+ In base–ten,
+ is the fraction 
+\begin_inset Formula $1/2$
+\end_inset
+
+ mapped to 
+\begin_inset Formula $0.4999\cdots$
+\end_inset
+
+ or to 
+\begin_inset Formula $0.5000\cdots$
+\end_inset
+
+?
+ Which?
+ This feels like a 
+\begin_inset Quotes eld
+\end_inset
+
+decision point
+\begin_inset Quotes erd
+\end_inset
+
+ or some hyperbolic saddle point.
+ I do not understand how this works.
+ Doesn't every chaotic system,
+ e.g.
+ the Lorenz attractor,
+ have this Cantor dust embedded in it?
+ How does the mapping work?
+ When integrating the differential equation,
+ am I supposed to use the reals,
+ extended with the infinitessimals?
+ Who makes the decision?
+ Is there some little machine elf,
+ paired off with each infinitessimal?
+\end_layout
+
+\begin_layout Standard
+In short,
+ I frankly do not understand the Lorenz attractor.
+ At all.
+ Perhaps that should be the first order of business,
+ to try to understand it.
+ I suspect,
+ I fear that my understanding will be analogous to,
+ say,
+ the beta–expansion of a real number for certain irrational beta:
+ there are branch points,
+ saddle points every so often,
+ where you get to pick which expansion you want to use.
+ I wrote a 30–page paper,
+ on this,
+ with graphs and analysis.
+ If I remember correctly,
+ it was someone named Sidorov(?) who notes that these decision points can be mapped to an infinite binary tree.
+ My paper was on determining the location of that tree,
+ as it depends on beta as to how it embeds.
+ In my imagination,
+ this same collection of points,
+ this Sidorov tree,
+ embeds into the Lorenz attractor.
+ This embedding depends on the parameters,
+ of course.
+ I have no formal proof of this,
+ but it seems obviously true,
+ as what else could it be?
+\end_layout
+
+\begin_layout Standard
+How could this be proved?
+ Well,
+ we'd have to trace some given trajectory until it encounters some rational:
+ some branchpoint,
+ saddlepoint.
+ Here,
+ the trajectory bifurcates.
+ Pick one.
+ Up or down,
+ left or right.
+ Continue,
+ until another bifurcation.
+ There's an infinite number of these;
+ these form the Sidorov tree.
+ But how to find these bifurcation points?
+ This I do not know.
+ But I'm clever,
+ I imagine that I am capable of this.
+\end_layout
+
+\begin_layout Standard
+Lets assume the Lorenz attractor works like the above (I could be wrong.)
+\end_layout
+
 \begin_layout Standard
 x
 \end_layout
