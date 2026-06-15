@@ -7980,6 +7980,12 @@ Let
 \end_inset
 
  be the Cantor set.
+ Say,
+ 
+\begin_inset Formula $\mathcal{C}=2^{\omega}$
+\end_inset
+
+.
  The mapping 
 \begin_inset Formula $\mathcal{C}\to\mathbb{R}$
 \end_inset
@@ -8085,7 +8091,188 @@ How could this be proved?
 \end_layout
 
 \begin_layout Standard
-Lets assume the Lorenz attractor works like the above (I could be wrong.)
+Lets assume the Lorenz attractor works like the above (I could be wrong.) I mean,
+ beta expansions really do work this way,
+ and this is quite easy to show,
+ and there's no waffling on that point.
+ So if the above sketch is correct,
+ this means that,
+ umm,
+ the Lorenz attractor is a model of many–worlds.
+ That is,
+ there is a covering,
+ an embedding 
+\begin_inset Formula $E\to B$
+\end_inset
+
+ where 
+\begin_inset Formula $B$
+\end_inset
+
+ is the base space of trajectories,
+ valued with as real numbers (i.e.
+ in 
+\begin_inset Formula $\mathbb{R}^{3}$
+\end_inset
+
+) That is,
+ it is the butterfly that is drawn in those computer graphics visualizations,
+ and appears in explantory texts.
+ Perhaps I should write 
+\begin_inset Formula $L$
+\end_inset
+
+ instead of 
+\begin_inset Formula $B$
+\end_inset
+
+ to denote that 
+\begin_inset Formula $L$
+\end_inset
+
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+ Lorenz attractor,
+ so 
+\begin_inset Formula $L=B$
+\end_inset
+
+.
+ The space 
+\begin_inset Formula $E$
+\end_inset
+
+ is then (isomorphic to) 
+\begin_inset Formula $2^{\omega}\times L$
+\end_inset
+
+ where 
+\begin_inset Formula $2^{\omega}$
+\end_inset
+
+ is the Sidorov tree of branch points:
+ all the places where the trajectory could have gone either up,
+ or down.
+\end_layout
+
+\begin_layout Standard
+In this sense,
+ the space 
+\begin_inset Formula $E$
+\end_inset
+
+ is the space of all possible choices for a trajectory to take.
+ Now,
+ but the nature of this,
+ they all project down to the same 
+\begin_inset Quotes eld
+\end_inset
+
+physical
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $L$
+\end_inset
+
+,
+ in the same way that all possible beta–expansions of some real number is still that same real number:
+ there are just 
+\begin_inset Formula $2^{\omega}$
+\end_inset
+
+ distinct,
+ unique expansions of that real number.
+\end_layout
+
+\begin_layout Standard
+Cool mathematical trick,
+ bro.
+ So now what?
+ Well,
+ here,
+ I let my imagination take over,
+ and I imagine a (chaotic,
+ dynamical) system embedded not in 
+\begin_inset Formula $N=3$
+\end_inset
+
+ dimensional space,
+ like the Lorenz attractor,
+ but in 
+\begin_inset Formula $N=10^{23}$
+\end_inset
+
+dimensions.
+ And now for the big question:
+ is the covering space 
+\begin_inset Formula $E$
+\end_inset
+
+ for this system simply a Cartesian product of 
+\begin_inset Formula $2^{\omega}$
+\end_inset
+
+ copies,
+ or is it twisted.
+ Or worse:
+ there is no mapping 
+\begin_inset Formula $E\to B$
+\end_inset
+
+ because there is no unique base space 
+\begin_inset Formula $B$
+\end_inset
+
+?
+ That is,
+ as a trajectory 
+\begin_inset Formula $\gamma\in E$
+\end_inset
+
+ progresses over time,
+ viz 
+\begin_inset Formula $\gamma\left(t\right)$
+\end_inset
+
+,
+ and hits some branch point 
+\begin_inset Formula $\gamma\left(t_{0}\right)$
+\end_inset
+
+,
+ the actual path taken depends on the branch taken.
+ That is,
+ 
+\begin_inset Formula $\gamma_{u}\left(t_{0}+\epsilon\right)\ne\gamma_{d}\left(t_{0}+\epsilon\right)$
+\end_inset
+
+ when 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{u}\left(t_{0}+\epsilon\right)=\gamma_{d}\left(t_{0}+\epsilon\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $\epsilon\le0$
+\end_inset
+
+ and 
+\begin_inset Formula $u,d$
+\end_inset
+
+ denote up,
+ down,
+ the branch taken.
 \end_layout
 
 \begin_layout Standard
