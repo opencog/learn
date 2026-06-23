@@ -14089,9 +14089,376 @@ I've spent weeks developing a thermodynamic basis for life,
  Except to eat,
  sleep,
  take showers,
- hang out in bars and go gaga for Jonines.
+ hang out in bars and go gaga for Joninės.
  Later,
  duude.
+\end_layout
+
+\begin_layout Subsection*
+23 June 2026
+\end_layout
+
+\begin_layout Standard
+Sensing danger is difficult.
+ Evolutionarily,
+ the danger has to harm your reproductive fitness.
+ This danger would then be very highly context–specific.
+ It would be anti–communication.
+\end_layout
+
+\begin_layout Standard
+That is,
+ danger is not an internal property,
+ but is necessarily of external origin:
+ bugs that eat plants,
+ or whatever predator eats jellyfish.
+ It is very context–specific:
+ its specifically bugs,
+ and not lions and tigers.
+ Since it is an external action on internal state,
+ it is necessarily communicative,
+ a message that crosses the internal–external boundary.
+ This message is forced,
+ from the external world onto the internal.
+ This makes it different from conventional sensory operation,
+ where the internal mechanisms observe the external world,
+ selecting the specific kind of sensory information to let across (sight,
+ sound,
+ smell...) Sensory operations seem to be continuous,
+ uninterrupted.
+ Ongoing.
+ By contrast,
+ externally forced interactions are insults (in the European sense of the word 
+\begin_inset Quotes eld
+\end_inset
+
+insult
+\begin_inset Quotes erd
+\end_inset
+
+:
+ an attack,
+ not just a verbal attack,
+ but a general forced–upon–ness.)
+\end_layout
+
+\begin_layout Standard
+How might such an external event force itself upon the agent,
+ and how would it be (subjectively) perceived?
+ The thermodynamic character of sensory flow is unclear.
+ How should I justify it?
+ As the agent perceives,
+ by sensory means,
+ the external world,
+ the total entropy increases.
+ But the informational flow is controlled;
+ the incoming sensory information is either integrated into the world–model,
+ or it is discarded.
+ The complexity of the world–model increases.
+ The problem here is I do not have a good metric or measure of structural complexity.
+ I imagine this word–model to be some graph of vertexes and edges,
+ or some partly–assembled jigsaws.
+ But I'm not sure what it is that I should be counting,
+ and even if I do invent something countable about a graph,
+ I'm not sure in what way I need to relate it to entropy.
+ So this is another TODO:
+ with great effort,
+ lets try to find some suitable measure of complexity of a world model.
+ And,
+ from this,
+ articulate how the informational flow,
+ coming in from sensory channels,
+ alters that complexity.
+ 
+\end_layout
+
+\begin_layout Standard
+I assume that the correct model is (again) self–organized criticality.
+ That is,
+ the incoming information affects the world–model a bit like the sand–pile:
+ each new bit of information is added,
+ until there is some avalanche.
+ In reasoning,
+ this would be generalization from particulars:
+ after observing a number of specific instances,
+ a general pattern emerges.
+ The specific instances are wiped away from memory – this is the avalanche – and replaced by the generalization.
+ 
+\end_layout
+
+\begin_layout Standard
+Fascinating.
+ I can see how to do this in software.
+ I mean,
+ the original language–learning project was exactly this.
+ The biggest design issue there was that it was batched.
+ Instead,
+ I need to make it avalanche at some natural pace.
+ But what is the correct pace?
+ The answer is that there needs to be an ensemble of organisms (agents),
+ each with different thresholds for generalization (
+\begin_inset Quotes eld
+\end_inset
+
+stickier sand grains
+\begin_inset Quotes erd
+\end_inset
+
+) and let them all run in parallel.
+ And ...
+ if I am running this in parallel,
+ I can do this via GPU.
+ So,
+ when incrementing observational counts,
+ these are incremented for different organisms.
+ Hmm.
+ This works for a while,
+ but eventually,
+ different organisms must diverge,
+ as they will select different behaviors.
+ At any rate,
+ this sounds like a viable experimental research direction.
+ So,
+ another TODO.
+\end_layout
+
+\begin_layout Standard
+Wow.
+ OK.
+ So where am I?
+ I have an even,
+ ongoing,
+ streaming flow of incoming sensory information,
+ and it updates the world model using some algo that generalizes from particulars to generals,
+ that algorithm appearing to operate near criticality and having avalanching behavior.
+ And this could be said to be the 
+\begin_inset Quotes eld
+\end_inset
+
+flow state
+\begin_inset Quotes erd
+\end_inset
+
+:
+ the pleasurable,
+ agreeable forward progress.
+ Maybe not towards a specific goal,
+ but towards a towering Babel of increasing structural complexity.
+ Which I can hand–wavingly claim is not only compatible with the 2nd law of thermodynamics,
+ but is driven by it.
+ Err,
+ well,
+ careful.
+ Driven by non–equilibrium energy flows.
+ Fuck.
+ These details are killing me.
+ But anyway,
+ this seems to be a coherent,
+ consistent description of the sensory flow for an agent.
+\end_layout
+
+\begin_layout Standard
+It lacks a detailed description of the decision process.
+ Unless the avalanching is taken to be decision–making.
+ That is,
+ when a set of particulars are replaced by their generalization,
+ if this the 
+\begin_inset Quotes eld
+\end_inset
+
+decision
+\begin_inset Quotes erd
+\end_inset
+
+?
+ In particular,
+ there may be multiple different collections of particulars,
+ which can be generalized in conflicting ways.
+ The generalizations are non–Abelian:
+ once generalized in one direction,
+ the other directions are shut off (since the collection of particulars has been trimmed and are no longer available.) If two different generalizations are available,
+ and of about equal strength,
+ then the choice is which way to go.
+ For a sand–pile,
+ it would be to avalanche left or avalanche right.
+ This is the branch point.
+ If the sand–pile is circle–symmetric,
+ then it can tumble down towards any point in that circle.
+ (Shades of wave–function collapse...) For a general collection of structural counts,
+ my graph includes many,
+ many collections of particulars,
+ so there is no particular (spatial) symmetry.
+\end_layout
+
+\begin_layout Standard
+The philosophical issue here is the intersection of free will and avalanching.
+ The previous paragraph paints avalanche directions as 
+\begin_inset Quotes eld
+\end_inset
+
+choices
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The obvious choice mechanism is to give each avalanche direction a probability of 
+\begin_inset Formula $e^{-E/kT}$
+\end_inset
+
+ and then pick one randomly,
+ and commit to it.
+ But this is purely random:
+ its a role of the dice.
+ The final position of the dice is a 
+\begin_inset Quotes eld
+\end_inset
+
+choice
+\begin_inset Quotes erd
+\end_inset
+
+ but the process was empty and void of volition.
+ So how does this work for the subjective experience of the agent?
+ The agent senses it's place in the world,
+ but the process of incorporating new information proceeds without conscious volition.
+ Thus,
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+illusion of free will
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Hmm.
+\end_layout
+
+\begin_layout Standard
+Well,
+ but this is not so bad as it sounds.
+ The above describes the accumulation of information about the external world,
+ and it's incorporation into the world–model.
+ This can run on full automatic.
+ My eyes and ears just run on automatic.
+ I'm subjectively aware of hearing and seeing,
+ but whatever information is coming across,
+ and what that information is doing as it enters my brain,
+ that's automatic.
+ My volition,
+ my decision–making process is where to direct my gaze,
+ or,
+ more abstractly,
+ where to direct my attention.
+ The description of the prior paragraphs does not invalidate or harm that.
+ It does,
+ however,
+ push the volitional layer off deeper into the meta–stack.
+ So,
+ that's an open work item.
+\end_layout
+
+\begin_layout Standard
+That,
+ and I wandered off–track from the conception of harm to the organism.
+ It seems that this can now be defined as unwanted,
+ unregulated external actions upon the agent.
+ I guess that's obvious.
+ The subtlety is to reinterpret this external action as a kind of 
+\begin_inset Quotes eld
+\end_inset
+
+message
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+informational flow
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Such a view unifies the system into a whole,
+ giving us a birds–eye view of insults acting on organisms.
+ Part of an ecology,
+ instead of discrete objective events.
+\end_layout
+
+\begin_layout Standard
+But if this is the view of an insult,
+ then some numerical measure of the harm caused needs to be devised.
+ Putting bacteria in soapy water is deadly;
+ the reproductive possibilities of that bacterium are wiped out.
+ The only evolutionary trait tested here is that,
+ perhaps,
+ this one particular instance of this one particular bacterium can survive the insult,
+ and therefore,
+ whatever it was that made it structurally unique can be passed on to future generations.
+ But this model is a binary yes/no,
+ survived or died,
+ instance by instance.
+ There has to be some ensemble of phenotypes,
+ some of which die,
+ and some of which don't,
+ in order for selection to act on the genotype.
+\end_layout
+
+\begin_layout Standard
+And that's fine,
+ I guess.
+ But I am hunting for defense mechanisms against harm in individuals.
+ Thus,
+ the insult is either not deadly,
+ or there is enough fore–warning of the upcoming insult that it can be fled from,
+ protected from,
+ or actions taken to mitigate the harm.
+ That is,
+ there has to be some message,
+ some informational flow,
+ that acts as a warning.
+ And,
+ for this,
+ some sensory apparatus can be developed.
+ An early warning system.
+ DEW in the far North.
+ PAVE PAWS.
+\end_layout
+
+\begin_layout Standard
+Huh.
+ That last sentence was not foreseen.
+ It just hopped into my head by free–association.
+ But it is interesting.
+ It indicates the presence of an agential organism,
+ nominally called 
+\begin_inset Quotes eld
+\end_inset
+
+the nation–state
+\begin_inset Quotes erd
+\end_inset
+
+,
+ but apparently operating with a complexity comparable to the jellyfish or the tree–shrub.
+ So it would be an example of 
+\begin_inset Quotes eld
+\end_inset
+
+its sub–agents,
+ all the way down.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Enough.
+ Time to take a break.
+ Later.
 \end_layout
 
 \begin_layout Standard
