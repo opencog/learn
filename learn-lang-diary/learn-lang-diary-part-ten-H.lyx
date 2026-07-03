@@ -19503,7 +19503,210 @@ The idea of pruning and trimming is that,
 \begin_layout Standard
 Sooo,
  now what?
- This large 
+ This large ...
+ shoot,
+ I was interrupted,
+ and now I lost the train of thought.
+\end_layout
+
+\begin_layout Standard
+Lets start over.
+ In genetics,
+ there is this idea of conserved regions and highly variable regions,
+ and,
+ in machine learning,
+ I use this to my advantage to limit the combinatorial explosion,
+ and explore only the regions that are highly variable.
+ How can I translate this,
+ apply it as a metaphor,
+ to statistical frequentist counts of observations?
+ Some of these counts are indeed random junk,
+ noise,
+ and some are significant.
+ How can I tell them apart?
+ My frequentist clusters are currently spatial;
+ should I include temporal information?
+ Or is this document information?
+ i.e.
+ because some word occurs frequently in a specific document?
+\end_layout
+
+\begin_layout Standard
+Hmm.
+ More generally,
+ if I have an agent crawling over text,
+ I should associate text meta–data,
+ such as 
+\begin_inset Quotes eld
+\end_inset
+
+this text is rich in this word
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Maintaining such info explodes the size of the database,
+ so now pruning again becomes important.
+ And again,
+ how?
+ By keeping only the highest frequency markers?
+ Computing word–to–document MI?
+ That is,
+ what is the agent observing?
+ Initially,
+ agents observe word frequencies and word–pair MI.
+ And then the next step,
+ as always,
+ clustering.
+ But what am I doing here?
+ I'm defining some a priori sensory mechanisms:
+ the simplest sensor is one that detect word–pairs,
+ and the world–model is the sparse matrix of observed counts.
+ I still have the same old unsolved issue from decades ago:
+ great,
+ now what?
+\end_layout
+
+\begin_layout Standard
+Actually I have two or three unsolved issues.
+ And these are show–stoppers;
+ I've been glib,
+ but here the rubber meets the road.
+ They are:
+\end_layout
+
+\begin_layout Itemize
+What are the sensory organs beyond word–pair counting?
+ Do I have to engineer these,
+ each step of the way?
+ If not,
+ then how do I explore the algorithmic space of meaning extraction?
+ I've hand–waved that pair counting is enough,
+ I just have to do it recursively.
+ And that's an OK starting point,
+ and its a point I have not yet reached,
+ but it sounds good.
+ Should I reach that point before trying to find 
+\begin_inset Quotes eld
+\end_inset
+
+something better
+\begin_inset Quotes erd
+\end_inset
+
+?
+ What's the minimal algo for true recursive world–modeling?
+ And,
+ given that minimal model,
+ how do I evolve it?
+ I'm grasping at straws here.
+ I see something through the fog,
+ but the outlines aren't firm.
+ Lets stick to the recursive pair–counting idea:
+ the problem here was that there's a combinatoric explosion at each recursive step,
+ and I don't know how to control that explosion.
+\end_layout
+
+\begin_layout Itemize
+The other deep and fundamental issue is that of decision–making.
+ If I have agents crawling over documents in a directory tree,
+ then ...
+ when do they decide to go to the next file?
+ What is the menu of choices that each faces,
+ and how do they make choices?
+ Are the choices uniformly random,
+ or are there preferred choices?
+ For a directory crawler,
+ this is attentional focus:
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+attention
+\begin_inset Quotes erd
+\end_inset
+
+ is being directed at the file to be processed.
+ Where does the agent swing attention to,
+ next?
+ Attention is 
+\begin_inset Quotes eld
+\end_inset
+
+volitional
+\begin_inset Quotes erd
+\end_inset
+
+,
+ in that the agent decides where to shift attention next.
+ Besides simple algos like depth–first or breadth–first exploration,
+ what else can be done?
+ What do I have to engineer,
+ and what can be discovered evolutionarily?
+ How do I create an algo that explores algos,
+ and how do I do this so I don't immediately get stuck in some huge search space,
+ some huge combinatoric explosion?
+ Should I literally create a few hundred agents,
+ represent their search algos in Atomese,
+ and then apply point mutations or breeding cross–overs to the algo trees?
+ Keep the ones with the best scores?
+\end_layout
+
+\begin_layout Standard
+I'm wringing my hands because the above basics can be implemented in code.
+ But its hard,
+ even with Claude,
+ its a huge amount of work.
+ Months,
+ more likely years,
+ given past progress.
+ What alternatives are there?
+ I've got fancy ideas about agents,
+ but when I try to put into practice,
+ the resulting system is pathetically trapped and can't free itself to fly.
+ Am I being unrealistic?
+ The goal was to self–engineer into greater intelligence.
+\end_layout
+
+\begin_layout Standard
+The last few paragraphs is the status of how things were,
+ before LLM's.
+ Now,
+ with LLM's,
+ there are alternatives:
+ I can design agents with LLM attachments,
+ or I can use the LLM to design agents,
+ or I can use the LLM to give the agent some verbal self–awareness.
+ So that I could talk to the agent,
+ the way I might talk to a human,
+ and ask:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+How's it going?
+ What are you doing?
+ Have you tried doing xyz?
+ Have you tried enumerating all xyz's and testing them all?
+\begin_inset Quotes erd
+\end_inset
+
+ So I'm brainstorming with the LLM through the most basic agent behaviors,
+ but looking towards granting autonomy.
+ This is a proposal for a research project.
+ When I try to theorize at this level,
+ I get stuck,
+ which is why I want to experiment.
+ Experimental issues get the juices flowing.
+ But when is the right time to jump back into coding?
+ When I'm back from Vilnius,
+ when I've squared away all the issues here?
+ Crap.
+\end_layout
+
+\begin_layout Standard
+I'm halting now,
+ to read more of the CBC theory paper.
 \end_layout
 
 \begin_layout Standard
