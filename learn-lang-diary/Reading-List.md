@@ -1,5 +1,29 @@
 
-Things to read:
+Things to read: 
+
+* The CBC theory and its entailments
+  Arthur S Reber, William B Miller Jr, Predrag Slijepcevic, František Baluška
+  EMBO Rep . 2023 Dec 13;25(1):8–12. doi: 10.1038/s44319-023-00004-6
+  https://pmc.ncbi.nlm.nih.gov/articles/PMC10883262/
+
+  A fine declarative annunciation of the "cellular basis of
+  consciousness" (CBC). It is declaraitve because it asserts that this
+  is the case, without making any active inferences or deductions.
+  It does, however, have good references to plant consciousness.
+  There are two assertions: cells (eukaryotes, prokaryotes) are conscious
+  and this lower-level consciousness must be necessarily understood for
+  human consciousness to be understood. I agree with the first, I
+  disagree with the second. No sketch of the basis of cell consciousness
+  is made other than hand-waving about Tononi IIT Phi, an
+  interior/exterior division, the "senome" ("sensome"?) inside.
+
+  Perhaps the most triggering assertion, for me, is that Darwinian
+  evolution must be modified in light of this. Rather than being random,
+  the evolution is instead directed, focused by the conscious collective
+  behavior of cells. That is, cells in a collective decide together what
+  the important directions in which cell collectives are to evolve.
+  The specific mechanism of DNA methylation is proposed as the
+  evolutionary control.
 
 * Canonical Art as Informational Paradox (1973) Juri Lotman
   Sign Sysmtems Studies Journal on OJS

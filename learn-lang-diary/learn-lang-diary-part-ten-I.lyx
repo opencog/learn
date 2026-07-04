@@ -176,6 +176,254 @@ There's an earlier 4 July entry in Part Ten–H.
 \end_layout
 
 \begin_layout Standard
+Well,
+ its late afternoon,
+ and I'm tired,
+ been writing since morning,
+ but I don't know what else to do.
+\end_layout
+
+\begin_layout Standard
+Upon finishing the CBC paper,
+ I'm left teetering on next steps.
+ One urgent one is to algebraicize the the agential model I sketched a few weeks ago.
+ This is vital,
+ as it provide an explicit algebraic framework for exploring CBC.
+ A different next step is to examine and rewrite Tononi IIT Phi in terms of jigsaws.
+ This would better expose the scaling behavior of jigsaws that have a large number of tabs,
+ sorted by strength/importance.
+ Maybe even Phi would help rank these by importance?
+ i.e.
+ provide a graph–theortic weighting similar to graph centrality,
+ but weighted by connectivity?
+ This seems like a good little mathematical problem I could get lost in.
+ But then there's an irritant:
+ what is volition?
+ My agent model requires volition,
+ expressed as choice in a menu,
+ as a vital,
+ central ingredient for phenomenal,
+ conscious 
+\begin_inset Quotes eld
+\end_inset
+
+weak
+\begin_inset Quotes erd
+\end_inset
+
+ subjective awareness.
+ But I get stuck when trying to evade the deterministic Turing trap,
+ here.
+ It's irritating.
+ Oh,
+ but I have in idea.
+ See below.
+ Finally,
+ the CBC paper makes a striking assertion about evolution:
+ since the cells (agents) are conscious,
+ they can use some political process to reason their way into directed evolution.
+ To basically engineer their own future evolutionary state.
+ This is remarkable,
+ because it overcomes the combinatoric explosion usually seen when random mutation is used to drive evolution.
+ Articulating and explaining this would be a huge algorithmic breakthrough.
+ This is fun,
+ because it again suggests a system operating near critical opalescence,
+ avalanching near a phase transition.
+\end_layout
+
+\begin_layout Standard
+OK,
+ but perhaps I need to tackle the hardest problem first,
+ as everything else seems to rest upon this.
+ This is the problem of volitional choice.
+ So all I've got is this hare–brained idea.
+ Turtles all the way down.
+\end_layout
+
+\begin_layout Standard
+So,
+ lets assume a menu has appeared via some mechanism.
+ To be concrete,
+ in the case of my Atomese learning agents,
+ the menu of choices are:
+ (a) move to a different file in this directory (b) move to another directory (c) do word–pair counting on this file (d) do disjunct parsing and counting on this file (e) do clustering & classifiction (f) maybe other menu choices.
+ Since Atomese is computable,
+ this is all Turing deterministic,
+ there is no free will.
+ I can write some algo that will randomly pick one of these menu items,
+ maybe by some weighted importance.
+ Still,
+ there is no free will.
+ This is unsatisfying,
+ so what can we do?
+\end_layout
+
+\begin_layout Standard
+The goofball proposal is to posit an oracle of some sort,
+ a Turing oracle,
+ that will make the decision using some impenetrable logic.
+ This is goofy,
+ because its non–physical.
+\end_layout
+
+\begin_layout Standard
+The remaining proposal is to posit quantum effects.
+ This is in accordance with the physical world,
+ except that the physical world is incompletely understood,
+ viz.
+ quantum collapse is magical.
+ So now,
+ we imagine the agent,
+ and it's menu of choices,
+ in some quantum superposition.
+ Let's suppose the six menu items to be in some pure state,
+ i.e.
+ to correspond to state vectors with phases.
+ Viz.
+ the current menu is 
+\begin_inset Formula 
+\[
+\left|\psi_{\chi}\right\rangle =e^{i\phi_{1}}\left|\chi_{1}\right\rangle +e^{i\phi_{2}}\left|\chi_{2}\right\rangle +\cdots
+\]
+
+\end_inset
+
+ with each 
+\begin_inset Formula $\left|\chi_{k}\right\rangle $
+\end_inset
+
+ being a menu choice (corresponding to a menu choice).
+ These correspond to the eigenstates of a decision operator 
+\begin_inset Formula $\Xi$
+\end_inset
+
+ so that 
+\begin_inset Formula $\Xi\left|\chi_{k}\right\rangle =\lambda_{k}\left|\chi_{k}\right\rangle $
+\end_inset
+
+ and the agent has made a choice when 
+\begin_inset Formula $\Xi$
+\end_inset
+
+ has been applied to the current menu,
+ resulting in a wave–function collapse,
+ which is interpreted as a choice.
+ Because it is a collapse,
+ it immediately enters the past,
+ and is no longer a part of the present.
+ That is,
+ wave–function collapse marks the forward march of time.
+ Time ticks because wave functions collapse;
+ it is the originator and driver of time.
+\end_layout
+
+\begin_layout Standard
+Whatever.
+ But,
+ at any rate,
+ the agent itself would then be in some superposition,
+ with the possible future motor actions entangled with the choice menu.
+ That is,
+ the agent state is 
+\begin_inset Formula 
+\[
+\left|\psi_{\alpha}\right\rangle =e^{i\phi_{1}}\left|\chi_{1}\right\rangle \left|\mu_{1}\right\rangle +e^{i\phi_{2}}\left|\chi_{2}\right\rangle \left|\mu_{2}\right\rangle +\cdots
+\]
+
+\end_inset
+
+with each 
+\begin_inset Formula $\left|\mu_{k}\right\rangle $
+\end_inset
+
+ being the motor movement associated with menu choice 
+\begin_inset Formula $\left|\chi_{k}\right\rangle $
+\end_inset
+
+.
+ That is,
+ the agent collapses to state 
+\begin_inset Formula $\left|\chi_{k}\right\rangle \left|\mu_{k}\right\rangle $
+\end_inset
+
+ and performs movement 
+\begin_inset Formula $\left|\mu_{k}\right\rangle $
+\end_inset
+
+.
+ Umm,
+ I'm slightly confused:
+ if this was a finite state machine,
+ this says that the machine transitions to state 
+\begin_inset Formula $\mu_{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Perhaps I'm doing my analysis wrong:
+ I should be writing this out using the language of a quantum finite automaton (alternately,
+ as a geometric finite automaton!?,
+ but I don't see that this mild generalization matters,
+ for the moment,
+ except as an OK intellectual exercise.) So lets do this.
+\end_layout
+
+\begin_layout Standard
+But,
+ before we do this,
+ note that we skipped over avalanching as a purely classical but somehow non–deterministic means of choosing and making a selection.
+ That is,
+ the system sits on the verge of making a decision,
+ and the menu of choices is somehow analogous to the abelian sand–pile.
+ Most choices are small:
+ e.g.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+process the next word pair
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But sometimes,
+ end of file is reached,
+ and now the menu expands.
+ The driver of the avalanche is some minor external event.
+ It triggers the avalanche,
+ interpreted as a state transition to a new state.
+ Is it free–will–ish?
+ Well,
+ not quite,
+ not conventionally,
+ because a small external influence can trigger a large internal rearrangement,
+ when the internal system is poised on the edge of stability.
+\end_layout
+
+\begin_layout Standard
+OK,
+ one last trick before this analysis can begin.
+ By using the generic geometric finite state machine algebraic axioms and notation,
+ we can use exactly the same notation to describe a DFA,
+ PFA,
+ QFA or other GFA,
+ leaving most of the framework the same.
+ (Here DFA==deterministic,
+ PFA==probabilistic,
+ QFA==quantum,
+ etc.)
+\end_layout
+
+\begin_layout Standard
+It's 7:30 PM.
+ I'm tired.
+ Do I really want to start this now?
+ Maybe I can lay down some basics?
+\end_layout
+
+\begin_layout Standard
 x
 \end_layout
 
