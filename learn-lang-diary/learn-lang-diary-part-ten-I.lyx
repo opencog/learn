@@ -463,7 +463,7 @@ I just woke up.
  but the thought of writing formulas raised a certain pressure in my head.
  The intellectual effort does create sudden sharp elevations in assorted synaptic fluids,
  and,
- I guess jus like any motor slammed into gear,
+ I guess just like any motor slammed into gear,
  the shock can be harmful.
  Different mechanisms run at different rates,
  the fastest ones just have to wait for the slowest ones to come up to speed.
@@ -699,7 +699,8 @@ For
 
  then the measure is irrelevant,
  as the state transition function guarantees that the machine is always in just one and only one state at a time.
- More on this later.
+ A probabilistic state machine can be defined by having multiple initial states,
+ and then purpose of the measure is to make sure we don't get too many (or too few) of them as the system progresses.
 \end_layout
 
 \begin_layout Itemize
@@ -891,6 +892,229 @@ The point of the above was rather trite:
  by using notation for measure–preserving dynamical systems,
  we can cover both the classical and the quantum cases at the same time,
  instead of having to have distinct conversations about each.
+\end_layout
+
+\begin_layout Standard
+OK,
+ so that's the base tool.
+ Now for some issues.
+ If we are to describe an agent,
+ then an assortment of issues arise.
+ First,
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+input alphabet
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ can be interpreted as the alphabet of sensory input from the external environment.
+ However,
+ by making it discrete,
+ finite,
+ we've forced the sensor to convert observations of the unbounded,
+ uncountable external world into a finite set of discrete signals.
+ This is OK for the perception of text,
+ and maybe even OK for the perception of phonetic speech,
+ but it's problematic for music,
+ and certainly for vision.
+ I mean,
+ both can be pixelated,
+ but that's hacky.
+ It's more confusing if the external world is itself quantum,
+ and so,
+ instead of sensing a 
+\begin_inset Quotes eld
+\end_inset
+
+single thing
+\begin_inset Quotes erd
+\end_inset
+
+ from the external world,
+ the agent needs to sense a superposition in the external world.
+ The algebraic language given above is inadequate for that.
+ So,
+ fixing this is a TODO item.
+\end_layout
+
+\begin_layout Standard
+Next,
+ for an agent with free will,
+ the alphabet 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ needs to be split into 
+\begin_inset Formula $\Sigma_{s}$
+\end_inset
+
+ coming from sensor 
+\begin_inset Formula $s$
+\end_inset
+
+ and 
+\begin_inset Formula $\Sigma_{c}$
+\end_inset
+
+ corresponding to the menu of choices available at any given time.
+ The stream of events 
+\begin_inset Formula $\Sigma_{s}$
+\end_inset
+
+ is fully deterministic:
+ it is whatever the external world is raining down upon the sensors of the agent.
+ The set of choices 
+\begin_inset Formula $\Sigma_{c}$
+\end_inset
+
+ is internal and context–dependent:
+ a choice I had yesterday may no longer be available today;
+ new choices may open up tomorrow.
+ The notation is inappropriate.
+ Then,
+ as before,
+ choice is itself problematic,
+ as how does the agent 
+\begin_inset Quotes eld
+\end_inset
+
+choose
+\begin_inset Quotes erd
+\end_inset
+
+?
+ If the idea of a supernatural spirit making a choice is to be avoided,
+ then the choice needs to be reframed as a system on the edge of criticality.
+ If we do want to allow supernatural spirits or oracles making decisions,
+ then we have to articulate algebra for for how these work:
+ an algebra of the supernatural.
+ It might be OK to do this,
+ simply in the name of distinguishing structural elements,
+ but I see no need for this right now.
+ Wishing to have a supernatural description just make things harder,
+ it seems.
+\end_layout
+
+\begin_layout Standard
+A different issue is whether the Cartesian or the tensor product should be used.
+ That is,
+ should the transition functions depend on 
+\begin_inset Formula $\Sigma_{s}\times\Sigma_{c}$
+\end_inset
+
+ or on 
+\begin_inset Formula $\Sigma_{s}\otimes\Sigma_{c}$
+\end_inset
+
+ ?
+ The former has the problem of 
+\begin_inset Quotes eld
+\end_inset
+
+who chooses
+\begin_inset Quotes erd
+\end_inset
+
+?
+ The later says that the menu of current choices in intricately entangled with the external state of the external world ...
+ and indeed it is.
+ But just saying 
+\begin_inset Quotes eld
+\end_inset
+
+oh it's the tensor product
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+oh it's entangled
+\begin_inset Quotes erd
+\end_inset
+
+ is glib.
+ This needs to be articulated.
+ I don't understand what this means.
+\end_layout
+
+\begin_layout Standard
+Next,
+ there's an issue with 
+\begin_inset Quotes eld
+\end_inset
+
+measure–preserving
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This seems correct if the agent to be described is a biological cell (eukaryote,
+ prokaryote) and the measure is the baryon number.
+ The cell contents are preserved,
+ excluding ingestion of food,
+ intake of water or ions.
+ But for digital agents,
+ the inside contains the world–model,
+ and the complexity of that world model is generally increasing.
+ If I think of the world model as some assembled sheaf of jigsaws,
+ that assembly increases over time,
+ so the measure cannot be the number of jigsaws,
+ nor the number of connections.
+ The measure can be something simpler,
+ though:
+ it can be just an ensemble.
+ (A thermodynamic ensemble?!) The ensemble here is the analog of the mixed state in quantum:
+ the measure allows us to track many 
+\begin_inset Quotes eld
+\end_inset
+
+individuals
+\begin_inset Quotes erd
+\end_inset
+
+ at the same time;
+ each individual is a 
+\begin_inset Quotes eld
+\end_inset
+
+pure state
+\begin_inset Quotes erd
+\end_inset
+
+;
+ each individual is a single point in the space 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ And so the interpretation of the measure is now clear:
+ it is merely a trick,
+ a technique,
+ for working with an ensemble of individuals (who are otherwise getting the exact same sensory input).
+\end_layout
+
+\begin_layout Standard
+Except this is wrong...
+ because once two individuals make different choices,
+ their life histories diverge,
+ so their sensory experiences differ.
+ This mechanism does not seem to offer a way of tracking different sensory inputs.
+ So it would seem that I am totally and completely broken,
+ now.
+ Dead end?
+\end_layout
+
+\begin_layout Standard
+Not quite?
+ Because...
 \end_layout
 
 \begin_layout Standard
