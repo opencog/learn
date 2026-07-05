@@ -423,8 +423,474 @@ It's 7:30 PM.
  Maybe I can lay down some basics?
 \end_layout
 
+\begin_layout Subsection*
+5 July 2026
+\end_layout
+
 \begin_layout Standard
-x
+I just woke up.
+ Well,
+ 20 mins ago,
+ but had to make coffee,
+ whatever.
+ I am now trying to ...
+ not hurt myself.
+ Didn't work.
+ Instead,
+ I read six pages of Baltušis.
+ Apparently,
+ the thought of writing formulas first thing in the morning started to make my head hurt.
+ What's the problem?
+ I had one cocktail last night,
+ only one.
+ And I'm dehydrated.
+ Yesterday was the 4th of July.
+ I hoped to find some Americans to celebrate with.
+ I didn't.
+ One cocktail doesn't make me drunk any more.
+ Maybe it never did,
+ but I have the feeling I'm less alcohol sensitive now,
+ than when I was younger.
+ I wonder what that is.
+ Google AI says it should be the opposite:
+ lower muscle mass and slower liver means higher blood alcohol percentage.
+ Well,
+ except I have higher muscle mass now,
+ than when I was younger.
+ Whatever.
+ I still woke with ...
+ I feel fine,
+ but the thought of writing formulas raised a certain pressure in my head.
+ The intellectual effort does create sudden sharp elevations in assorted synaptic fluids,
+ and,
+ I guess jus like any motor slammed into gear,
+ the shock can be harmful.
+ Different mechanisms run at different rates,
+ the fastest ones just have to wait for the slowest ones to come up to speed.
+\end_layout
+
+\begin_layout Standard
+I'm ready for math now.
+ Just a few words.
+ Nothing interesting happened last night;
+ alas.
+ The night before,
+ I wrote up,
+ in part,
+ above.
+ What I did not write up was that I met a 53–year–old psychiatrist who seemed to marvel at my command of the language.
+ Perhaps I made a strong first impression.
+ I walked up to her,
+ direct (the place was empty) and told her about the vatnik angel episode that occurred just moments earlier.
+ She was actually the first to use the word 
+\begin_inset Quotes eld
+\end_inset
+
+angel
+\begin_inset Quotes erd
+\end_inset
+
+,
+ so I went with that.
+ Presumably,
+ psychiatrists are very good at observation.
+ We had fun talking.
+ The only issue was that she kept telling me how awesome I am,
+ here and there.
+ I don't need to be told that.
+ I'm fully self–affirmed.
+ I guess I should have told her that.
+ I'm confident.
+ If I ever see her again,
+ and if she ever complements me again,
+ I will have to ask her if confirmation is a natural part of psychiatric help.
+ Maybe she just says that out of habit?
+ Hmm.
+ Google AI says no.
+ Psychiatrists just become normal when off duty.
+ Maybe she just liked me.
+ We had good rapport.
+ For a while,
+ I got to thinking that she was thinking 
+\begin_inset Quotes eld
+\end_inset
+
+At last!
+ A normal person!
+ Without pathologies!
+\begin_inset Quotes erd
+\end_inset
+
+ and was relieved.
+\end_layout
+
+\begin_layout Standard
+Maybe I should start a 
+\begin_inset Quotes eld
+\end_inset
+
+normal person club
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Invite her,
+ and Lenonas.
+ And see what happens.
+\end_layout
+
+\begin_layout Standard
+Anyway.
+ Time for work.
+\end_layout
+
+\begin_layout Standard
+—
+—
+—
+—
+—
+—
+—
+—
+—
+-
+\end_layout
+
+\begin_layout Standard
+Lets define a 
+\begin_inset Quotes eld
+\end_inset
+
+measure–preserving finite automaton
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This will be inadequate for the agent model,
+ but is one of the central concepts,
+ so lets start.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\Sigma=\left\{ a_{k}:k\in1,\cdots,N\right\} $
+\end_inset
+
+ a finite set of symbols,
+ the input alphabet.
+ (I guess it could be countable:
+ 
+\begin_inset Formula $N=\omega$
+\end_inset
+
+ or maybe larger,
+ bt for now just,
+ uhh,
+ countanble?)
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $B=\left(X,\mathcal{B},\mu\right)$
+\end_inset
+
+ be space with a Borel algebra 
+\begin_inset Formula $\mathcal{B}$
+\end_inset
+
+ and a measure 
+\begin_inset Formula $\mu:\mathcal{B}\to\left[0,1\right]$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\mathcal{T}=\left\{ T_{k}:k\in1,\cdots,N\right\} $
+\end_inset
+
+ be a collection of transformations 
+\begin_inset Formula $T_{k}:X\to X$
+\end_inset
+
+ that are measure–preserving 
+\begin_inset Formula $\mu\left(T_{k}^{-1}\left(A\right)\right)=\mu\left(A\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $A\in\mathcal{B}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For the case of 
+\begin_inset Formula $N=1$
+\end_inset
+
+ this corresponds to the standard definition of a dynamical system.
+ When there is only one 
+\begin_inset Formula $T$
+\end_inset
+
+,
+ it is interpreted as the forward–time evolution of the system.
+ But here,
+ it is curiously different.
+ One possible interpretation is that there are 
+\begin_inset Formula $N$
+\end_inset
+
+ different time axes.
+ But this is bunkum,
+ since we will soon impose the requirement that for each time step,
+ one and only one 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ must be chosen.
+ This implies an interpretation that there are many possible futures ahead of us.
+ The selection of just one 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ is the selection of one possible future,
+ and mapping it into the present (here and now).
+ Huh.
+ Well,
+ I think I just got lucky,
+ here,
+ because I wasn't planning this in advance.
+ Again,
+ the universe sings.
+\end_layout
+
+\begin_layout Standard
+So,
+ now,
+ we mention that this can be specialized to multiple common cases.
+\end_layout
+
+\begin_layout Itemize
+For 
+\begin_inset Formula $X=S=\left\{ s_{j}\right\} $
+\end_inset
+
+ a finite set of states,
+ 
+\begin_inset Formula $\mu$
+\end_inset
+
+ the counting measure,
+ and 
+\begin_inset Formula $\mathcal{T}=\delta$
+\end_inset
+
+ the transition function 
+\begin_inset Formula $\delta:S\times\Sigma\to S$
+\end_inset
+
+ one gets the bog–standard finite state machine.
+ (Not yet a transducer,
+ as there is no output,
+ so Moore and Mealey do not yet enter the discussion.) If we set it up so that the initial state is 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ then the measure is irrelevant,
+ as the state transition function guarantees that the machine is always in just one and only one state at a time.
+ More on this later.
+\end_layout
+
+\begin_layout Itemize
+For 
+\begin_inset Formula $X=\Delta^{n}$
+\end_inset
+
+ an 
+\begin_inset Formula $n$
+\end_inset
+
+–simplex,
+ and 
+\begin_inset Formula $T_{k}:\Delta^{n}\to\Delta^{n}$
+\end_inset
+
+ a Markov chain,
+ one get a probabilistic finite automaton.
+ If the starting point is a single point 
+\begin_inset Formula $p\in\Delta^{n}$
+\end_inset
+
+,
+ then the measure 
+\begin_inset Formula $\mu$
+\end_inset
+
+ is once again irrelevant,
+ as the Markov chain again guarantees that the machine is only in one state.
+ Contacting with conventional notation,
+ 
+\begin_inset Formula $p=\left(p_{1},\cdots,p_{n}\right)$
+\end_inset
+
+ a vector of 
+\begin_inset Formula $n$
+\end_inset
+
+ real numbers,
+ interpreted as probabilities:
+ 
+\begin_inset Formula $1=\sum_{i}p_{i}$
+\end_inset
+
+.
+ There's awkwardness in contacting with the conventional 
+\begin_inset Formula $\mathrm{Pr}\left(X=X_{j}\right)$
+\end_inset
+
+ notation for Markov chains,
+ since that notation requires a distinct random variable 
+\begin_inset Formula $X_{j}$
+\end_inset
+
+ for each time–step 
+\begin_inset Formula $j$
+\end_inset
+
+ and so the convention of 
+\begin_inset Quotes eld
+\end_inset
+
+random variables
+\begin_inset Quotes erd
+\end_inset
+
+ is awkward in the present setting.
+ It can be done,
+ but I see no point in trying to make contact with that notation.
+ It just would be a wall of text that doesn't clarify anything.
+\end_layout
+
+\begin_layout Itemize
+For 
+\begin_inset Formula $X=\mathbb{C}P^{n}$
+\end_inset
+
+ complex projective space,
+ or,
+ alternately,
+ 
+\begin_inset Formula $X=H$
+\end_inset
+
+ a Hilbert space,
+ and 
+\begin_inset Formula $T_{k}=U_{k}:H\to H$
+\end_inset
+
+ a set of unitary transformations,
+ one gets a quantum finite automaton.
+ A single point 
+\begin_inset Formula $p=\left|\psi\right\rangle \in X$
+\end_inset
+
+ is interpreted as a pure state.
+ A mixed state is then a collection of points in 
+\begin_inset Formula $X$
+\end_inset
+
+;
+ when this collection is uncountable,
+ the Borel algebra and the measure is employed,
+ so as to make the application of the unitary transforms meaningful.
+ The quantum finite automaton is exactly the same thing as the 
+\begin_inset Quotes eld
+\end_inset
+
+computer
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+quantum computing
+\begin_inset Quotes erd
+\end_inset
+
+ and there is a vast ocean of notation and conventions for talking about this.
+ I don't see much point in articulating these at this time,
+ other than to mention that the 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ would correspond to 
+\begin_inset Quotes eld
+\end_inset
+
+gates
+\begin_inset Quotes erd
+\end_inset
+
+ of various sorts,
+ and the measure here becomes the Bures measure (Fubini–Study metric for mixed states).
+\end_layout
+
+\begin_layout Itemize
+It might be interesting to generalize from 
+\begin_inset Formula $X=\mathbb{C}P^{n}$
+\end_inset
+
+ to 
+\begin_inset Formula $X$
+\end_inset
+
+ some (complex) variety,
+ or even a scheme,
+ but I don't see the point of this just right now.
+ This is the 
+\begin_inset Quotes eld
+\end_inset
+
+varietal state machine
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+For 
+\begin_inset Formula $X$
+\end_inset
+
+ a homogeneous space (viz.
+ quotient of Lie groups) and the 
+\begin_inset Formula $T_{k}$
+\end_inset
+
+ being transformations on this homogeneous space,
+ one gets the 
+\begin_inset Quotes eld
+\end_inset
+
+geometric state machine
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Again,
+ this could be interesting,
+ but I don't see any utility just right now.
+\end_layout
+
+\begin_layout Standard
+The point of the above was rather trite:
+ by using notation for measure–preserving dynamical systems,
+ we can cover both the classical and the quantum cases at the same time,
+ instead of having to have distinct conversations about each.
 \end_layout
 
 \begin_layout Standard
