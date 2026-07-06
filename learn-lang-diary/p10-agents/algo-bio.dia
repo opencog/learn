@@ -97,13 +97,13 @@
         <dia:point val="17.9417,-1.24583"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="16.7917,-2.39583;32.7918,5.9299"/>
+        <dia:rectangle val="16.7917,-2.39583;33.8416,5.9299"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="17.9417,-1.24583"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="13.700099999999999"/>
+        <dia:real val="14.749899999999993"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="6.0257316666666672"/>
@@ -112,7 +112,7 @@
         <dia:point val="17.9417,-1.24583"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="16.7917,-2.39583;32.7918,5.9299"/>
+        <dia:rectangle val="16.7917,-2.39583;33.8416,5.9299"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -121,7 +121,7 @@
         <dia:point val="17.9417,-1.24583"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="13.700099999999999"/>
+        <dia:real val="14.749899999999993"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="6.0257316666666672"/>
@@ -147,7 +147,7 @@
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="19.1267,0.240457"/>
+            <dia:point val="19.1792,0.240457"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000ff"/>
@@ -165,13 +165,13 @@
         <dia:point val="11.7416,-1.86323"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="11.7416,-2.54823;17.2891,-0.87323"/>
+        <dia:rectangle val="11.7416,-2.5701;18.176,-0.82948"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#Organic substrate 
-(pond, soil, ...)#</dia:string>
+            <dia:string>#Computer Simulation
+(Prusinkiewicz)#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -199,17 +199,17 @@
         <dia:point val="20.525,0.156623"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="20.525,-0.550252;29.8394,4.39037"/>
+        <dia:rectangle val="20.525,-0.550252;32.0244,4.39037"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#(Physical) Cell (prokaryote...)
+            <dia:string>#Morphological botanical model
 Contains:
-  * Methylated DNA
-  * Dynamics (enzymes...)
+  * Lindenmeyer System
+  * Dynamics (reaction-diffusion eqn...)
   * Action Selection mechanism
-     (chemotaxis, klinotaxis,...)#</dia:string>
+    (up/down regulation)#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -318,7 +318,58 @@ Contains:
         </dia:attribute>
       </dia:object>
     </dia:group>
-    <dia:object type="Standard - Text" version="1" id="O5">
+    <dia:object type="Standard - PolyLine" version="0" id="O5">
+      <dia:attribute name="obj_pos">
+        <dia:point val="13.8167,1"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="13.7667,0.406574;19.9068,2.59343"/>
+      </dia:attribute>
+      <dia:attribute name="poly_points">
+        <dia:point val="13.8167,1"/>
+        <dia:point val="18.3167,1"/>
+        <dia:point val="18.3167,0.5"/>
+        <dia:point val="19.8167,1.5"/>
+        <dia:point val="18.3167,2.5"/>
+        <dia:point val="18.3167,2"/>
+        <dia:point val="13.8167,2"/>
+        <dia:point val="13.8167,1"/>
+      </dia:attribute>
+    </dia:object>
+    <dia:object type="Standard - Text" version="1" id="O6">
+      <dia:attribute name="obj_pos">
+        <dia:point val="14.4167,1.68333"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="14.3948,0.976455;15.2492,1.91708"/>
+      </dia:attribute>
+      <dia:attribute name="text">
+        <dia:composite type="text">
+          <dia:attribute name="string">
+            <dia:string>#???#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="font">
+            <dia:font family="sans" style="0" name="Helvetica"/>
+          </dia:attribute>
+          <dia:attribute name="height">
+            <dia:real val="0.80000000000000004"/>
+          </dia:attribute>
+          <dia:attribute name="pos">
+            <dia:point val="14.4167,1.68333"/>
+          </dia:attribute>
+          <dia:attribute name="color">
+            <dia:color val="#000000ff"/>
+          </dia:attribute>
+          <dia:attribute name="alignment">
+            <dia:enum val="0"/>
+          </dia:attribute>
+        </dia:composite>
+      </dia:attribute>
+      <dia:attribute name="valign">
+        <dia:enum val="3"/>
+      </dia:attribute>
+    </dia:object>
+    <dia:object type="Standard - Text" version="1" id="O7">
       <dia:attribute name="obj_pos">
         <dia:point val="12.55,0.639793"/>
       </dia:attribute>
@@ -351,17 +402,17 @@ Contains:
         <dia:enum val="3"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O6">
+    <dia:object type="Standard - Text" version="1" id="O8">
       <dia:attribute name="obj_pos">
-        <dia:point val="12.2083,6.12677"/>
+        <dia:point val="12.0364,6.0976"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="12.2083,5.44177;15.4308,6.31677"/>
+        <dia:rectangle val="12.0364,5.39073;18.8308,6.33135"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#Movement#</dia:string>
+            <dia:string>#Computer graphics ???#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -370,7 +421,7 @@ Contains:
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="12.2083,6.12677"/>
+            <dia:point val="12.0364,6.0976"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000ff"/>
@@ -384,62 +435,5 @@ Contains:
         <dia:enum val="3"/>
       </dia:attribute>
     </dia:object>
-    <dia:group>
-      <dia:attribute name="meta">
-        <dia:composite type="dict"/>
-      </dia:attribute>
-      <dia:attribute name="matrix"/>
-      <dia:object type="Standard - PolyLine" version="0" id="O7">
-        <dia:attribute name="obj_pos">
-          <dia:point val="13.6667,1.025"/>
-        </dia:attribute>
-        <dia:attribute name="obj_bb">
-          <dia:rectangle val="13.6167,0.431574;19.7568,2.61843"/>
-        </dia:attribute>
-        <dia:attribute name="poly_points">
-          <dia:point val="13.6667,1.025"/>
-          <dia:point val="18.1667,1.025"/>
-          <dia:point val="18.1667,0.525"/>
-          <dia:point val="19.6667,1.525"/>
-          <dia:point val="18.1667,2.525"/>
-          <dia:point val="18.1667,2.025"/>
-          <dia:point val="13.6667,2.025"/>
-          <dia:point val="13.6667,1.025"/>
-        </dia:attribute>
-      </dia:object>
-      <dia:object type="Standard - Text" version="1" id="O8">
-        <dia:attribute name="obj_pos">
-          <dia:point val="14.2667,1.70833"/>
-        </dia:attribute>
-        <dia:attribute name="obj_bb">
-          <dia:rectangle val="14.2667,1.02333;18.6867,1.89833"/>
-        </dia:attribute>
-        <dia:attribute name="text">
-          <dia:composite type="text">
-            <dia:attribute name="string">
-              <dia:string>#Endocytosis, ...#</dia:string>
-            </dia:attribute>
-            <dia:attribute name="font">
-              <dia:font family="sans" style="0" name="Helvetica"/>
-            </dia:attribute>
-            <dia:attribute name="height">
-              <dia:real val="0.80000000000000004"/>
-            </dia:attribute>
-            <dia:attribute name="pos">
-              <dia:point val="14.2667,1.70833"/>
-            </dia:attribute>
-            <dia:attribute name="color">
-              <dia:color val="#000000ff"/>
-            </dia:attribute>
-            <dia:attribute name="alignment">
-              <dia:enum val="0"/>
-            </dia:attribute>
-          </dia:composite>
-        </dia:attribute>
-        <dia:attribute name="valign">
-          <dia:enum val="3"/>
-        </dia:attribute>
-      </dia:object>
-    </dia:group>
   </dia:layer>
 </dia:diagram>
