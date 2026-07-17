@@ -12916,6 +12916,497 @@ hard problems
 \end_layout
 
 \begin_layout Standard
+—
+–
+\end_layout
+
+\begin_layout Standard
+Meanwhile,
+ I posed the following to Claude 5 Sonnet medium:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Continuous measure–preserving dynamical systems,
+ and specifically symplectic manifolds,
+ conventionally split into stable,
+ unstable and middle manifolds.
+ Suppose I consider all the proteins and enzymes and biomoelcules in a prokaryote or eukaryote.
+ The vibrational modes of these molecules can be approximated with the Born–Oppenheimer approximation,
+ so that the motion is effectively classical,
+ and thus should occur on a symplectic manifold.
+ Can you approximate the dimension of this manifold?
+ Are there books or texts that explore this view in detail?
+ I'm particularly interested in the Lyapunov exponents:
+ how small disturbances in the motion of those proteins might be rapidly amplified.
+ I am also a bit confused by the thermal setting.
+ I suppose that there is some (grand–)canonical ensemble for the biological cell,
+ but I'm unclear on how that description interacts with the symplectic dynamics.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Selected replies:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+E.
+ coli,
+ back-of-envelope:
+ cell volume ~1 fL,
+ ~2–4×10⁶ protein molecules (this is a fairly standard estimate,
+ e.g.
+ from BioNumbers–style counting),
+ average protein maybe 300–400 residues (~30–40 kDa) → roughly 5,000–8,000 atoms per protein including hydrogens.
+ That alone gives ~2×10¹⁰ atoms in protein,
+ i.e.
+ N ~ 10¹⁰,
+ phase space dimension ~6×10¹⁰.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ OK.
+ Add nucleic acids,
+ water,
+ its nearly 
+\begin_inset Formula $10^{12}$
+\end_inset
+
+ for a prokaryote and 
+\begin_inset Formula $10^{14}$
+\end_inset
+
+ for a eukaryote.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Lyapunov exponents in this setting have been studied directly at the single-protein / small-peptide scale.
+ * Braxenthaler,
+ Unger,
+ Auerbach,
+ Given & Moult,
+ "Chaos in protein dynamics," Proteins 29:417–425 (1997) —
+ perturbed a protein fragment in explicit solvent by 10⁻³–10⁻⁹ Å and found trajectories diverged to ~1 Å RMSD within 1–2 ps regardless of starting conformation,
+ and perturbing more than 1–2 ps before a conformational transition erased that transition in the perturbed trajectory.
+ * Zhou & Wang,
+ "Chaos in Biomolecular Dynamics," J.
+ Phys.
+ Chem.
+ 100:8101 (1996) —
+ for an α-helix,
+ Lyapunov exponents came out around 0.001–0.01 ps⁻¹.
+ * A later myoglobin simulation put the maximum Lyapunov exponent around 10 ps⁻¹ —
+ much faster divergence,
+ showing the exponent is very sensitive to system size/force field/method.
+ * An undergrad-style redo on ubiquitin (NAMD/VMD) reported exponential divergence with λ ≈ 10.5 ps⁻¹,
+ i.e.
+ loss of predictability in well under a picosecond.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ So then ...
+ its ...
+ fast.
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Predictability timescale vs.
+ biological timescale.
+ The striking thing in the biology is the separation of timescales:
+ chaotic divergence at the atomic level happens on ~0.1–10 ps,
+ while functionally relevant conformational changes (domain motions,
+ allostery,
+ folding) happen on ns–ms.
+ So the microscopic trajectory is essentially unpredictable almost immediately,
+ yet coarse,
+ collective observables (RMSD to a folded state,
+ reaction coordinates,
+ free energy along a pathway) remain statistically reproducible —
+ this is the same kind of scale separation that makes hydrodynamics work despite molecular chaos underneath it.
+ This is really the crux of why "amplification of small disturbances" doesn't obviously translate into unpredictable biology.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ OK.
+ I will have to ponder this.
+ The amplification of my quantum state indeterimancy is in the picosecond scale,
+ but it doesn't matter at the biological timescale.
+ So this torpedoes my naive thinking about choice and choosing being of quantum origin...
+ Hmm.
+ Hard problem,
+ eh?
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+With this many coupled anharmonic oscillators and no extra conserved quantities beyond energy,
+ you're deep in the Chirikov–overlap / Arnold–diffusion regime rather than anywhere near KAM–torus survival —
+ high dimensionality plus resonance overlap essentially guarantees a positive Lyapunov spectrum almost everywhere accessible at thermal energies.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ In other words,
+ thermal disturbances far exceed quantum effects.
+ It did not matter if there had been any preferential quantum collapse;
+ thermal dynamics would have erased that immediately.
+ This too is deeply troubling on the philosophical side;
+ we'd have to posit that water molecules are conscious,
+ too,
+ to obtain some escape route,
+ but that flies a little too close to the Sun.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+microscopically symplectic + reversible → macroscopically dissipative + stochastic,
+ once you project onto the subsystem of interest.
+ Zwanzig's Nonequilibrium Statistical Mechanics is the classic treatment of this reduction.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ OK.
+ In principle,
+ I already know this.
+ In practice,
+ I should review.
+ As if I did not have enough to do ...
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The Nosé–Hoover thermostat adds one (or a chain of) fictitious extra degree(s) of freedom coupled to the physical system such that the extended system is still genuinely Hamiltonian (deterministic,
+ time–reversible,
+ and —
+ after a time rescaling —
+ volume–preserving in an extended,
+ non–standard measure),
+ while the marginal distribution of the physical subsystem,
+ averaged over long trajectories (assuming ergodicity),
+ is exactly canonical.
+ This is the cleanest bridge between "symplectic dynamics" and "canonical ensemble" you'll find,
+ because it keeps you inside Hamiltonian mechanics rather than jumping to a stochastic Langevin picture.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ OK.
+ And apparently numerical codes implement exactly this.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+References.
+ For the general framework:
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+V.I.
+ Arnold,
+ Mathematical Methods of Classical Mechanics —
+ the canonical text for symplectic manifolds,
+ Liouville's theorem,
+ integrability,
+ and the language you'd want for stable/unstable/center manifold decomposition of Hamiltonian flows.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+M.
+ Tuckerman,
+ Statistical Mechanics:
+ Theory and Molecular Simulation —
+ this is probably the single best match for your thermal-ensemble question specifically:
+ it carefully derives Liouville's theorem,
+ symplectic (and non-canonical,
+ extended-system) formulations of MD,
+ and Nosé–Hoover/Nosé–Hoover chains as a route from Hamiltonian dynamics to canonical/isothermal-isobaric ensembles.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+B.
+ Leimkuhler & C.
+ Matthews,
+ Molecular Dynamics:
+ With Deterministic and Stochastic Numerical Methods —
+ modern,
+ numerically-minded treatment of symplectic integrators,
+ thermostats,
+ and the dynamics/ensemble interface.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+W.G.
+ Hoover,
+ Time Reversibility,
+ Computer Simulation,
+ Algorithms,
+ Chaos —
+ directly addresses Lyapunov spectra for thermostated (i.e.,
+ canonical-ensemble) molecular dynamics;
+ this is where the conjugate-pairing rule and non-equilibrium Lyapunov analysis of thermostated systems is worked out in detail.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+P.
+ Cvitanović et al.,
+ Chaos:
+ Classical and Quantum (ChaosBook.org,
+ free online) —
+ has material on Lyapunov spectra of many-body Hamiltonian systems and periodic-orbit theory that generalizes cleanly to high dimension.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+R.
+ Zwanzig,
+ Nonequilibrium Statistical Mechanics —
+ the Mori–Zwanzig projection formalism connecting symplectic microscopic dynamics to dissipative/stochastic reduced descriptions;
+ this is the rigorous version of the "how does the ensemble interact with the dynamics" question.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Not sure why I copied the references into here,
+ but it seems like the right thing to do.
+\end_layout
+
+\begin_layout Standard
+At any rate,
+ this exposes my thinking as being somewhat naive.
+ I will need to work a good bit more to rescue the situation.
+ Off–hand,
+ I don't really see any other way:
+ somehow,
+ the future turns into the past,
+ and it all funnels through molecular motion.
+ So I don't see where else to put it.
+\end_layout
+
+\begin_layout Standard
+Saying that human subjective awareness is due to the neural architecture does not seem to resolve anything,
+ either.
+ The thermo of neurons is gonna be worse.
+ It is also possible that portions of neural dynamics occur on almost–complex manifolds;
+ what's–his–name Zo....
+ has already suggested that...
+ wait.
+ Let me ask Claude...
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+If I recall correctly,
+ I went to a lecture where the speaker suggested that some of the neural dynamics in the human brain appear to take place on an almost-complex manifold.
+ This was in the context of spiking behavior correlated with background waves (alpha?
+ beta?) which provided a precise clock against which the spiking could be resolved.
+ The almost-complex dynamics therefore resembled a QM-like situation,
+ in that it had a quantum-like behavior,
+ even though there is no actual quantum at all in the actual measurements.
+ Is this a one-off paper,
+ or is this a more generally understood situation?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Selected replies,
+ Claude Sonnet 5 medium:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Andrei Khrennikov's program builds a complex/Hilbert–space representation of cognitive and neural data out of a two–timescale argument:
+ a fast "pre–cognitive" internal dynamics gets coarse–grained against a slower observational timescale,
+ ...
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Harald Atmanspacher and Peter beim Graben's "complementarity in classical dynamical systems" —
+ they show that if you partition a classical system's phase space at one timescale and observe it at a coarser one,
+ you get non–commuting,
+ quantum–like observables purely from epistemic coarse–graining,
+ no actual quantum substrate required.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ Similar but distinct from above.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The oscillator–reduction thread —
+ this one gives you a literal complex manifold,
+ not just an analogy.
+ Populations of coupled phase oscillators (Kuramoto–type,
+ or quadratic–integrate–and–fire/theta neurons,
+ which are the canonical spiking model) admit exact low–dimensional reductions —
+ Ott–Antonsen and Watanabe–Strogatz —
+ where the macroscopic state collapses onto a single complex order parameter,
+ and the dynamics live on a manifold acted on by the Möbius group (essentially the Poincaré disk).
+ A 2024 PRL made this rigorous for "complex Riccati arrays" spanning the whole spectrum from QIF spiking neurons to pure phase oscillators.
+ ...
+ an actual holomorphic structure emerging from real spiking dynamics.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ Well,
+ hot damn.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Recent whole-brain modeling papers explicitly reviving the QL framing.
+ A 2025 bioRxiv preprint builds a whole-brain model out of coupled Stuart–Landau oscillators —
+ each region's state literally is a complex variable z = x + iy —
+ and finds that quantum-like probability laws including interference effects emerge from coupled oscillators,
+ and that the quantum-like regime gave the best fit to large-scale human resting-state neuroimaging data while using significantly less energy than non-QL networks.
+ There's also a 2025 Frontiers paper trying to bridge classical oscillatory neural network phase-space descriptions with the Hilbert-space QL formalism used for "mental entanglement" models,
+ explicitly noting that there's a persisting gap between the classical oscillatory phase-space description of neuronal networks and the quantum-like representation of mental states via density and Hermitian operators —
+ i.e.,
+ people in the field agree this connection is real but not yet airtight.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ Knock me over with a feather.
+\end_layout
+
+\begin_layout Standard
+Lets go farther:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+OK,
+ so in the context of this "QL framing",
+ if there is a Hilbert-space QL formalism for "mental entanglement",
+ then is there also a discussion of something resembling wave-function collapse,
+ where,
+ perhaps,
+ the brain spontaneously decides to do one thing,
+ instead of another?
+ If so,
+ how would this collapse be driven?
+ On a related note:
+ is this "entanglement" analogous to QM,
+ so that if there is a collapse here to one state,
+ it precludes collapse there,
+ to a conflicting state?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Selected answers:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 x
 \end_layout
 
