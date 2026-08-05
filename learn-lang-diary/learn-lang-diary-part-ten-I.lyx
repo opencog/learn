@@ -20678,8 +20678,338 @@ Whatever.
  Something has to be done.
 \end_layout
 
+\begin_layout Subsection*
+5 August 2026
+\end_layout
+
 \begin_layout Standard
-x
+I had a fitful sleep.
+ I don't recall any tortured dreams;
+ one was actually quite pleasant.
+ just waking every hour or two,
+ tossing,
+ turning.
+\end_layout
+
+\begin_layout Standard
+So I'm going to do something about that right quick.
+ Last nights resolution.
+ But first,
+ I have to close out the IIT tab.
+ Gemini defines the 
+\begin_inset Quotes eld
+\end_inset
+
+Intrinsic Information
+\begin_inset Quotes erd
+\end_inset
+
+ about a state 
+\begin_inset Formula $y$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+L_{c}\left(y\right)=p\left(y|m\right)\log_{2}\frac{p\left(y|m\right)}{p_{c}\left(y|m\right)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $p$
+\end_inset
+
+ is the 
+\begin_inset Quotes eld
+\end_inset
+
+uncut causal power over a state 
+\begin_inset Formula $Y$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Formula $p_{c}$
+\end_inset
+
+ is the 
+\begin_inset Quotes eld
+\end_inset
+
+cut causal power (over a state 
+\begin_inset Formula $Y$
+\end_inset
+
+)
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is for a mechanism 
+\begin_inset Formula $M$
+\end_inset
+
+ in a state 
+\begin_inset Formula $m$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+Intrinsic Difference
+\begin_inset Quotes erd
+\end_inset
+
+ is defined as 
+\begin_inset Formula 
+\[
+ID_{c}\left(p,p_{c}\right)=\max_{y}L_{c}\left(y\right)-\min_{y}L_{c}\left(y\right)
+\]
+
+\end_inset
+
+It is also given the name 
+\begin_inset Quotes eld
+\end_inset
+
+the expansion/contraction of a system's causal horizon
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now we struggle with terminology.
+ What are 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+,
+ actually?
+ Gemini clarifies:
+ 
+\begin_inset Formula $y$
+\end_inset
+
+ ranges over every possible state that the machine could transition into.
+ Given that 
+\begin_inset Formula $m$
+\end_inset
+
+ is the current machine state,
+ I'm not sure why a different letter was used,
+ instead of,
+ say 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $m^{\prime}$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $p\left(y|m\right)$
+\end_inset
+
+ is just a transition probability.
+ Given only a current and a future state,
+ the system is taken to be Markovian,
+ or at least flattened to look Markovian.
+\end_layout
+
+\begin_layout Standard
+This is worth thinking about.
+ One way to think about a Markovian transition matrix is that the system is not deterministic:
+ there is a probability of transitioning,
+ and it is stochastic.
+ Perhaps one can hide 
+\begin_inset Quotes eld
+\end_inset
+
+free will
+\begin_inset Quotes erd
+\end_inset
+
+ in there?
+ One could,
+ but I wouldn't.
+ Its not the correct setting.
+ Another interpretation is that the system is incompletely described,
+ and the probability corresponds to the hiding of unknown (but deterministic) transitions.
+ This is the typical case in textbook radio engineering and signal transmission:
+ some codec issues strings of bits.
+ The codec is some finite transducer;
+ with,
+ for example,
+ dozens of states.
+ When the codec is driven by a specific message,
+ i.e.
+ when it is encoding a specific message,
+ that encoding is fully deterministic,
+ and the transitions are fully known.
+ But if the specific message is not known,
+ one can take an average:
+ assuming the messages are uniformly distributed (have a uniform prior),
+ one can compute posterior probabilities for any given transition.
+ These are purely an artifact of not knowing the driving message.
+\end_layout
+
+\begin_layout Standard
+I guess the intent of 
+\begin_inset Formula $ID$
+\end_inset
+
+ is that the definition is meant to be generic,
+ and ducks such considerations.
+ I also don't understand what happens if 
+\begin_inset Formula $p_{c}\left(y|m\right)=0$
+\end_inset
+
+,
+ cause then 
+\begin_inset Formula $L_{c}\left(y\right)=\infty$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Then Gemini trots out some gems:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The ratio 
+\begin_inset Formula $p/p_{c}$
+\end_inset
+
+ measures how much the cut distorted reality.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ WTF.
+ The reality of what?
+ Distorted the perception of reality?
+ I don't understand.
+ Lets step back to the beginning.
+ Phi is defined as 
+\begin_inset Formula 
+\[
+\Phi=D\left(\mbox{System uncut}\Vert\mbox{System at MIP}\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $D$
+\end_inset
+
+ is the distance metric ...
+ ??
+ Gemini is no longer responding.
+ Free tier.
+ I've been too lazy to pay money.
+ Fuck.
+\end_layout
+
+\begin_layout Standard
+Some other terminology it was happy to sling around:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The 
+\begin_inset Formula $\max_{y}L_{c}\left(y\right)$
+\end_inset
+
+ identifies the specific state where the uncut system provides the most unexpected certainty compared to the cut system.
+ It isolates the system's absolute peak causal power.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ What does this mean?
+ I'm not sure.
+ Naively,
+ the words 
+\begin_inset Quotes eld
+\end_inset
+
+peak causal power
+\begin_inset Quotes erd
+\end_inset
+
+ suggests that the universe is maximally affected?
+ But there's no universe,
+ only a central complex.
+ Now,
+ by definition,
+ 
+\begin_inset Formula $p\left(y|m\right)\le1$
+\end_inset
+
+ so 
+\begin_inset Formula $L_{c}\left(y\right)$
+\end_inset
+
+ attains a maximum when 
+\begin_inset Formula $p\left(y|m\right)\gg p_{c}\left(y|m\right)$
+\end_inset
+
+,
+ or more narrowly,
+ when 
+\begin_inset Formula $1\gg p_{c}\left(y|m\right)$
+\end_inset
+
+ i.e.
+ when the cut system is very unlikely to transition to 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ Paraphrasing,
+ this would be when something very smart is able to infer 
+\begin_inset Formula $y$
+\end_inset
+
+ but anything dumber could not.
+ That is,
+ the smart system can be certain of 
+\begin_inset Formula $y$
+\end_inset
+
+ in a way that dumber systems could not be.
+ (Yes,
+ this is not what it says.
+ I'm paraphrasing,
+ transposing.)
+\end_layout
+
+\begin_layout Standard
+x 
 \end_layout
 
 \begin_layout Standard
