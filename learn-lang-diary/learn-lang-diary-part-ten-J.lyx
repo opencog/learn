@@ -14672,8 +14672,227 @@ thickness
 \end_layout
 
 \begin_layout Standard
-Earlier in this diary,
- I attempt
+—
+—
+–
+\end_layout
+
+\begin_layout Standard
+Multi–hour break,
+ change the topic,
+ slightly.
+ Null lightcone photons propagate in space,
+ and have a distinct emission point (or region) and a distinct absorption point (or region) and thus,
+ a distinct time–ordering.
+ Yet,
+ the metric distance is zero.
+ In my imagination,
+ and I don't know if this is correct,
+ this means the emitter and absorber are entangled.
+ In particular,
+ any sort of measurement (or wave–function collapse) at the emitter or the absorber is 
+\begin_inset Quotes eld
+\end_inset
+
+instantly
+\begin_inset Quotes erd
+\end_inset
+
+ (trivially) propagated to the other,
+ as a non–local effect (obviously,
+ carrying no information,
+ but preserving quantum state,
+ per no-cloning/no–erasure.) That's what I've been imagining,
+ but perhaps it is many years overdue to see if this is true,
+ and to try to write down the algebra for this.
+\end_layout
+
+\begin_layout Standard
+In the below,
+ I'm going to fumble a bit,
+ because I'm not sure what I'm looking for,
+ or what I'm trying to prove.
+ The one–point interaction is 
+\begin_inset Formula $\overline{\psi}\gamma_{\mu}A^{\mu}\psi$
+\end_inset
+
+ which we integrate over the entire emission or absorption region.
+ If its a slit,
+ we integrate over the slit;
+ if its a star,
+ we integrate over the entire surface of the star.
+ The Pauli reduction to non–relativistic form is 
+\begin_inset Formula 
+\[
+H_{int}=\frac{e}{2m}\left(\vec{p}\cdot\vec{A}+\vec{A}\cdot\vec{p}\right)+\frac{e^{2}}{2m}\left|\vec{A}\right|^{2}+\frac{e\hbar}{2m}\sigma\cdot\vec{B}
+\]
+
+\end_inset
+
+The first term is the orbital term,
+ the quadratic term is the 
+\begin_inset Quotes eld
+\end_inset
+
+diamagnetic
+\begin_inset Quotes erd
+\end_inset
+
+ term,
+ the third term is the Pauli term.
+ I want to create a much simpler toy model of this,
+ by ignoring the orbital and diamagnetic terms.
+ That is,
+ I only want the algebraic coupling,
+ none of the dynamics.
+ Lets try it this way.
+\end_layout
+
+\begin_layout Standard
+A spin-1/2 qubit with basis 
+\begin_inset Formula $\left|\uparrow\right\rangle $
+\end_inset
+
+ and 
+\begin_inset Formula $\left|\downarrow\right\rangle $
+\end_inset
+
+.
+ A spin-1 photon with basis 
+\begin_inset Formula $\left|+\right\rangle ,\left|\ell\right\rangle ,\left|-\right\rangle $
+\end_inset
+
+ where 
+\begin_inset Formula $\left|+\right\rangle ,\left|-\right\rangle $
+\end_inset
+
+ are the left and right circular photons,
+ and 
+\begin_inset Formula $\left|\ell\right\rangle $
+\end_inset
+
+ is the longitudinal one.
+ Denote these two vector spaces as 
+\begin_inset Formula $V_{spin}$
+\end_inset
+
+ and 
+\begin_inset Formula $V_{photon}$
+\end_inset
+
+.
+ The interaction term lives in the tensor product space 
+\begin_inset Formula $V_{spin}\otimes V_{photon}$
+\end_inset
+
+.
+ The Pauli spin coupling is 
+\begin_inset Formula 
+\[
+\vec{\sigma}\cdot\vec{B}=\vec{\sigma}\cdot\vec{\nabla}\times\vec{A}
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $\vec{A}$
+\end_inset
+
+ is build of ladder operators 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $a^{\dagger}$
+\end_inset
+
+.
+ The interaction term (aka the 
+\begin_inset Quotes eld
+\end_inset
+
+vertex operator
+\begin_inset Quotes erd
+\end_inset
+
+) is then 
+\begin_inset Formula 
+\[
+H_{int}=g\left(\sigma_{+}\otimes a_{+}+\sigma_{-}\otimes a_{+}^{\dagger}+\sigma_{+}\otimes a_{-}^{\dagger}+\sigma_{-}\otimes a_{-}\right)
+\]
+
+\end_inset
+
+I was working with google gemini,
+ and then got in an argument,
+ because it was obviously wrong.
+ I needled it twice and still got wrong answers from it.
+ So I just constructed the above.
+ I think it's correct.
+ So 
+\begin_inset Formula $\sigma_{+}$
+\end_inset
+
+ has a 
+\begin_inset Formula $\Delta m_{spin}=+1$
+\end_inset
+
+ while 
+\begin_inset Formula $a_{+}$
+\end_inset
+
+ annihilates a left–circular photon for 
+\begin_inset Formula $\Delta m_{j}=-1$
+\end_inset
+
+ so that total 
+\begin_inset Formula $\Delta M=0$
+\end_inset
+
+.
+ Similarly 
+\begin_inset Formula $a_{-}^{\dagger}$
+\end_inset
+
+ creates a right–circular photon for 
+\begin_inset Formula $\Delta m_{j}=-1$
+\end_inset
+
+ again.
+ So I think this is OK,
+ and I will ignore the google blargle.
+\end_layout
+
+\begin_layout Standard
+Here 
+\begin_inset Formula $\sigma_{\pm}$
+\end_inset
+
+ are the spin–flip operators given by 
+\begin_inset Formula $\sigma_{\pm}=\left(\sigma_{x}\pm i\sigma_{y}\right)/2$
+\end_inset
+
+ so that 
+\begin_inset Formula $\sigma_{+}\left|\downarrow\right\rangle =\left|\uparrow\right\rangle $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Then photon absorption is 
+\begin_inset Formula 
+\[
+\left\langle \uparrow,0\right|H_{int}\left|\downarrow,+\right\rangle =g\left\langle \uparrow\right|\sigma_{+}\left|\downarrow\right\rangle \otimes\left\langle 0\right|a_{+}\left|+\right\rangle =g
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left|0\right\rangle $
+\end_inset
+
+ is the photon vacuum state.
 \end_layout
 
 \begin_layout Standard
