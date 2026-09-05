@@ -14896,6 +14896,467 @@ where
 \end_layout
 
 \begin_layout Standard
+So this looks like the correct toy model.
+ A more realistic model would include a wave–vector subscript 
+\begin_inset Formula $k$
+\end_inset
+
+ on the photon.
+ We ignore this.
+\end_layout
+
+\begin_layout Subsection*
+5 Sept 2026
+\end_layout
+
+\begin_layout Standard
+There's something else I want to work on,
+ but lets continue with above.
+ Again,
+ what follows below will be confused and possibly wrong;
+ I'm feeling my way through.
+ 
+\end_layout
+
+\begin_layout Standard
+The idea that I'm chasing is a chain of entanglement.
+ But before we get to that,
+ some simpler steps.
+ Suppose a state is prepared at the emitter:
+ 
+\begin_inset Formula $\left|\psi\right\rangle =\alpha\left|\uparrow\right\rangle +\beta\left|\downarrow\right\rangle $
+\end_inset
+
+ with appropriate normalization 
+\begin_inset Formula $\left|\alpha\right|^{2}+\left|\beta\right|^{2}=1$
+\end_inset
+
+.
+ Suppose this state is capable of spontaneously emitting a photon.
+ This last wording is important:
+ I don't want to have any additional interactions,
+ manipulations that would 
+\begin_inset Quotes eld
+\end_inset
+
+induce
+\begin_inset Quotes erd
+\end_inset
+
+ the state emit.
+ Such inductions would be some many–body effect,
+ e.g.
+ lasing because its in a non–zero undulating field,
+ or emission because its in some microwave cavity,
+ some altered vacuum a la Casimir or gravitation.
+ Presence of 
+\begin_inset Quotes eld
+\end_inset
+
+infrared
+\begin_inset Quotes erd
+\end_inset
+
+ photons.
+ I don't (currently) want this,
+ as it would require and entirely altered analysis,
+ taking into account the electroagnetic *field*,
+ and I want to be able to ignore that field for the current analysis.
+ I want a virgin birth of a photon,
+ insofar as it's possible.
+ Well,
+ of course it is,
+ if I pretend that this simplified model is a stand–in for what radiative decay of an excited atom.
+ Which is the intent here:
+ that this simplified model is a stand–in for some generic atomic–photonic interaction.
+ With that out of the way,
+ damn the torpedoes,
+ full speed ahead.
+\end_layout
+
+\begin_layout Standard
+The post–emission state is 
+\begin_inset Formula 
+\begin{align*}
+H_{int}\left|\psi\right\rangle  & =\alpha H_{int}\left|\uparrow,0\right\rangle +\beta H_{int}\left|\downarrow,0\right\rangle \\
+ & =\alpha g\sigma_{-}\left|\uparrow\right\rangle \otimes a_{+}^{\dagger}\left|0\right\rangle +\beta g\sigma_{+}\left|\downarrow\right\rangle \otimes a_{-}^{\dagger}\left|0\right\rangle \\
+ & =g\left(\alpha\left|\downarrow,+\right\rangle +\beta\left|\uparrow,-\right\rangle \right)
+\end{align*}
+
+\end_inset
+
+Lets ignore 
+\begin_inset Formula $g$
+\end_inset
+
+ or set 
+\begin_inset Formula $g=1$
+\end_inset
+
+ or whatever.
+ The 
+\begin_inset Formula $g$
+\end_inset
+
+ was the gyromagnetic ratio,
+ but we don't need this for the algebra.
+ The magnitude of the energy exchanged does not affect the geometry.
+\end_layout
+
+\begin_layout Standard
+Lets now assume the photon propagates to somewhere where it's polarization can be measured.
+ As a measurement device,
+ this causes the wave–function to 
+\begin_inset Quotes eld
+\end_inset
+
+collapse
+\begin_inset Quotes erd
+\end_inset
+
+.
+ For now,
+ lets assume a Copenhagen interpretation.
+ We'll repeal this shortly,
+ for for now,
+ keep things as simple as possible.
+ Lets assume that the result of the measurement is that the 
+\begin_inset Formula $\left|+\right\rangle $
+\end_inset
+
+ state is observed.
+ This implies a collapse of the wave function back at the emitter:
+\begin_inset Formula 
+\[
+H_{int}\left|\psi\right\rangle \mapsto\left|\downarrow\right\rangle 
+\]
+
+\end_inset
+
+That is,
+ if the fermion spin state back at the emitter were to be measured,
+ it would be found to be in the spin–down state.
+\end_layout
+
+\begin_layout Standard
+This is a non–local effect.
+ The emitter could be a star a million light–years away.
+ The collapse of the wave–function here,
+ in the lab,
+ done by measuring the polarization of the photon,
+ causes a collapse there,
+ far away.
+ This is meant to be an illustration of here–and–now;
+ for this particular measurement,
+ here–and–now had a 
+\begin_inset Quotes eld
+\end_inset
+
+thickness
+\begin_inset Quotes erd
+\end_inset
+
+ of a million light–years,
+ because that is how long the photon was in flight.
+ The collapse is 
+\begin_inset Quotes eld
+\end_inset
+
+simultaneous
+\begin_inset Quotes erd
+\end_inset
+
+,
+ but that's a mis–nomer,
+ because there is no 
+\begin_inset Quotes eld
+\end_inset
+
+time
+\begin_inset Quotes erd
+\end_inset
+
+ in the hear–and–now.
+ Everything in the here–and–now is co–located at 
+\begin_inset Quotes eld
+\end_inset
+
+right now
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The here–and–now ends when the photon is absorbed and measured.
+ The state is updated,
+ closed out and committed to the past.
+\end_layout
+
+\begin_layout Standard
+This is a highly heterodox interpretation,
+ and although I've already internalized it,
+ many years ago,
+ I struggle to accept it as fact.
+ I guess the only thing to do is to struggle to articulate this until something breaks.
+\end_layout
+
+\begin_layout Standard
+Back at the star where the emission occurred,
+ it was 
+\begin_inset Quotes eld
+\end_inset
+
+here–and–now
+\begin_inset Quotes erd
+\end_inset
+
+ at the time of emission.
+ The emission opens a pending transaction,
+ the transaction is not closed out until the absorption occurs.
+ I only vaguely recall the details of the TIQM,
+ the transactional interpretation of QM.
+ I think this uses the two state–vector formalism,
+ claiming that there is a state 
+\begin_inset Formula $\left\langle \psi\right|$
+\end_inset
+
+ traveling backwards in time,
+ or perhaps 
+\begin_inset Formula $\left\langle \downarrow,+\right|$
+\end_inset
+
+ from the measurement.
+ I think what I'm saying is consistent with TIQM,
+ except I don't particularly needs a backwards–time propagating state,
+ since the transaction happens 
+\begin_inset Quotes eld
+\end_inset
+
+everywhere
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+simultaneously
+\begin_inset Quotes erd
+\end_inset
+
+ in the here–and–now.
+ Nothing went 
+\begin_inset Quotes eld
+\end_inset
+
+backwards in time
+\begin_inset Quotes erd
+\end_inset
+
+ to the star;
+ the emitter in the star is co–located with the absorber,
+ both entirely contained in the here–and–now.
+ At the moment of measurement,
+ the here–and–now becomes the past.
+\end_layout
+
+\begin_layout Standard
+I need to go for a bike–ride,
+ here,
+ but before that,
+ a wrap up.
+ Several aspects of the above are unresolved.
+ First,
+ what is the nature of measurement?
+ Earlier in this diary,
+ maybe 4 or 5 months ago,
+ I attempted to model collapse by creating two tanks of harmonic oscillators,
+ and then imagining a quantum of energy getting trapped in one tank or the other.
+ The intent was that the tanks were large or voluminous,
+ and that the quantum would get trapped simply from the shear size of the tank.
+ It's still a valid intuition,
+ but the algebra did not work out:
+ the Hamiltonian was (is always) diagonalizable,
+ the vector space is linear,
+ and there seems like there was no way to 
+\begin_inset Quotes eld
+\end_inset
+
+thermalize
+\begin_inset Quotes erd
+\end_inset
+
+ without having some non–linear interaction.
+ i.e.
+ the conclusion I reached then was that collapse is impossible without some sort of non–linearity.
+\end_layout
+
+\begin_layout Standard
+There is some hope,
+ still;
+ the conception of here–and–now as presented above may provide ...
+ something.
+\end_layout
+
+\begin_layout Standard
+Next,
+ the entanglements seem to be chainable.
+ When the original state 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+ was prepared,
+ doesn't that mean that a whole bunch of other entanglements happened,
+ to prepare that state?
+ Where did they go?
+ That is,
+ the state 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+ is entangled with trillions of other atoms,
+ back at the star.
+ When the photon polarization is measured locally,
+ the collapse provoked here has to propagate back through this entire entanglement chain.
+ Well,
+ that implies the entire entanglement chain is also in the here–and–now.
+ But I would like to think that this chain (or is it a tree?) is finite;
+ if it's finite,
+ where does it end?
+\end_layout
+
+\begin_layout Standard
+Next,
+ what about fields?
+ The photon vacuum state 
+\begin_inset Formula $\left|0\right\rangle $
+\end_inset
+
+ is a field,
+ its uncountable,
+ not finite.
+ All sorts of vacuum effects may come into play.
+ The most intriguing might be the implied thermal nature of this field,
+ implied by Unruh,
+ Hawking.
+ This provides a source of thermalization that might be able to provide some non–linear–like effect that drives collapse.
+\end_layout
+
+\begin_layout Standard
+On the other hand,
+ perhaps the reason it looks thermal is because it's a stand–in for a huge,
+ massive network of entanglements,
+ encompassing the entire universe.
+ That is,
+ the universe itself presents itself as if it were a canonical ensemble,
+ because the network of entanglements involves all 
+\begin_inset Formula $10^{80}$
+\end_inset
+
+ particles.
+ All of which are in the here–and–now.
+ This number is so vast,
+ that,
+ of course,
+ 
+\begin_inset Formula $\left|0\right\rangle $
+\end_inset
+
+ should appear to be thermal.
+ Well,
+ duh.
+ 
+\end_layout
+
+\begin_layout Standard
+The on–going crazy–train is that QM is linear.
+ Gravity provides non–linearity,
+ but opening that is a Pandora's box,
+ for now.
+\end_layout
+
+\begin_layout Standard
+Finally,
+ and most importantly,
+ there is the problem of choice.
+ When the photon polarization is measured and found to be 
+\begin_inset Formula $\left|+\right\rangle $
+\end_inset
+
+,
+ was this an accident,
+ a roll of the dice?
+ Or was there a conscious choice made somewhere in the chain?
+ The keyword here is 
+\begin_inset Quotes eld
+\end_inset
+
+conscious
+\begin_inset Quotes erd
+\end_inset
+
+;
+ that a choice was made,
+ between 
+\begin_inset Formula $\left|+\right\rangle $
+\end_inset
+
+ and 
+\begin_inset Formula $\left|-\right\rangle $
+\end_inset
+
+,
+ is clear.
+ But was this a random choice,
+ or was this a Schrodinger's Cat choice?
+ Viz,
+ did some human or other conscious entity open the box and look at the cat?
+ (viz we hooked up the photon polarization detector to kill a car,
+ or not.) Since we've concluded,
+ by separate chain of reasoning,
+ that any agent is conscious and capable of exercising free will,
+ and that even prokaryotic cells are agents,
+ is it enough for a prokaryote to 
+\begin_inset Quotes eld
+\end_inset
+
+observe
+\begin_inset Quotes erd
+\end_inset
+
+ the measurement of the photon?
+ And if it does,
+ what the heck is free will all about?
+ Who is 
+\begin_inset Quotes eld
+\end_inset
+
+choosing
+\begin_inset Quotes erd
+\end_inset
+
+?
+ How does choosing work?
+\end_layout
+
+\begin_layout Standard
+So,
+ the above paragraphs entangle everything that I've been writing about in this diary.
+ Is it a step forwards?
+ Sort of.
+ At least I now have a toy algebraic model of entanglement in the here–and–now,
+ which I had not made explicit before.
+ Yet all the major questions remain unresolved.
+\end_layout
+
+\begin_layout Standard
+Time to ride a bike.
+\end_layout
+
+\begin_layout Standard
 x
 \end_layout
 
