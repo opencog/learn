@@ -19680,7 +19680,7 @@ Hmm.
 \begin_layout Itemize
 Yikes.
  This feels like progress,
- because erlier,
+ because earlier,
  I was working with causal barriers,
  insulators that block flow.
  Crap,
@@ -19692,6 +19692,384 @@ Yikes.
 
 \begin_layout Standard
 Later.
+\end_layout
+
+\begin_layout Standard
+—
+—
+
+\end_layout
+
+\begin_layout Standard
+OK.
+ I'm fucked up.
+ Roller–coastering.
+ It's late.
+ Lets just try random shit.
+ Let 
+\begin_inset Formula $S$
+\end_inset
+
+ be a system,
+ consisting of a bunch of parts 
+\begin_inset Formula $S=\left\{ S_{i}\right\} $
+\end_inset
+
+ that is,
+ a set of sub–parts 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $C_{i}=C\left(S_{i}\right)$
+\end_inset
+
+ be the complexity of subsystem 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+.
+ Define the complexity (what follows is incorrect) as
+\begin_inset Formula 
+\[
+C\left(S\right)=\sum_{i,j}\min\left(b_{ij},b_{ji}\right)C_{i}C_{j}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $b_{ij}$
+\end_inset
+
+ is the unidirectional bandwidth from 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ to 
+\begin_inset Formula $S_{j}$
+\end_inset
+
+.
+ This is wrong,
+ because bandwidth carries units bits/time.
+ For the units work correctly,
+ the 
+\begin_inset Formula $C_{i}$
+\end_inset
+
+ would need to carry units of time/bits which is weird or counterintuitive.
+ Or there needs to be some extra factor or constant canceling things out.
+\end_layout
+
+\begin_layout Standard
+Can we brainstorm this?
+ It's tempting to measure complexity in bits;
+ it seems like such an obvious,
+ natural unit.
+ Perhaps,
+ instead of bandwidth,
+ we should count the number of pipes (or wires) between the pairs,
+ normalized so that a wire transmits one bit per second.
+ This is the same as multiplying times an arbitrary time constant.
+ Now,
+ the bits don't work out.
+ So perhaps 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+C\left(S\right)=T\sum_{i,j}\min\left(b_{ij},b_{ji}\right)\left(C_{i}+C_{j}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This makes more sense,
+ because it feels like complexity should be additive.
+ Except that's also wrong.
+ If I have two systems of the same complexity,
+ putting them in the same box does not make the result twice as complex.
+ The bandwidth was supposed to be the force multiplier,
+ here.
+ But if the bandwidth between the two parts is zero,
+ then the total complexity should not be zero;
+ it should be equal to the part having the larger complexity.
+ That is,
+ it should be 
+\begin_inset Quotes eld
+\end_inset
+
+convex
+\begin_inset Quotes erd
+\end_inset
+
+ in some way.
+ But how?
+\end_layout
+
+\begin_layout Standard
+Maybe we can arrive at this with infinitessimals?
+ If I have a large system,
+ and attach a tiny one,
+ the complexity should increase.
+ The quantity of attachment should determine the amount of increase:
+ but this cannot be unlimited;
+ there's some upper bound.
+ This upper bound would seem to be achieved if every subcomponent of the big system was attached to the tiny one.
+ But now we have the problem of rate or bandwidth.
+ That is,
+ its not just topology;
+ it must include the size of the link,
+ how much data each link can carry.
+ But this is confusing;
+ each link cannot get arbitrarily large;
+ it must max out.
+\end_layout
+
+\begin_layout Standard
+Max out where?
+ Well,
+ at the max data rate that the tiny thing can deliver.
+ That means that the complexity of the tiny thing is to be measured as a rate,
+ so,
+ bits per second.
+ The sum–total of the pipes connected to the tiny thing cannot exceed the rate of the tiny generator.
+ Or rather,
+ the sum can be larger,
+ but the most by which the can be filled is given by the intrinsic rate of the tiny part.
+ So:
+ complexity is the same as the intrinsic rate of generation.
+ I guess.
+\end_layout
+
+\begin_layout Standard
+Lets explore another confusing situation.
+ Say I have two humans,
+ arranged so that they cannot talk to each other.
+ What is the total complexity?
+ It cannot be greater than that of just one human.
+\end_layout
+
+\begin_layout Standard
+Now lets add an interlocuter to the mix;
+ the interlocuter has unbounded,
+ very large complexity,
+ larger than humans.
+ Pairing to each,
+ it cannot interact with either human than the bandwidth of speech.
+ The complexity of the human is clearly high;
+ bandwidth of speech seems to hide behind a much greater complexity of the brain.
+\end_layout
+
+\begin_layout Standard
+Or does it?
+ How fast can we talk?
+ Fifty bits per second?
+ My rate of speech is not much slower than my rate of verbal thinking;
+ the two are about the same.
+ Usually much slower;
+ right now,
+ I'm having to pause to think of what to write next.
+ Has my complexity decreased?
+ Well,
+ the topology of the wiring diagram of my brain has not changed.
+ But some kind of processing rate is being highly variable.
+ I'm debating a lot with myself,
+ and effectively all of it is subconscious.
+ 
+\end_layout
+
+\begin_layout Standard
+Here,
+ we run into the problem of ingress.
+ My brain is not some finite state machine clocked at some rate,
+ some sofic system mixing things around.
+ My ability to write here is is limited by the ingress of new ideas;
+ if I had to only write random words,
+ I could be faster.
+ Should I conclude that complexity is interlinked with ingress?
+\end_layout
+
+\begin_layout Standard
+Lets sanity–check this.
+ Suppose I have a Lindemeyer system of some six production rules.
+ Should I assign it a complexity computed from the production rules 
+\begin_inset Quotes eld
+\end_inset
+
+alone
+\begin_inset Quotes erd
+\end_inset
+
+?
+ Or should the complexity be given by the structure(s) that it manifests?
+ If the production rules are the 
+\begin_inset Quotes eld
+\end_inset
+
+DNA
+\begin_inset Quotes erd
+\end_inset
+
+,
+ each cell gets a copy of this DNA,
+ but there might be millions of cells,
+ multiplying,
+ interconnecting.
+ I should measure the complexity of the final system,
+ right?
+ And not the complexity of the production rules.
+\end_layout
+
+\begin_layout Standard
+What is the band–width of 
+\begin_inset Quotes eld
+\end_inset
+
+communication
+\begin_inset Quotes erd
+\end_inset
+
+ between neighbors in an L–system?
+ Effectively none,
+ other than 
+\begin_inset Quotes eld
+\end_inset
+
+knowing
+\begin_inset Quotes erd
+\end_inset
+
+ that there is a neighbor.
+ But knowing that one has a neighbor is not a bits–per–second thing;
+ its static.
+ 
+\end_layout
+
+\begin_layout Standard
+Note:
+ L–systems would be a special case of the more general membrane–computing system;
+ at this stage,
+ L–systems should be easier.
+\end_layout
+
+\begin_layout Standard
+Meta–question:
+ Do L–systems 
+\begin_inset Quotes eld
+\end_inset
+
+ingress
+\begin_inset Quotes erd
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+If I write an algorithm,
+ the infinite loop:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+n=0;
+ do:
+ n = n+1;
+ print n;
+ done;
+\begin_inset Quotes erd
+\end_inset
+
+,
+ this algo will ingress the natural numbers from the platonic realm to the physical realm (assuming that I actually ran it on a real computer.) So this is a deterministic,
+ dynamical process that is ingressing;
+ we can even say how fast:
+ its proportional to the clock rate of the machine executing the program.
+ Now,
+ printing a number with a trillion decimal places will be slower than printing a number with only two;
+ so the rate of ingress here slows down.
+ Logarithmically,
+ I guess.
+\end_layout
+
+\begin_layout Standard
+So,
+ this is a deterministic system,
+ and it ingresses.
+ Thus,
+ L–systems do too,
+ and they do so proportional to the clock rate,
+ but I guess also the number of cells at the given time (since each cell is clocked 
+\begin_inset Quotes eld
+\end_inset
+
+independently
+\begin_inset Quotes erd
+\end_inset
+
+).
+ The makes it clear that the complexity of the rule system (which is static over time) should not be confused with the complexity of the resulting 
+\begin_inset Quotes eld
+\end_inset
+
+botanical
+\begin_inset Quotes erd
+\end_inset
+
+ organism,
+ which will be larger,
+ and related to the organism size,
+ and also the clock rate.
+ In particular,
+ the complexity of the organism is not static,
+ but dynamic,
+ and it should be measured as a rate.
+\end_layout
+
+\begin_layout Standard
+All these considerations lead to more confusion.
+ My brain is ingressing at a max of 50 bits per second,
+ witnessed by the rate at which I type words,
+ times log of vocabulary size,
+ times correction factors for English language syntax.
+ I can build simple L–system organisms much faster than that.
+ And yet,
+ the final botanical organism will have a dramatically smaller complexity than my brain.
+\end_layout
+
+\begin_layout Standard
+My eyelids are slamming shut.
+ I need to go to sleep.
+\end_layout
+
+\begin_layout Standard
+My roller–coaster saw a facebook reel that says I should be stoic.
+ Easier said than done.
+ One day at a time is a better plan,
+ and entertain no hope for the future.
+ We spent some significant amount of quality time together today,
+ much more than the running average.
+ No play.
+ The play was more fun,
+ but she has to initiate it.
+ I can't force that.
+ Enough.
+ This will occupy my thoughts as I sleep.
+ I'm putting vast amounts of effort into this,
+ even if its not visible.
+ This is the issue of the ingress of the human brain.
+ I don't know how to measure it.
+ Its not equivalent to the number of words per second I can think through.
+ I'm crawling over complex models of this other person I live with,
+ vesting great time into imagining what the future holds in store.
+ I really need to stop writing this drivel.
+ Good night.
 \end_layout
 
 \begin_layout Standard
