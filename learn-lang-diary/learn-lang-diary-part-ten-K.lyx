@@ -3714,6 +3714,383 @@ I guess I can control it while awake,
 \end_layout
 
 \begin_layout Standard
+I don't have a long–term plan for this.
+ I live with her.
+ She was ...
+ hanging out last night.
+ No fireworks,
+ but we did have a few laughs.
+ The party theme is 
+\begin_inset Quotes eld
+\end_inset
+
+who the hell invited these people?
+\begin_inset Quotes erd
+\end_inset
+
+ Of the people I invited,
+ five,
+ maybe seven are coming.
+ Not clear how many she's inviting.
+ At first,
+ she said,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+a lot
+\begin_inset Quotes erd
+\end_inset
+
+,
+ but then Adrė will be there,
+ so maybe not so many.
+ Rytis will not be there.
+ I can't wait till I'm in Chicago.
+ I don't know what sort of plans to make for next year.
+ The limerence needs to be fixed;
+ but it will be triggered again next summer.
+\end_layout
+
+\begin_layout Standard
+I'm writing the below,
+ and I have this tonic knot in my stomach.
+ I'd eaten a big breakfast just a bit earlier,
+ so I'm not hungry.
+ It feels like a very low–grade anxiety.
+ I don't want to interrupt the flow below,
+ so I'll top–post instead,
+ the correlation of feeling and writing is not important.
+ But this low–grade stomach flopping ...
+ its well,
+ a hopeful heartache.
+ I know rationally it's hopeless but subconscious me doesn't acknowledge that.
+ Subconscious me understands that the friendship remains alive and well and healthy.
+ And sees no evidence of it tapering.
+ For example,
+ last night,
+ she was asking about Austin,
+ and Chicago.
+ I replied tamely.
+ I've been dealing with days where I know she's been sleeping with other guys.
+ When I think about it,
+ it makes me feel utterly awful.
+ That's what the loss of sleep is all about.
+ But then,
+ its like ...
+ she spends way more time with me,
+ than these other guys.
+ They're bootie calls.
+ I'm safe space.
+ Its a weird dynamic.
+ So,
+ below,
+ I'm writing,
+ I'm concentrating,
+ and I have these evil butterflies in my stomach.
+ It's hopeless but its hopeful.
+ It's fucking weird,
+ and its taking a mental toll.
+ 
+\end_layout
+
+\begin_layout Standard
+I want to complain about how much time I spend writing crap like this,
+ but frankly,
+ it could be a lot worse.
+ The house could be completely 100% empty and I would be lonely going out of my mind,
+ and that would be 100% far worse.
+ The sporadic social contact is calming.
+\end_layout
+
+\begin_layout Standard
+It may also be the case that I am experiencing plain–old gastrointestinal distress.
+ It might be that,
+ too.
+ There might even be chicken and egg stuff,
+ going on here.
+ 
+\end_layout
+
+\begin_layout Standard
+—
+—
+–
+\end_layout
+
+\begin_layout Standard
+So,
+ for a pair of communicating agents,
+ assume we can monitor what fraction of a single agents world model gets activated by the receipt and processing of a message.
+ This would be a fraction of the total size of the network.
+ For a pair of communicating agents exchanging messages,
+ we have a flow resembling a pair of interacting finite state transducers.
+\end_layout
+
+\begin_layout Standard
+Recall a finite state transducer is defined as
+\end_layout
+
+\begin_layout Itemize
+A set 
+\begin_inset Formula $S=\left\{ s_{i}\right\} $
+\end_inset
+
+ of internal states.
+\end_layout
+
+\begin_layout Itemize
+A set of messages 
+\begin_inset Formula $M=\left\{ m_{k}\right\} $
+\end_inset
+
+ that it can receive and validly decode,
+ react to.
+\end_layout
+
+\begin_layout Itemize
+A set of actions 
+\begin_inset Formula $A=\left\{ a_{k}\right\} $
+\end_inset
+
+ that it it can take.
+ These are effectively sent messages or token placed on the output.
+ A finite state transducer does not locomote,
+ so the actions are always necessarily messages placed into the environment (or into a specific channel.)
+\end_layout
+
+\begin_layout Itemize
+A transition function 
+\begin_inset Formula $T:M\times S\to S\times A$
+\end_inset
+
+ that,
+ upon receipt of message 
+\begin_inset Formula $m_{k}$
+\end_inset
+
+ transitions the internal state 
+\begin_inset Formula $s_{i}$
+\end_inset
+
+ to a new state 
+\begin_inset Formula $s_{j}$
+\end_inset
+
+,
+ and outputs an action 
+\begin_inset Formula $a_{n}$
+\end_inset
+
+.
+ That is,
+ 
+\begin_inset Formula $T:\left(m_{k},s_{i}\right)\mapsto\left(s_{j},a_{n}\right)$
+\end_inset
+
+ The product is a Cartesian product.
+\end_layout
+
+\begin_layout Standard
+I don't know what would happen,
+ or if it is possible to replace the Cartesian product by a tensor product.
+ Dammit.
+\end_layout
+
+\begin_layout Standard
+OK,
+ before doing tensor product,
+ lets quickly finish the earlier thought.
+ If I have two agents 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+ exchanging messages,
+ then I wanted to measure what fraction of the internal states 
+\begin_inset Formula $S_{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{B}$
+\end_inset
+
+ get visited as they communicate.
+\end_layout
+
+\begin_layout Standard
+I want to assign a measure to each internal state,
+ so that 
+\begin_inset Formula $0<\mu\left(s_{i}\right)<1$
+\end_inset
+
+ for each state 
+\begin_inset Formula $s_{i}$
+\end_inset
+
+.
+ For ordinary finite state machines,
+ this is just 
+\begin_inset Formula $\mu\left(s_{i}\right)=1/\left|S\right|$
+\end_inset
+
+ i.e.
+ the counting measure.
+ For something like LLM's or anything else non–trivial,
+ the measure 
+\begin_inset Formula $\mu\left(s_{i}\right)$
+\end_inset
+
+ becomes the fraction of the world model that is activated (upon receiving some message).
+ Its how much of the brain 
+\begin_inset Quotes eld
+\end_inset
+
+lights up
+\begin_inset Quotes erd
+\end_inset
+
+ on getting a message.
+ How much of the knowledge representation network is activated.
+ 
+\end_layout
+
+\begin_layout Standard
+For a communications session where an agent receives messages 
+\begin_inset Formula $m_{k_{1}},m_{k_{2}},\cdots,m_{k_{N}}$
+\end_inset
+
+ it will transition through internal states 
+\begin_inset Formula $s_{i_{1}},s_{i_{2}},\cdots,s_{i_{N}}$
+\end_inset
+
+and the total visited space during the exchange would be 
+\begin_inset Formula $\mu\left(s_{i_{1}}\cup s_{i_{2}}\cup\cdots\cup s_{i_{N}}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that for an ordinary finite state machine,
+ it is necessarily the case that 
+\begin_inset Formula $s_{i}\cap s_{j}=\varnothing$
+\end_inset
+
+ for 
+\begin_inset Formula $i\ne j$
+\end_inset
+
+ but for more complex systems having a network activation,
+ it will generally be the case that 
+\begin_inset Formula $s_{i}\cap s_{j}\ne\varnothing$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Lets return to the case of weakly coupled harmonic oscillators.
+ Here,
+ the state space are the rotor angles 
+\begin_inset Formula $S=\left\{ \theta:0\le\theta<2\pi\right\} $
+\end_inset
+
+ for each of the two rotors.
+ We can promptly generalize this to e.g.
+ the Ising model (where we have just two spin sites),
+ or an N–state rotor instead of a continuous angle.
+ The rotor need not be a circle,
+ it could be a sphere,
+ a projective space,
+ real or complex.
+ A homogeneous space.
+ A unitary group.
+ These all fall into the class of conventional geometric state machines.
+ 
+\end_layout
+
+\begin_layout Standard
+The weak coupling need not be limited to point dynamics:
+ it could couple distributions.
+ For example,
+ if the state space aka world–model of an agent is the complex projective space 
+\begin_inset Formula $\mathbb{C}P^{n}$
+\end_inset
+
+ then the state transition functions could be elements of the unitary group 
+\begin_inset Formula $U\left(n\right)$
+\end_inset
+
+ which maps 
+\begin_inset Formula $\mathbb{C}P^{n}$
+\end_inset
+
+ to 
+\begin_inset Formula $\mathbb{C}P^{n}$
+\end_inset
+
+ and thus maps distributions to distributions.
+\end_layout
+
+\begin_layout Standard
+Mode locking is a thing in the circle map,
+ and is generally seen e.g.
+ in orbital resonances.
+ I guess mode locking is a general phenomenon,
+ where here it is called a 
+\begin_inset Quotes eld
+\end_inset
+
+resonant interaction
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Conventional resonant interactions are for waves,
+ i.e.
+ have 3-momenta 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+ and energy 
+\begin_inset Formula $\omega$
+\end_inset
+
+ with some dispersion relation,
+ and resonances occur when 
+\begin_inset Formula $\vec{k}_{1}\pm\vec{k}_{2}=\pm\vec{k}_{3}$
+\end_inset
+
+ and 
+\begin_inset Formula $\omega_{1}\pm\omega_{2}=\pm\omega_{3}$
+\end_inset
+
+.
+ This is seen for water waves,
+ plasma waves,
+ etc.
+ but all these waves are scalar waves.
+ I've never seen a discussion for where the waves lie on the surface of some general manifold,
+ instead of being a scalar ....
+\end_layout
+
+\begin_layout Standard
+The non–geometric case is that of weakly coupled knowledge graphs...
+ of which some fraction of the nodes are activated,
+ for each internal state.
+\end_layout
+
+\begin_layout Standard
+Ugh.
+ That's the general setting I still do not have an expression that captures the complexity of a pair of interacting systems vs.
+ a pair of isolated systems.
+\end_layout
+
+\begin_layout Standard
 x
 \end_layout
 
